@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="assets/css/style.css" type="stylesheet">
     <title>My First Webpage</title>
 </head>
 <body>
     <header>
         <h1>Welcome to My Website</h1>
         <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+			<form id="search-form">
+				<label>Search Movie</label>
+				<input id="search-input">
+				<button type="submit" id="search-button">Search</button>
+			</form>
         </nav>
     </header>
     
@@ -37,5 +38,8 @@
     <footer>
         <p>&copy; 2024 My Website. All rights reserved.</p>
     </footer>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+	<script src="assets/js/index.js"></script>
 </body>
 </html>
