@@ -14,6 +14,7 @@ genre buttons & food option buttons
 Modals 
 	search forms
 	movie details
+		Title, Description, Year, Starring, Rating, Posterpage, link to YouTube Trailer
 		save, go back, start over buttons
 	recipe details
 		" " go to recipe page
