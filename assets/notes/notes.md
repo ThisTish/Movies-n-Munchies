@@ -12,3 +12,9 @@ genre buttons & food option buttons
 	recipe results page
 
 Modals 
+	search forms
+	movie details
+		save, go back, start over buttons
+	recipe details
+		" " go to recipe page
+
