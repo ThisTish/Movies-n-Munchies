@@ -1,7 +1,7 @@
 Ideas...
 
 filtering process
-	diffuclting rating!
+	diffuclty rating!
 
 genre buttons & food option buttons
 	select multiple with slider buttons or just one with radios
