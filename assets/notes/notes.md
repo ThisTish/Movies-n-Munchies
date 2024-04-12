@@ -26,5 +26,53 @@ https://api.jqueryui.com/dialog/#option-modal
 		" " go to recipe page
 
 
+Homepage 
+html
+header logo description/slogan
+search button(s) "movie/title" "pick n choose" "raNdOm!" "discover"
+container movie results
+container reciper results
+containers for...cards
+saved for later cards
+footer.-include disclaimer for the movieDB and logo
 
+
+
+Modal for search
+html
+
+Header-Choose your movie or recipe or search. close X right side. 
+Search input
+radio buttons "movie" or "recipe"
+submit button "discover!"
+
+
+
+Modal movie selected
+html
+
+Movie Title x
+poster x
+year x
+description x
+starring x
+rating x
+genres x
+link to the youtube trailer x
+buttons---"save for later" "go back" "pair w/ munchies" x
+
+
+Modal recipes selected
+html
+
+Title of recipe
+ratings?
+picture
+ingredients
+prep time & cook time
+instructions
+src
+link to the recipe?
+youtube link?
+buttons -- "save for later" "go back" "pair w/ movie"
 

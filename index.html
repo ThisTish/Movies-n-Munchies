@@ -38,8 +38,6 @@
         </section>
     </main>
 
-        </head>
-        <body>
         
         <h2>Modal Example</h2>
         
@@ -56,34 +54,35 @@
 			</div>
         
         </div>
+
+        <div class="w3-container">
+            <h2>Movie Modal</h2>
+            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">movie poster or title</button>
         
-        <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
-        
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-        
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-			modal.style.display = "block";
-        }
-        
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-    		modal.style.display = "none";
-        }
-        
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-        }
-        </script>
+            <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                <!-- <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span> -->
+                
+                    <h2>movieTitle</h2>
+                
+                <img id="poster" src="https://image.shutterstock.com/image-vector/landscape-photo-image-picture-placeholder-260nw-272872412.jpg">
+                    
+                <p id="year">year</p>
+                <p id="description">desc</p>
+                <p id="starring">cast</p>
+                <p id="rating">rating</p>
+                <p id="genres">genres</p>
+                <a id="trailer" href="#">link</a>
+                
+                <button id ="saveForLater" type="submit">watch later</button>
+                <button id ="goBack" type="close">go back</button>
+                <button id ="pair" type="button">pair!</button>
+                
+                </div>
+            </div>
+            </div>
+        </div>
 
     <footer>
         <p>&copy; 2024 My Website. All rights reserved.</p>
