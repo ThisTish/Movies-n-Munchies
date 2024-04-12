@@ -15,7 +15,6 @@
     </header>
     
     <main>
-
         <div class="slogan">
             <h2>description/slogan</h2>
         </div>
@@ -82,9 +81,35 @@
             </div>
 
         </div>
-        
-    </main>
 
+        <div class="w3-container">
+            <h2>Movie Modal</h2>
+            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">movie poster or title</button>
+        
+            <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                <!-- <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span> -->
+                
+                    <h2>movieTitle</h2>
+                
+                <img id="poster" src="https://image.shutterstock.com/image-vector/landscape-photo-image-picture-placeholder-260nw-272872412.jpg">
+                    
+                <p id="year">year</p>
+                <p id="description">desc</p>
+                <p id="starring">cast</p>
+                <p id="rating">rating</p>
+                <p id="genres">genres</p>
+                <a id="trailer" href="#">link</a>
+                
+                <button id ="saveForLater" type="submit">watch later</button>
+                <button id ="goBack" type="close">go back</button>
+                <button id ="pair" type="button">pair!</button>
+                
+                </div>
+            </div>
+            </div>
+        </div>
     <footer>
         <p>Disclaimer:</p>
         <p>&copy; 2024 My Website. All rights reserved.</p>
