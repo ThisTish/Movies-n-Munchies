@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type ="text/css" href="assets/css/style.css">
-    <title>My First Webpage</title>
+    <title>Movies-n-Munchies</title>
 </head>
 
 <body>
@@ -18,32 +18,16 @@
         <div class="slogan">
             <h2>description/slogan</h2>
         </div>
-
-        <div class="modals">
-			<form id="search-form">
-				<label>Search Movie</label><br>
-				<input id="search-input"><br>
-				<button type="submit" id="search-button">Search</button><br>
-			</form>
         
-             <!-- Trigger/Open The Modal -->
-                <button id="myBtn">Open Modal</button>
         
-            <!-- The Modal -->
-                <div id="myModal" class="modal"></div>
-        
-			<!-- Modal content -->
-			    <div class="modal-content">
-				<span class="close">&times;</span>
-				<p>Some text in the Modal..</p>
-                </div>
-
         <div id="results">
             <h3>Results</h3>
-
+            
             <section id="movies">
                 <p>Movie Results</p>
                 <div id="movieResults"></div>
+                <!--button for movie modal for now -->
+                <button id="selectMovie" type="modal" class="card"><a> poster(img) or title(href)</a></button>
             </section>
 
             <section id="recipe">
@@ -51,6 +35,8 @@
                 <div id="recipeResults"></div>
             </section>
         </div>
+
+        <!--*SAVE COLUMNS-->
 
         <div id="save">
             <div id="savedMovies">
@@ -61,12 +47,12 @@
                     </li>
                 </ul>
             </div>
-
+            
             <div id="savedRecipes">
                 <h4>Recipes</h4>
                 <ul>
                     <li>
-
+                        
                     </li>
                 </ul>
             </div>
@@ -82,80 +68,78 @@
 
         </div>
 
-        <div class="w3-container">
-            <h2>Movie Modal</h2>
-            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">movie poster or title</button>
-        
-        <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Explore</button>
-            <div id="id01" class="w3-modal">
-            <div class="w3-modal-content">
-                <div class="w3-container">
-                <!-- <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span> -->
-                
-                    <h2>movieTitle</h2>
-                
-                <img id="poster" src="https://image.shutterstock.com/image-vector/landscape-photo-image-picture-placeholder-260nw-272872412.jpg">
-                    
-                <p id="year">year</p>
-                <p id="description">desc</p>
-                <p id="starring">cast</p>
-                <p id="rating">rating</p>
-                <p id="genres">genres</p>
-                <a id="trailer" href="#">link</a>
-                
-                <button id ="saveForLater" type="submit">watch later</button>
-                <button id ="goBack" type="close">go back</button>
-                <button id ="pair" type="button">pair!</button>
-                
-                </div>
-            </div>
-            </div>
+        <!-- *MODALS -->
+
+        <!-- Search Form Modal -->
+        <!--todo button to trigger modal. Label id's & classes. Fix html structure. function in js-->
+        <p><form id="search-form">
+            <h3>Header size 3</h3>
+            <label>Search Movie</label>
+            <input id="search-input">
+            <button type="submit" id="search-button">Search</button>
+            <label class="radio-button">
+                <input type="radio" name="example-radio" value="option1">
+                <span class="radio"></span>
+                Movie
+            </label>
+            
+            <label class="radio-button">
+                <input type="radio" name="example-radio" value="option2">
+                <span class="radio"></span>
+                Recipe
+            </label>
+        </form></p>
+
+        <hr>
+        <!-- selected movie modal -->
+        <!--todo function in js.  -->
+        <div id="movieModal" class="modal">
+            <div class="movieModalBody">
+            <h2>Movie Title(where modal begins)</h2>
+            <img id="poster" class="w-10 h-20" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
+            
+            <p id="year">year</p>
+            <p id="description">desc</p>
+            <p id="starring">cast</p>
+            <p id="rating">rating</p>
+            <p id="genres">genres</p>
+            <a id="trailer" href="#">link</a>
+            
+            <button id ="saveForLater" type="submit" class="button">watch later</button>
+            <button id ="goBack" type="close">go back</button>
+            <button id ="pair" type="button">pair!</button>
+            <hr>
         </div>
-				<p><form id="search-form">
-                <h3>Header size 3</h3>
-                    <label>Search Movie</label>
-                    <input id="search-input">
-                    <button type="submit" id="search-button">Search</button>
-                    <label class="radio-button">
-                        <input type="radio" name="example-radio" value="option1">
-                        <span class="radio"></span>
-                        Movie
-                      </label>
-                      
-                      <label class="radio-button">
-                        <input type="radio" name="example-radio" value="option2">
-                        <span class="radio"></span>
-                        Recipe
-                      </label>
-                </form></p>
-			</div>
-        
-        </div>
+    
+
+
+        <!-- selected recipe modal -->
+        <!-- todo reformat. filter out non needed items -->
         <h2>Recipe Modal</h2>
-        
-          <!-- Modal content -->
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Movie or Recipe?</p>
-          </div>
-        <button id="recipeBtn">Open Modal</button>
-        
-        <div id="recipeModal" class="modal">
-        
-			<div class="modal-content">
-				<span class="close">&times;</span>
-				<p><form id="search-form">
-                <h3>Recipe Results</h3>
-                    <label>Search Movie</label>
-                    <input id="search-input">
-                    <button type="submit" id="search-button">Search</button>
-                    <label class="radio-button">
-                        <h4>Title of Recipe</h4>
-                        ratings
-                        <src>picture</src>
-                        ingredients
-                        prep&cook times
+
+<!-- Modal content -->
+<div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Movie or Recipe?</p>
+</div>
+<!-- this will go into the "recipe results container, needs more formatting" -->
+<button id="recipeBtn">Open Modal</button>
+
+<div id="recipeModal" class="modal">
+    
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p><form id="search-form">
+            <h3>Recipe Results</h3>
+            <label>Search Movie</label>
+            <input id="search-input">
+            <button type="submit" id="search-button">Search</button>
+            <label class="radio-button">
+                <h4>Title of Recipe</h4>
+                ratings
+                <src>picture</src>
+                ingredients
+                prep&cook times
                         instructions
                         <source>
                         <link ytlink>
@@ -169,17 +153,37 @@
                         <input type="radio" name="example-radio" value="option2">
                         <span class="radio"></span>
                         Recipe
-                      </label>
+                    </label>
                 </form></p>
 			</div>
         
         </div>
+
+
+        <!-- ? what is this modal for? -->
+        <div class="modals">
+            <form id="search-form">
+                <label>Search Movie</label><br>
+                <input id="search-input"><br>
+                <button type="submit" id="search-button">Search</button><br>
+            </form>
         
+             <!-- Trigger/Open The Modal -->
+                <button id="myBtn">Open Modal</button>
+        
+            <!-- The Modal -->
+                <div id="myModal" class="modal"></div>
+        
+            <!-- Modal content -->
+                <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Some text in the Modal..</p>
+                </div>
     <footer>
         <p>Disclaimer:</p>
         <p>&copy; 2024 My Website. All rights reserved.</p>
     </footer>
-        
+    
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
 	<script src="assets/js/index.js"></script>
