@@ -27,7 +27,7 @@
                 <p>Movie Results</p>
                 <div id="movieResults"></div>
                 <!--button for movie modal for now -->
-                <button id="selectMovie" type="modal" class="card"><a> poster(img) or title(href)</a></button>
+                <button id="selectMovieBtn" type="button" class="bg-blue-500 text-white font-bold py-2 px-4 rounded"><a> poster(img) or title(href)</a></button>
             </section>
 
             <section id="recipe">
@@ -93,22 +93,25 @@
         <hr>
         <!-- selected movie modal -->
         <!--todo function in js.  -->
-        <div id="movieModal" class="modal">
-            <div class="movieModalBody">
-            <h2>Movie Title(where modal begins)</h2>
-            <img id="poster" class="w-10 h-20" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
-            
-            <p id="year">year</p>
-            <p id="description">desc</p>
-            <p id="starring">cast</p>
-            <p id="rating">rating</p>
-            <p id="genres">genres</p>
-            <a id="trailer" href="#">link</a>
-            
-            <button id ="saveForLater" type="submit" class="button">watch later</button>
-            <button id ="goBack" type="close">go back</button>
-            <button id ="pair" type="button">pair!</button>
-            <hr>
+        <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-h-80">
+            <div class="movieModalBody modal-content text-white rounded-lg p-4">
+                <header id="moveModalHeader">
+                <span class="close absolute text-white top-0 right-0 p-4 cursor-pointer">&times;</span>
+                <h2>Movie Title</h2>
+                </header>
+                <img id="poster" class="w-10 h-auto mx-auto mb-4" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
+                
+                <p id="year">year</p>
+                <p id="description">desc</p>
+                <p id="starring">cast</p>
+                <p id="rating">rating</p>
+                <p id="genres">genres</p>
+                <a id="trailer" href="#">link</a>
+                
+                <button id ="saveForLater" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
+                <button id ="goBack" type="close" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+                <button id ="pair" type="button" class="button bg-blue-600 rounded-4 mx-4">pair!</button>
+            </div>
         </div>
     
 

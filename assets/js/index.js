@@ -36,6 +36,8 @@ $('#search-form').on('submit', function(event){
 }
 )
 
+// ? for search modal?
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -61,3 +63,24 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
+
+//* Selected Movie Modal Functions
+
+// to open modal
+const selectMovieEl = $('#selectMovieBtn')
+const selectedMovieModal = $('#movieModal')
+const goBackBtn = $('#goBack')
+const closeBtn = $('.close')
+
+selectMovieEl.on('click', () =>{
+	selectedMovieModal.show()
+})
+
+goBackBtn.on('click', () =>{
+	selectedMovieModal.hide()
+})
+closeBtn.on('click', () =>{
+	selectedMovieModal.hide()
+})
