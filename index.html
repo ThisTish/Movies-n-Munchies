@@ -3,56 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- we cannot use cdn for production, we need to install it. url underneath provides instructions -->
-                    <!-- <script src="https://cdn.tailwindcss.com"></script>
-                    https://tailwindcss.com/docs/installation -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type ="text/css" href="assets/css/style.css">
     <title>My First Webpage</title>
 </head>
+
 <body>
     <header>
-        <h1>Welcome to My Website</h1>
-        <nav>
-			<form id="search-form">
-				<label>Search Movie</label>
-				<input id="search-input">
-				<button type="submit" id="search-button">Search</button>
-			</form>
-        </nav>
+        <img src="" alt="">
+        <h1 class="py-4 font-bold text-sky-400 text-7xl">Movies 'n' Munchies</h1>
     </header>
     
     <main>
-        <section id="home">
-            <h2>Home</h2>
-            <p>Welcome to my homepage! This is where you'll find all the latest updates and information.</p>
-        </section>
-        
-        <section id="about">
-            <h2>About</h2>
-            <p>Learn more about me and my interests here.</p>
-        </section>
-        
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Feel free to reach out to me through the contact form or my email address.</p>
-        </section>
-    </main>
+        <div class="slogan">
+            <h2>description/slogan</h2>
+        </div>
 
+        <div class="modals">
+			<form id="search-form">
+				<label>Search Movie</label><br>
+				<input id="search-input"><br>
+				<button type="submit" id="search-button">Search</button><br>
+			</form>
         
-        <h2>Modal Example</h2>
+             <!-- Trigger/Open The Modal -->
+                <button id="myBtn">Open Modal</button>
         
-        <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Open Modal</button>
-        
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
+            <!-- The Modal -->
+                <div id="myModal" class="modal"></div>
         
 			<!-- Modal content -->
-			<div class="modal-content">
+			    <div class="modal-content">
 				<span class="close">&times;</span>
 				<p>Some text in the Modal..</p>
-			</div>
-        
+                </div>
+
+        <div id="results">
+            <h3>Results</h3>
+
+            <section id="movies">
+                <p>Movie Results</p>
+                <div id="movieResults"></div>
+            </section>
+
+            <section id="recipe">
+                <p>Recipe Results</p>
+                <div id="recipeResults"></div>
+            </section>
+        </div>
+
+        <div id="save">
+            <div id="savedMovies">
+                <h4>Movies</h4>
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+            </div>
+
+            <div id="savedRecipes">
+                <h4>Recipes</h4>
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+            </div>
+
+            <div id="saveForLater">
+                <h4>Saved for Later</h4>
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+            </div>
+
         </div>
 
         <div class="w3-container">
@@ -83,12 +110,15 @@
             </div>
             </div>
         </div>
-
     <footer>
+        <p>Disclaimer:</p>
         <p>&copy; 2024 My Website. All rights reserved.</p>
     </footer>
+        
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
 	<script src="assets/js/index.js"></script>
+
 </body>
+
 </html>
