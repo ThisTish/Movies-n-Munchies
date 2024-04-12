@@ -3,87 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type ="text/css" href="./assets/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type ="text/css" href="assets/css/style.css">
     <title>My First Webpage</title>
 </head>
+
 <body>
     <header>
-        <h1>Welcome to My Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <img src="" alt="">
+        <h1 class="py-4 font-bold text-sky-400 text-7xl">Movies 'n' Munchies</h1>
     </header>
     
     <main>
-        <section id="home">
-            <h2>Home</h2>
-            <p>Welcome to my homepage! This is where you'll find all the latest updates and information.</p>
-        </section>
+        <div class="slogan">
+            <h2>description/slogan</h2>
+        </div>
+
+        <div class="modals">
+			<form id="search-form">
+				<label>Search Movie</label><br>
+				<input id="search-input"><br>
+				<button type="submit" id="search-button">Search</button><br>
+			</form>
         
-        <section id="about">
-            <h2>About</h2>
-            <p>Learn more about me and my interests here.</p>
-        </section>
+             <!-- Trigger/Open The Modal -->
+                <button id="myBtn">Open Modal</button>
         
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Feel free to reach out to me through the contact form or my email address.</p>
-        </section>
-    </main>
-   
-        </head>
-        <body>
+            <!-- The Modal -->
+                <div id="myModal" class="modal"></div>
         
-        <h2>Modal Example</h2>
+			<!-- Modal content -->
+			    <div class="modal-content">
+				<span class="close">&times;</span>
+				<p>Some text in the Modal..</p>
+                </div>
+
+        <div id="results">
+            <h3>Results</h3>
+
+            <section id="movies">
+                <p>Movie Results</p>
+                <div id="movieResults"></div>
+            </section>
+
+            <section id="recipe">
+                <p>Recipe Results</p>
+                <div id="recipeResults"></div>
+            </section>
+        </div>
+
+        <div id="save">
+            <div id="savedMovies">
+                <h4>Movies</h4>
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+            </div>
+
+            <div id="savedRecipes">
+                <h4>Recipes</h4>
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+            </div>
+
+            <div id="saveForLater">
+                <h4>Saved for Later</h4>
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="w3-container">
+            <h2>Movie Modal</h2>
+            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">movie poster or title</button>
         
         <!-- Trigger/Open The Modal -->
         <button id="myBtn">Explore</button>
+            <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                <!-- <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span> -->
+                
+                    <h2>movieTitle</h2>
+                
+                <img id="poster" src="https://image.shutterstock.com/image-vector/landscape-photo-image-picture-placeholder-260nw-272872412.jpg">
+                    
+                <p id="year">year</p>
+                <p id="description">desc</p>
+                <p id="starring">cast</p>
+                <p id="rating">rating</p>
+                <p id="genres">genres</p>
+                <a id="trailer" href="#">link</a>
+                
+                <button id ="saveForLater" type="submit">watch later</button>
+                <button id ="goBack" type="close">go back</button>
+                <button id ="pair" type="button">pair!</button>
+                
+                </div>
+            </div>
+            </div>
+        </div>
+				<p><form id="search-form">
+                <h3>Header size 3</h3>
+                    <label>Search Movie</label>
+                    <input id="search-input">
+                    <button type="submit" id="search-button">Search</button>
+                    <label class="radio-button">
+                        <input type="radio" name="example-radio" value="option1">
+                        <span class="radio"></span>
+                        Movie
+                      </label>
+                      
+                      <label class="radio-button">
+                        <input type="radio" name="example-radio" value="option2">
+                        <span class="radio"></span>
+                        Recipe
+                      </label>
+                </form></p>
+			</div>
         
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
+        </div>
+        <h2>Recipe Modal</h2>
         
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
             <p>Movie or Recipe?</p>
           </div>
+        <button id="recipeBtn">Open Modal</button>
+        
+        <div id="recipeModal" class="modal">
+        
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<p><form id="search-form">
+                <h3>Recipe Results</h3>
+                    <label>Search Movie</label>
+                    <input id="search-input">
+                    <button type="submit" id="search-button">Search</button>
+                    <label class="radio-button">
+                        <h4>Title of Recipe</h4>
+                        ratings
+                        <src>picture</src>
+                        ingredients
+                        prep&cook times
+                        instructions
+                        <source>
+                        <link ytlink>
+                        <button id="sflBtn">Save for Later</button>
+                        <button id="gbBtn">go back</button>
+                        <input type="radio" name="example-radio" value="option1">
+                        <span class="radio"></span>
+                        Movie
+                        </label>
+                        <label class="radio-button">
+                        <input type="radio" name="example-radio" value="option2">
+                        <span class="radio"></span>
+                        Recipe
+                      </label>
+                </form></p>
+			</div>
         
         </div>
         
-        <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
-        
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-        
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-          modal.style.display = "block";
-        }
-        
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-        
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        }
-        </script>
-
     <footer>
+        <p>Disclaimer:</p>
         <p>&copy; 2024 My Website. All rights reserved.</p>
     </footer>
+        
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+	<script src="assets/js/index.js"></script>
+
 </body>
+
 </html>
