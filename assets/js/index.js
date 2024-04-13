@@ -1,6 +1,5 @@
+const searchBtnEl = $('#search-button')
 
-
-// const searchBtnEl = $('#search-button')
 
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
@@ -36,7 +35,7 @@ $('#search-form').on('submit', function(event){
 }
 )
 
-// ? for search modal?
+//* for search modal
 
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -67,8 +66,9 @@ window.onclick = function(event) {
 
 
 //* Selected Movie Modal Functions
+// todo selected movie modal. still need to populate
+const displaySelectedMovie = () =>{
 
-// to open modal
 const selectMovieEl = $('#selectMovieBtn')
 const selectedMovieModal = $('#movieModal')
 const goBackBtn = $('#goBack')
@@ -84,3 +84,101 @@ goBackBtn.on('click', () =>{
 closeBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
+}
+
+
+
+// todo getLocalStorage()
+
+
+
+// todo setLocalStorage()
+
+
+
+// todo displaySavedCards()
+
+
+
+// todo openSearchModal()
+
+
+
+// todo searchMovie()
+
+
+
+// todo searchRecipe()
+
+
+
+// todo fetchRecipeApi()
+
+
+
+// todo displaySelectedRecipe()
+
+
+
+// todo displayMovieResults()
+
+
+
+// todo displayRecipeResults()
+
+
+
+// todo watchLater()
+
+
+
+// todo makeLater()
+
+
+
+// todo 
+
+
+
+// todo nowPickMunchies()
+
+
+
+// todo nowPickMovies()
+
+
+
+// todo fetchRecipesFromMovie()
+
+
+
+// todo fetchMoviesFromRecipes()
+
+
+
+// todo displayMovieFilmCombination
+
+
+
+
+// OPTIONAL FOR NOW
+// todo displayPickedMovie()
+
+// OPTIONAL
+// todo displayPickedMovie()
+
+// OPTIONAL
+// todo startOver()
+
+// OPTIONAL
+// todo deleteSavedBtn()
+
+// OPTIONAL
+// todo doneBtns()
+
+
+
+// more functions for searching random....
+
+
+// more functions to search by sliders/checkboxes
