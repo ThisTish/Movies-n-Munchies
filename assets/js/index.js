@@ -176,7 +176,8 @@ closeBtn.on('click', () =>{
 // OPTIONAL
 // todo doneBtns()
 
-
+// OPTIONAL
+// todo slidingResults()
 
 // more functions for searching random....
 

@@ -13,6 +13,7 @@ When open-modal-btn is clicked{
 
 <--or a genres || types of food are selected by (slide?) buttons-->
 When input is submitted && movie/recipe radio is selected{
+	if/then for movie or recipe
 	fetch(movie/recipe API)
 	displayResults(movie,recipe)<--page or slide scroll?-->
 }
