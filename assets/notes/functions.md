@@ -64,7 +64,7 @@ when watched/made/done button is pressed{
 
 When random-button is clicked{
 	randomRecipeFetch()
-	randomMovieFethc()
+	randomMovieFetch()
 	displayPaired()
 }
 

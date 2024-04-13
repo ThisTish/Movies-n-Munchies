@@ -67,12 +67,12 @@ window.onclick = function(event) {
 
 //* Selected Movie Modal Functions
 // todo selected movie modal. still need to populate
-const displaySelectedMovie = () =>{
 
 const selectMovieEl = $('#selectMovieBtn')
 const selectedMovieModal = $('#movieModal')
-const goBackBtn = $('#goBack')
+const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
+const saveForLaterBtn = $('#save-for-later')
 
 selectMovieEl.on('click', () =>{
 	selectedMovieModal.show()
@@ -81,10 +81,16 @@ selectMovieEl.on('click', () =>{
 goBackBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
+
 closeBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
-}
+
+saveForLaterBtn.on('click', () =>{
+	// setLocalStorage()
+	selectedMovieModal.hide()
+	
+})
 
 
 
@@ -116,10 +122,6 @@ closeBtn.on('click', () =>{
 
 
 
-// todo displaySelectedRecipe()
-
-
-
 // todo displayMovieResults()
 
 
@@ -128,15 +130,11 @@ closeBtn.on('click', () =>{
 
 
 
-// todo watchLater()
-
-
-
 // todo makeLater()
 
 
 
-// todo 
+// todo displaySelectedRecipe()
 
 
 
