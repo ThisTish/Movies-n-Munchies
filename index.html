@@ -20,6 +20,7 @@
             <h2>description/slogan</h2>
         </div>
         
+        <button id="random-button" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RaNdoM</button>
 
         <!-- *MODALS -->
 
@@ -44,40 +45,18 @@
         </form></p>
 
         <hr>
-        <!-- selected movie modal -->
-        <!--todo function in js.  -->
-        <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-h-80">
-            <div class="movieModalBody modal-content text-white rounded-lg p-4">
-                <header id="moveModalHeader">
-                <span class="close absolute text-white top-0 right-0 p-4 cursor-pointer">&times;</span>
-                <h2>Movie Title</h2>
-                </header>
-                <img id="poster" class="w-10 h-auto mx-auto mb-4" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
-                
-                <p id="year">year</p>
-                <p id="description">desc</p>
-                <p id="starring">cast</p>
-                <p id="rating">rating</p>
-                <p id="genres">genres</p>
-                <a id="trailer" href="#">link</a>
-                
-                <button id ="save-for-later" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
-                <button id ="go-back" type="close" class="button bg-blue-600 rounded-4 mx-4">go back</button>
-                <button id ="pair" type="button" class="button bg-blue-600 rounded-4 mx-4">pair!</button>
-            </div>
-        </div>
-    
-
-
+        
+        
+        
         <!-- selected recipe modal -->
         <!-- todo reformat. filter out non needed items -->
         <h2>Recipe Modal</h2>
-
-<!-- Modal content -->
-<div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Movie or Recipe?</p>
-</div>
+        
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Movie or Recipe?</p>
+        </div>
 <!-- this will go into the "recipe results container, needs more formatting" -->
 <button id="recipeBtn">Open Modal</button>
 
@@ -96,26 +75,26 @@
                 <src>picture</src>
                 ingredients
                 prep&cook times
-                        instructions
-                        <source>
-                        <link ytlink>
-                        <button id="sflBtn">Save for Later</button>
+                instructions
+                <source>
+                <link ytlink>
+                <button id="sflBtn">Save for Later</button>
                         <button id="gbBtn">go back</button>
                         <input type="radio" name="example-radio" value="option1">
                         <span class="radio"></span>
                         Movie
-                        </label>
-                        <label class="radio-button">
+                    </label>
+                    <label class="radio-button">
                         <input type="radio" name="example-radio" value="option2">
                         <span class="radio"></span>
                         Recipe
                     </label>
                 </form></p>
 			</div>
-        
+            
         </div>
-
-
+        
+        
         <!-- ? what is this modal for? -->
         <!-- *going to use this search form for fetching movie api for now. -->
         <div class="modals">
@@ -124,51 +103,74 @@
                 <input id="search-input"><br>
                 <button type="submit" id="search-button">Search</button><br>
             </form>
-        
-             <!-- Trigger/Open The Modal -->
-                <button id="myBtn">Open Modal</button>
-        
+            
+            <!-- Trigger/Open The Modal -->
+            <button id="myBtn">Open Modal</button>
+            
             <!-- The Modal -->
-                <div id="myModal" class="modal"></div>
-        
+            <div id="myModal" class="modal"></div>
+            
             <!-- Modal content -->
-                <div class="modal-content">
+            <div class="modal-content">
                 <span class="close">&times;</span>
                 <p>Some text in the Modal..</p>
-                </div>
+            </div>
 
-<!-- Results and save lists -->
+            <!-- Results and save lists -->
 
-<!-- results -->
-
-                <div id="results" class="p-4 flex-col justify-around align-center">
-
-                    <div class="p-4 text-white text-2xl flex justify-center align-center">
+            <!-- results -->
+            
+            <div id="results" class="p-4 flex-col justify-around align-center">
+                
+                <div class="p-4 text-white text-2xl flex justify-center align-center">
                         <h3>Results</h3>
                     </div>
-                        
+                    
                     <div class="p-4 flex-row justify-center align-center">
                         <section id="movies" class="p-4 flex-col justify-center align-center border-4 h-80">
                             <p class="p-4 text-white flex justify-center align-center">Movie Results</p>
-                                <div id="movieResults">
-                                    <!--button for movie modal for now -->
-                                    <button id="selectMovieBtn" type="button" class="bg-blue-500 text-white font-bold py-2 px-4 rounded"><a> poster(img) or title(href)</a></button>
+                            <div id="movieResults">
+                                    <!--dynamically created button(title)(js) -->
                                 </div>
-                        </section>
-            
-                        <section id="recipe" class="p-4 flex-col justify-center align-center border-4 h-80">
-                            <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
+                            </section>
+                            
+                            <section id="recipe" class="p-4 flex-col justify-center align-center border-4 h-80">
+                                <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
                                 <div id="recipeResults">
-                                        <!--button for movie modal for now -->
-                                    <button id="selectMovieBtn" type="button" class="bg-blue-500 text-white font-bold py-2 px-4 rounded"><a> poster(img) or title(href)</a></button>
+                                    <!--button for movie modal for now -->
                                 </div>
-                        </section>
+                            </section>
+                        </div>
                     </div>
-                </div>
-            
-<!--*SAVE COLUMNS-->
-            
-        <div id="save" class="p-4 flex flex-row justify-around align-center">
+                    
+                    
+                    <!-- selected movie modal -->
+                    <!--todo populate function in js.  -->
+                    <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-h-80">
+                        <div class="movieModalBody modal-content text-white rounded-lg p-4">
+                            <header id="moveModalHeader">
+                            <span class="close absolute text-white top-0 right-0 p-4 cursor-pointer">&times;</span>
+                            <h2>Movie Title</h2>
+                            </header>
+                            <img id="poster" class="w-10 h-auto mx-auto mb-4" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
+                            
+                            <p id="year">year</p>
+                            <p id="description">desc</p>
+                            <p id="starring">cast</p>
+                            <p id="rating">rating</p>
+                            <p id="genres">genres</p>
+                            <a id="trailer" href="#">link</a>
+                            
+                            <button id ="save-for-later" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
+                            <button id ="go-back" type="close" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+                            <button id ="pair" type="button" class="button bg-blue-600 rounded-4 mx-4">pair!</button>
+                        </div>
+                    </div>
+                    
+                    
+                    <!--*SAVE COLUMNS-->
+                    
+                    <div id="save" class="p-4 flex flex-row justify-around align-center">
             
             <div id="savedMovies" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
                 <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
