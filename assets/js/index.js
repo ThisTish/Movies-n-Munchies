@@ -23,22 +23,17 @@ function fetchMovieTitleApi(search){
 
 }
 
-
 $('#search-form').on('submit', function(event){
 	event.preventDefault()
 	const searchInputEl = $('#search-input').val()
 	fetchMovieTitleApi(searchInputEl)
-
-	
-}
-)
-
+})
 
 // *function for random movie
 function fetchRandomMovie(random){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
 	const randomPage = Math.floor(Math.random() * 500) + 1//might need to change number-only goes to 500 
-	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
+	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
 
 	fetch(randomMovieApi)
 	.then(response => {
@@ -57,6 +52,8 @@ function fetchRandomMovie(random){
 	});
 
 }
+
+// function for random button fetch
 $('#random-button').on('click', function(event){
 	event.preventDefault()
 	fetchRandomMovie()
@@ -94,16 +91,73 @@ window.onclick = function(event) {
 }
 
 
+// function for populating movie results area
+// todo add poster to button, title on top or below poster?
+// todo create area when (random)btn is clicked
+function displayMovieResults(page){
+	const movieResultsArea= $('#movieResults')
+	
+	for(let i = 0; i<9; i++){
+		const movieDetails = page.results[i]
+		const movieCard = $('<div>')
+		// console.log(movieDetails)
+
+		const titleBtn = $('<button>')
+		titleBtn.addClass('rounded-full')
+		titleBtn.attr({
+			'data-movie-id': movieDetails.id,
+			'id': 'selectMovieBtn',
+			'type': 'button'})
+		titleBtn.text(movieDetails.original_title)
+		console.log(movieDetails.id)
+
+
+		movieCard.append(titleBtn)
+		movieResultsArea.append(movieCard)
+	}
+}
+
+$(document).on('click','#selectMovieBtn', function() {
+	const movieId = $(this).attr('data-movie-id')
+	console.log(movieId)
+	function fetchMovieId(){
+		const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
+		const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
+	
+		fetch(movieIdApi)
+		.then(response => {
+			if (!response.ok) {
+				throw response.json()
+			}
+			return response.json()
+			console.log(response)
+		})
+		.then(movie => {
+			console.log(movie)
+			// displayMovieResults(page)
+		})
+		.catch(error => {
+			console.error('Fetch error:', error)
+		});
+	
+	}
+	fetchMovieId()
+	selectedMovieModal.show()
+}
+)
+
 
 //* Selected Movie Modal Functions
 // todo selected movie modal. still need to populate
+// displaySelectedMovie()
+console.log()
+
 
 const selectedMovieModal = $('#movieModal')
 const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
 const saveForLaterBtn = $('#save-for-later')
-
-
+// todo make these one liners
 goBackBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
@@ -147,30 +201,6 @@ saveForLaterBtn.on('click', () =>{
 // todo fetchRecipeApi()
 
 
-
-function displayMovieResults(page){
-	const movieResultsArea= $('#movieResults')
-	
-	for(let i = 0; i<9; i++){
-		const movieDetails = page.results[i]
-		const movieCard = $('<div>')
-
-		const titleBtn = $('<button>')
-		titleBtn.addClass('rounded-full')
-		titleBtn.attr({
-			'id': 'selectMovieBtn',
-			'type': 'button'})
-		titleBtn.text(movieDetails.original_title)
-
-
-		movieCard.append(titleBtn)
-		movieResultsArea.append(movieCard)
-	}
-}
-
-$(document).on('click','#selectMovieBtn', () =>{
-	selectedMovieModal.show()
-	})
 
 // todo displayRecipeResults()
 
