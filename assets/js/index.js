@@ -1,39 +1,69 @@
 const searchBtnEl = $('#search-button')
 
-
+// *function for movie title search
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
 	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=${apiKey}`
 	
-	
+	// todo cleanup
 	fetch(searchMovieTitleApi)
 	.then(response => {
-		// Check if the response is successful
 		if (!response.ok) {
-			throw new Error('Network response was not ok');
+			throw new Error('Network response was not ok')
 		}
-		// Parse the JSON from the response
-		return response.json();
+		return response.json()
 		console.log(response)
 	})
 	.then(data => {
-		// Work with the data
-		console.log(data);
+		console.log(data)
 	})
 	.catch(error => {
-		// Handle any errors that occurred during the fetch
-		console.error('Fetch error:', error);
-	});
+		console.error('Fetch error:', error)
+	})
 
 }
+
+
 $('#search-form').on('submit', function(event){
-	event.preventDefault();
+	event.preventDefault()
 	const searchInputEl = $('#search-input').val()
 	fetchMovieTitleApi(searchInputEl)
 
 	
 }
 )
+
+
+// *function for random movie
+function fetchRandomMovie(random){
+	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
+	const randomPage = Math.floor(Math.random() * 500) + 1//might need to change number-only goes to 500 
+	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
+
+	fetch(randomMovieApi)
+	.then(response => {
+		if (!response.ok) {
+			throw response.json()
+		}
+		return response.json()
+		console.log(response)
+	})
+	.then(page => {
+		console.log(page)
+		displayMovieResults(page)
+	})
+	.catch(error => {
+		console.error('Fetch error:', error)
+	});
+
+}
+$('#random-button').on('click', function(event){
+	event.preventDefault()
+	fetchRandomMovie()
+})
+
+
+
 
 //* for search modal
 
@@ -68,15 +98,11 @@ window.onclick = function(event) {
 //* Selected Movie Modal Functions
 // todo selected movie modal. still need to populate
 
-const selectMovieEl = $('#selectMovieBtn')
 const selectedMovieModal = $('#movieModal')
 const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
 const saveForLaterBtn = $('#save-for-later')
 
-selectMovieEl.on('click', () =>{
-	selectedMovieModal.show()
-})
 
 goBackBtn.on('click', () =>{
 	selectedMovieModal.hide()
@@ -87,7 +113,7 @@ closeBtn.on('click', () =>{
 })
 
 saveForLaterBtn.on('click', () =>{
-	// setLocalStorage()
+	// setLocalStorage() not done
 	selectedMovieModal.hide()
 	
 })
@@ -122,9 +148,29 @@ saveForLaterBtn.on('click', () =>{
 
 
 
-// todo displayMovieResults()**
+function displayMovieResults(page){
+	const movieResultsArea= $('#movieResults')
+	
+	for(let i = 0; i<9; i++){
+		const movieDetails = page.results[i]
+		const movieCard = $('<div>')
+
+		const titleBtn = $('<button>')
+		titleBtn.addClass('rounded-full')
+		titleBtn.attr({
+			'id': 'selectMovieBtn',
+			'type': 'button'})
+		titleBtn.text(movieDetails.original_title)
 
 
+		movieCard.append(titleBtn)
+		movieResultsArea.append(movieCard)
+	}
+}
+
+$(document).on('click','#selectMovieBtn', () =>{
+	selectedMovieModal.show()
+	})
 
 // todo displayRecipeResults()
 
