@@ -1,6 +1,5 @@
+const searchBtnEl = $('#search-button')
 
-
-// const searchBtnEl = $('#search-button')
 
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
@@ -36,6 +35,8 @@ $('#search-form').on('submit', function(event){
 }
 )
 
+//* for search modal
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -61,3 +62,122 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
+
+//* Selected Movie Modal Functions
+// todo selected movie modal. still need to populate
+
+const selectMovieEl = $('#selectMovieBtn')
+const selectedMovieModal = $('#movieModal')
+const goBackBtn = $('#go-back')
+const closeBtn = $('.close')
+const saveForLaterBtn = $('#save-for-later')
+
+selectMovieEl.on('click', () =>{
+	selectedMovieModal.show()
+})
+
+goBackBtn.on('click', () =>{
+	selectedMovieModal.hide()
+})
+
+closeBtn.on('click', () =>{
+	selectedMovieModal.hide()
+})
+
+saveForLaterBtn.on('click', () =>{
+	// setLocalStorage()
+	selectedMovieModal.hide()
+	
+})
+
+
+
+// todo getLocalStorage()
+
+
+
+// todo setLocalStorage()
+
+
+
+// todo displaySavedCards()
+
+
+
+// todo openSearchModal()
+
+
+
+// todo searchMovie()
+
+
+
+// todo searchRecipe()
+
+
+
+// todo fetchRecipeApi()
+
+
+
+// todo displayMovieResults()
+
+
+
+// todo displayRecipeResults()
+
+
+
+// todo makeLater()
+
+
+
+// todo displaySelectedRecipe()
+
+
+
+// todo nowPickMunchies()
+
+
+
+// todo nowPickMovies()
+
+
+
+// todo fetchRecipesFromMovie()
+
+
+
+// todo fetchMoviesFromRecipes()
+
+
+
+// todo displayMovieFilmCombination
+
+
+
+
+// OPTIONAL FOR NOW
+// todo displayPickedMovie()
+
+// OPTIONAL
+// todo displayPickedMovie()
+
+// OPTIONAL
+// todo startOver()
+
+// OPTIONAL
+// todo deleteSavedBtn()
+
+// OPTIONAL
+// todo doneBtns()
+
+// OPTIONAL
+// todo slidingResults()
+
+// more functions for searching random....
+
+
+// more functions to search by sliders/checkboxes
