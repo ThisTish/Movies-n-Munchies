@@ -8,65 +8,18 @@
     <title>Movies-n-Munchies</title>
 </head>
 
-<body>
-    <header>
+<body class="bg-gray-400">
+
+    <header class="px-4 flex justify-center items-center">
         <img src="" alt="">
-        <h1 class="py-4 font-bold text-sky-400 text-7xl">Movies 'n' Munchies</h1>
+        <h1 class="y-4 font-bold text-white text-6xl">Movies'n'Munchies</h1>
     </header>
     
     <main>
-        <div class="slogan">
+        <div class="p-4 text-white flex justify-center align-center">
             <h2>description/slogan</h2>
         </div>
         
-        
-        <div id="results">
-            <h3>Results</h3>
-            
-            <section id="movies">
-                <p>Movie Results</p>
-                <div id="movieResults"></div>
-                <!--button for movie modal for now -->
-                <button id="selectMovieBtn" type="button" class="bg-blue-500 text-white font-bold py-2 px-4 rounded"><a> poster(img) or title(href)</a></button>
-            </section>
-
-            <section id="recipe">
-                <p>Recipe Results</p>
-                <div id="recipeResults"></div>
-            </section>
-        </div>
-
-        <!--*SAVE COLUMNS-->
-
-        <div id="save">
-            <div id="savedMovies">
-                <h4>Movies</h4>
-                <ul>
-                    <li>
-
-                    </li>
-                </ul>
-            </div>
-            
-            <div id="savedRecipes">
-                <h4>Recipes</h4>
-                <ul>
-                    <li>
-                        
-                    </li>
-                </ul>
-            </div>
-
-            <div id="saveForLater">
-                <h4>Saved for Later</h4>
-                <ul>
-                    <li>
-
-                    </li>
-                </ul>
-            </div>
-
-        </div>
 
         <!-- *MODALS -->
 
@@ -182,9 +135,68 @@
                 <span class="close">&times;</span>
                 <p>Some text in the Modal..</p>
                 </div>
-    <footer>
-        <p>Disclaimer:</p>
-        <p>&copy; 2024 My Website. All rights reserved.</p>
+
+<!-- Results and save lists -->
+
+<!-- results -->
+
+                <div id="results" class="p-4 flex-col justify-around align-center">
+
+                    <div class="p-4 text-white text-2xl flex justify-center align-center">
+                        <h3>Results</h3>
+                    </div>
+                        
+                    <div class="p-4 flex-row justify-center align-center">
+                        <section id="movies" class="p-4 flex-col justify-center align-center border-4 h-80">
+                            <p class="p-4 text-white flex justify-center align-center">Movie Results</p>
+                                <div id="movieResults">
+                                    <!--button for movie modal for now -->
+                                    <button id="selectMovieBtn" type="button" class="bg-blue-500 text-white font-bold py-2 px-4 rounded"><a> poster(img) or title(href)</a></button>
+                                </div>
+                        </section>
+            
+                        <section id="recipe" class="p-4 flex-col justify-center align-center border-4 h-80">
+                            <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
+                                <div id="recipeResults">
+                                        <!--button for movie modal for now -->
+                                    <button id="selectMovieBtn" type="button" class="bg-blue-500 text-white font-bold py-2 px-4 rounded"><a> poster(img) or title(href)</a></button>
+                                </div>
+                        </section>
+                    </div>
+                </div>
+            
+<!--*SAVE COLUMNS-->
+            
+        <div id="save" class="p-4 flex flex-row justify-around align-center">
+            
+            <div id="savedMovies" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
+                <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
+                    <div>
+
+                    </div>
+            </div>
+                        
+            <div id="savedRecipes" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
+                <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
+                    <div>
+
+                    </div>
+            </div>
+            
+            <div id="saveForLater" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
+                <h4 class="p-4 text-white flex justify-center align-center">Saved for Later</h4>
+                    <div>
+
+                    </div>
+            </div>
+            
+        </div>
+
+    <footer class="px-4 h-20 text-white flex-col justify-center items-center">
+        <div>
+            <p>Disclaimer:</p>
+            <p>&copy; 2024 My Website. All rights reserved.</p>
+        </div>
     </footer>
     
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
