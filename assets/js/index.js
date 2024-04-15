@@ -280,26 +280,25 @@ function displaySelectedMovie(movie){
 
 //* Selected Movie Modal Button Functions
 // todo make these one liners
-const selectedMovieModal = $('#movieModal')//can go up top and get rid of one in displaySelectedMovie function
+const selectedMovieModal = $('#movieModal')
 const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
-const saveForLaterBtn = $('#saveForLater')
+const saveForLaterBtnM = $('#saveForLaterM')
 const getRandomRecipeBtn =$('#getRandomRecipe')
 goBackBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
 
-$(document).on('click', closeBtn, function() {
+$(document).on('click', '.close', function() {
 	selectedMovieModal.hide()
 })
 
-saveForLaterBtn.on('click', function(){
-	console.log($('#movieModalTitle').text())
-	console.log($('#moviePoster').attr('src'))
-	console.log($('#movieDeets').attr('data-movie-id'))
-	// console.log('click')
-
-	// selectedMovieModal.hide()
+//* setMovieLocalStorage
+saveForLaterBtnM.on('click', function(event){
+	event.preventDefault()
+	console.log('click')
+	setMovieLocalStorage()
+	selectedMovieModal.hide()
 })
 
 getRandomRecipeBtn.on('click', function(event){ 
@@ -308,30 +307,55 @@ getRandomRecipeBtn.on('click', function(event){
 })
 
 // * function for closing modal when you click off modal
-$(document).click(function(event){
-	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
-		selectedMovieModal.hide()
+// $(document).click(function(event){
+// 	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
+// 		selectedMovieModal.hide()
+// 	}
+// })
+
+
+
+function getMovieLocalStorage(){
+	console.log(localStorage.movies)
+	let movies = (JSON.parse(localStorage.getItem('movies')))
+	if(!movies){
+		movies=[]
 	}
-})
+	return movies
+}
+
+function setMovieLocalStorage(){
+	let movies = getMovieLocalStorage()
+	
+	const savedMovieObject = {
+		title: ($('#movieModalTitle').text()),
+		poster: ($('#moviePoster').attr('src')),
+		id: ($('#movieDeets').attr('data-movie-id'))
+	}
+	
+	movies.push(savedMovieObject)
+	
+	localStorage.setItem('movies', JSON.stringify(movies))
+	console.log(savedMovieObject)
+	console.log(localStorage.movies)
+	
+}
 
 
 
-// todo getMovieLocalStorage()
 // todo getRecipeLocalStorage()
+
 // todo getMatchLocalStorage()
 
-
-
-// todo setMovieLocalStorage()
-
-
-
 // todo setRecipeLocalStorage()
+
 // todo setMatchLocalStorage()
 
 
 
-// todo displaySavedCards()
+// todo displaySavedMovies()
+// todo displaySavedRecipes()
+// todo displaySavedMatches()
 
 
 
