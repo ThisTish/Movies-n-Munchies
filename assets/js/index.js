@@ -59,7 +59,7 @@ function fetchMovieTitleApi(search){
 
 
 // *function to fetch random movies
-function fetchRandomMovie(){
+function fetchRandomMovies(){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
 	const randomPage = Math.floor(Math.random() * 500) + 1
 	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
@@ -85,10 +85,10 @@ function fetchRandomMovie(){
 const movieResultsArea= $('#movieResults')
 
 // *function for random movie button
-$('#random-button').on('click', function(event){
+$('#randomMoviesBtn').on('click', function(event){
 	event.preventDefault()
 	movieResultsArea.empty()
-	fetchRandomMovie()
+	fetchRandomMovies()
 })
 
 // *function for populating movie results area
@@ -99,7 +99,17 @@ function displayMovieResults(page){
 	for(let i = 0; i<9; i++){
 		const movieDetails = page.results[i]
 		const movieCard = $('<div>')
+		movieCard.addClass('card')
 		// console.log(movieDetails)
+
+		const backDropBtn = $('<button>')
+		backDropBtn.addClass('rounded-lg')
+		backDropBtn.attr({
+			'data-movie-id': movieDetails.id,
+			'id':'selectedMovieBtn',
+			'type':'button'
+		})
+
 		const backDrop = movieDetails.backdrop_path
 		const backdropUrl = `https://image.tmdb.org/t/p/w92/${backDrop}`
 		const backdrop = $('<img>')
@@ -116,14 +126,46 @@ function displayMovieResults(page){
 		titleBtn.text(movieDetails.title)
 		// console.log(movieDetails.id)
 
-
-		movieCard.append(backdrop,titleBtn)
+		backDropBtn.append(backdrop)
+		movieCard.append(backDropBtn,titleBtn)
 		movieResultsArea.append(movieCard)
 	}
 }
 
-// *function to fetch by id to get selectedMovieModal details
+// *function to fetch by id to get selectedMovieModal details by title button
 $(document).on('click','#selectMovieBtn', function() {
+	const movieId = $(this).attr('data-movie-id')
+	console.log(movieId)
+
+	function clearModal() {
+		$('.movieModalDynamic').empty()
+	}
+	clearModal()
+
+	function fetchMovieId(){
+		const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
+		const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
+	
+		fetch(movieIdApi)
+		.then(response => {
+			if (!response.ok) {
+				throw response.json()
+			}
+			return response.json()
+			console.log(response)
+		})
+		.then(movie => {
+			console.log(movie)
+			displaySelectedMovie(movie)
+		})
+		.catch(error => {
+			console.error('Fetch error:', error)
+		});
+	}
+	fetchMovieId()
+})
+// * function to fetch by id to get selected movie modal details by backdrop button
+$(document).on('click','#selectedMovieBtn', function() {
 	const movieId = $(this).attr('data-movie-id')
 	console.log(movieId)
 
