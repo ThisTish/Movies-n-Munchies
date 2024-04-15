@@ -70,7 +70,7 @@ function fetchRandomMovie(){
 			throw response.json()
 		}
 		return response.json()
-		console.log(response)
+		console.log(andomesponse)
 	})
 	.then(page => {
 		console.log(page)
@@ -262,15 +262,117 @@ $(document).click(function(event){
 
 // todo searchRecipe()
 
+// todo RANDOM button()
+
+const randomRecipeBtn = $('#randomRecipeBtn')
 
 
-// todo fetchRecipeApi()
 
 
 
-// todo displayRecipeResults()
+// todo RANDOM fetchRecipeApi()
+function fetchRandomRecipe() {
+	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
+
+	fetch(randomRecipeUrl)
+		.then(response => {
+			if (!response.ok){
+				throw response.json()
+			}
+			console.log(response);
+			return response.json()
+
+		})
+		.then(randomRecipe => console.log(randomRecipe))
+		.catch(error => {
+            console.error('Error fetching recipe:', error)
+	}) }
+
+	$('#randomRecipeBtn').on('click', function(event){
+		event.preventDefault();
+		fetchRandomRecipe();
+		displayRandomRecipe();
+		})
 
 
+
+// todo filter by main ingredient
+
+function fetchRecipeByMainIngredient() {
+	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
+	// const apiKeyRecipes = "1"
+	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
+
+	fetch(mainIngredientUrl)
+		.then(response => {
+			console.log(response);
+			return response.json()
+		})
+		.then(list => console.log(list))
+		.catch(error => {
+            console.error('Error fetching list:', error)
+		})}
+
+$('#mainIngredientBTN').on('click', function(event){
+	event.preventDefault();
+	fetchRecipeByMainIngredient();
+	displayList();
+})
+
+
+
+// todo RANDOM displayRecipeResults()
+
+function displayRandomRecipe (meals){
+
+	const recipeResultArea = $('#recipeResults')
+	const resultsCard = $('<div>')
+	resultsCard.appendTo(recipeResultArea)
+	
+	const mealName = $('<h4>')
+	mealName.appendTo(resultsCard)
+	mealName.text(meals[0].strMeal)
+
+	const category = $('<p>')
+	category.appendTo(resultsCard)
+	category.text(meals[0].strCategory)
+
+	const instructions = $('<p>')
+	instructions.appendTo(resultsCard)
+	instructions.text(meals[0].strInstructions)
+
+	// need for loop to get all ingredients and measurements
+
+	const ingredients = $('<p>')
+	ingredients.appendTo(resultsCard)
+	instructions.text(meals[0].strIngredient)
+
+	const measurements = $('<p>')
+	measurements.appendTo(resultsCard)
+	measurements.text(meals[0].strMeasure)
+
+	const source = $('<a>')
+	source.appendTo(resultsCard)
+	source.text(meals[0].strSource)
+
+	const youTube = $('<a>')
+	youTube.appendTo(resultsCard)
+	youTube.text(meals[0].strYoutube)
+
+}
+
+// todo list for recipe by main ingridient
+
+function displayList () {
+
+	const recipeResultArea = $('#recipeResults');
+	if (list.meals){
+	list.meals.forEach ( meal => {
+		
+	});
+}
+
+}
 
 // todo makeLater()
 
