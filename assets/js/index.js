@@ -100,6 +100,12 @@ function displayMovieResults(page){
 		const movieDetails = page.results[i]
 		const movieCard = $('<div>')
 		// console.log(movieDetails)
+		const backDrop = movieDetails.backdrop_path
+		const backdropUrl = `https://image.tmdb.org/t/p/w92/${backDrop}`
+		const backdrop = $('<img>')
+		// backdrop.addClass('w-10 h-auto')
+		backdrop.attr('src', backdropUrl)
+
 
 		const titleBtn = $('<button>')
 		titleBtn.addClass('rounded-full')
@@ -107,16 +113,16 @@ function displayMovieResults(page){
 			'data-movie-id': movieDetails.id,
 			'id': 'selectMovieBtn',
 			'type': 'button'})
-		titleBtn.text(movieDetails.original_title)
+		titleBtn.text(movieDetails.title)
 		// console.log(movieDetails.id)
 
 
-		movieCard.append(titleBtn)
+		movieCard.append(backdrop,titleBtn)
 		movieResultsArea.append(movieCard)
 	}
 }
 
-// *function to search by id to get selectedMovieModal details
+// *function to fetch by id to get selectedMovieModal details
 $(document).on('click','#selectMovieBtn', function() {
 	const movieId = $(this).attr('data-movie-id')
 	console.log(movieId)
@@ -157,7 +163,6 @@ function displaySelectedMovie(movie){
 	const movieModal = $('#movieModal')
 	const dynamicElements = $('<div>')
 	dynamicElements.addClass('movieModalDynamic p-3')
-	// dynamicElements.html('')
 
 	const movieModalHeader = $('<header>')
 
@@ -169,11 +174,14 @@ function displaySelectedMovie(movie){
 	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
 	close.html('&times;')
 
-	// const poster = $('<img>')
-	// poster.addClass('w-10 h-auto')
-	// poster.attr('src', movie.poster_path)
+	const moviePoster = movie.poster_path
+	const posterUrl = `https://image.tmdb.org/t/p/w92/${moviePoster}`
+	const poster = $('<img>')
+	poster.addClass('w-10 h-auto')
+	poster.attr('src', posterUrl)
 
-	console.log(movie.poster_path)//poster--how to get to show? maybe backdrop_path?
+	console.log(posterUrl)//poster--how to get to show? maybe backdrop_path?
+	// console.log(backdropUrl)//poster--how to get to show? maybe backdrop_path?
 	
 	const movieModalDetails = $('<div>')
 
@@ -212,7 +220,7 @@ function displaySelectedMovie(movie){
 	homepage.attr('href', movie.homepage)
 	homepage.text('Hompage')//could make the image the anchor...maybe
 	
-	movieModalDetails.append(year, overview, rating, genre, runtime, homepage)
+	movieModalDetails.append(poster, year, overview, rating, genre, runtime, homepage)
 	movieModalHeader.append(movieTitle, close)
 	dynamicElements.append(movieModalHeader, movieModalDetails)
 	movieModal.prepend(dynamicElements)
