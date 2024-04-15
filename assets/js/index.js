@@ -211,6 +211,7 @@ function displaySelectedMovie(movie){
 	const movieTitle = $('<h2>')
 	movieTitle.addClass('text-pink')
 	movieTitle.text(movie.title) 
+	movieTitle.attr('id', 'movieModalTitle')
 
 	const close = $('<span>')//might add back to html
 	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
@@ -220,12 +221,18 @@ function displaySelectedMovie(movie){
 	const posterUrl = `https://image.tmdb.org/t/p/w92/${moviePoster}`
 	const poster = $('<img>')
 	poster.addClass('w-10 h-auto')
-	poster.attr('src', posterUrl)
-
-	console.log(posterUrl)//poster--how to get to show? maybe backdrop_path?
-	// console.log(backdropUrl)//poster--how to get to show? maybe backdrop_path?
+	poster.attr({
+		'src': posterUrl,
+		'id' :'moviePoster'
+	})
 	
 	const movieModalDetails = $('<div>')
+	movieModalDetails.attr({
+		'id':'movieDeets',
+		'data-movie-id': movie.id
+
+	})
+
 
 	if(movie.tagline){
 		const tagline = $('<p>')
@@ -276,7 +283,7 @@ function displaySelectedMovie(movie){
 const selectedMovieModal = $('#movieModal')//can go up top and get rid of one in displaySelectedMovie function
 const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
-const saveForLaterBtn = $('#save-for-later')
+const saveForLaterBtn = $('#saveForLater')
 const getRandomRecipeBtn =$('#getRandomRecipe')
 goBackBtn.on('click', () =>{
 	selectedMovieModal.hide()
@@ -286,9 +293,13 @@ $(document).on('click', closeBtn, function() {
 	selectedMovieModal.hide()
 })
 
-saveForLaterBtn.on('click', () =>{
-	// setLocalStorage() not done
-	selectedMovieModal.hide()
+saveForLaterBtn.on('click', function(){
+	console.log($('#movieModalTitle').text())
+	console.log($('#moviePoster').attr('src'))
+	console.log($('#movieDeets').attr('data-movie-id'))
+	// console.log('click')
+
+	// selectedMovieModal.hide()
 })
 
 getRandomRecipeBtn.on('click', function(event){ 
@@ -305,11 +316,18 @@ $(document).click(function(event){
 
 
 
-// todo getLocalStorage()
+// todo getMovieLocalStorage()
+// todo getRecipeLocalStorage()
+// todo getMatchLocalStorage()
 
 
 
-// todo setLocalStorage()
+// todo setMovieLocalStorage()
+
+
+
+// todo setRecipeLocalStorage()
+// todo setMatchLocalStorage()
 
 
 
@@ -326,6 +344,11 @@ $(document).click(function(event){
 
 
 // todo searchRecipe()
+// *fetch recipe api's not in use yet.
+// const fetchRecipeByAreaApi = `www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
+// const fetchRecipeByTypeApi = `www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+// const fetchRecipeByIdApi = `www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+
 
 
 // *function to fetch random recipe
@@ -452,78 +475,75 @@ function displayList () {
 // todo click function for findRecipeBtn
 // todo function to pull genre
 // todo if statements to pair genres with types of food
+// *if statements to match genre's with keywords.
+// const genre = movie.genre[0]
+// if (genre.name === 'Action' || genre.id === 28) {
+// 	let area = 'American'
+// }
 
-const fetchRecipeByAreaApi = `www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
-const fetchRecipeByTypeApi = `www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
-const fetchRecipeByIdApi = `www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-const genre = movie.genre[0]
-if (genre.name === 'Action' || genre.id === 28) {
-	let area = 'American'
-}
+// else if (genre.name === 'Adventure' || genre.id === 12) {
+// 	let category = 'Miscellaneous'
+// }
 
-else if (genre.name === 'Adventure' || genre.id === 12) {
-	let category = 'Miscellaneous'
-}
+// else if (genre.name === 'Animation' || genre.id === 16) {
+// 	let category = 'Breakfast'
+// }
 
-else if (genre.name === 'Animation' || genre.id === 16) {
-	let category = 'Breakfast'
-}
+// else if (genre.name === 'Comedy' || genre.id === 35 || genre.name === 'Music' || genre.id === 10402) {
+// 	let category = 'Starter'
+// }
 
-else if (genre.name === 'Comedy' || genre.id === 35 || genre.name === 'Music' || genre.id === 10402) {
-	let category = 'Starter'
-}
+// else if (genre.name === 'Crime' || genre.id === 80 || genre.name === 'War' || genre.id === 10752) {
+// 	let area = 'British'
+// }
 
-else if (genre.name === 'Crime' || genre.id === 80 || genre.name === 'War' || genre.id === 10752) {
-	let area = 'British'
-}
+// else if (genre.name === 'Documentary' || genre.id === 99) {
+// 	let category = 'Vegetarian'
+// }
 
-else if (genre.name === 'Documentary' || genre.id === 99) {
-	let category = 'Vegetarian'
-}
+// else if (genre.name === 'Drama' || genre.id === 18) {
+// 	let category = 'Pasta'
+// }
 
-else if (genre.name === 'Drama' || genre.id === 18) {
-	let category = 'Pasta'
-}
+// else if (genre.name === 'Family' || genre.id === 10751) {
+// 	let category = 'Side'
+// }
 
-else if (genre.name === 'Family' || genre.id === 10751) {
-	let category = 'Side'
-}
+// else if (genre.name === 'Fantasy' || genre.id === 14) {
+// 	let area = 'Greek'
+// }
 
-else if (genre.name === 'Fantasy' || genre.id === 14) {
-	let area = 'Greek'
-}
+// else if (genre.name === 'History' || genre.id === 36) {
+// 	let category = 'Lamb'
+// }
 
-else if (genre.name === 'History' || genre.id === 36) {
-	let category = 'Lamb'
-}
+// else if (genre.name === 'Horror' || genre.id === 27) {
+// 	let area = 'Chinese'
+// }
 
-else if (genre.name === 'Horror' || genre.id === 27) {
-	let area = 'Chinese'
-}
+// else if (genre.name === 'Mystery' || genre.id === 9648) {
+// 	let Area = 'Italian'
+// }
 
-else if (genre.name === 'Mystery' || genre.id === 9648) {
-	let Area = 'Italian'
-}
+// else if (genre.name === 'Romance' || genre.id === 10749) {
+// 	let category = 'Dessert'
+// }
 
-else if (genre.name === 'Romance' || genre.id === 10749) {
-	let category = 'Dessert'
-}
+// else if (genre.name === 'Science Fiction' || genre.id === 878) {
+// 	let category = 'Chicken'
+// }
 
-else if (genre.name === 'Science Fiction' || genre.id === 878) {
-	let category = 'Chicken'
-}
+// else if (genre.name === 'TV Movie' || genre.id === 10770) {
+// 	let category = 'Pork'
+// }
 
-else if (genre.name === 'TV Movie' || genre.id === 10770) {
-	let category = 'Pork'
-}
+// else if (genre.name === 'Thriller' || genre.id === 53) {
+// 	let area = 'Japanese'
+// }
 
-else if (genre.name === 'Thriller' || genre.id === 53) {
-	let area = 'Japanese'
-}
-
-else if (genre.name === 'Western' || genre.id === 37) {
-	let category = 'Beef'
-}
+// else if (genre.name === 'Western' || genre.id === 37) {
+// 	let category = 'Beef'
+// }
 
 // !searching by name doesn't give much.
 // // todo fetchRecipeByName
