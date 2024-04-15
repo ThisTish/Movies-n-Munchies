@@ -306,7 +306,7 @@ getRandomRecipeBtn.on('click', function(event){
 	fetchRandomRecipe()
 })
 
-// * function for closing modal when you click off modal
+// * function for closing modal when you click off modal/don't want right now.
 // $(document).click(function(event){
 // 	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
 // 		selectedMovieModal.hide()
@@ -341,6 +341,42 @@ function setMovieLocalStorage(){
 	
 }
 
+// todo displaySavedMovies()
+function displaySavedMovies(){
+	const movies = 	getMovieLocalStorage()
+	const savedMoviesArea = $('#savedMoviesArea')
+
+	savedMoviesArea.empty()
+
+	if(Array.isArray(movies)){
+		for(let movie of movies){
+		
+		const movieCard = $('<card>')
+		movieCard.addClass('card')
+		movieCard.attr({
+			'id': 'movieCard',
+			'data-movie-id': movie.id
+		})
+
+		const savedMovieTitle = $('<h2>')
+		savedMovieTitle.addClass('font-bold')
+		savedMovieTitle.text(movie.title)
+
+		const savedMoviePoster = $('<img>')
+		savedMoviePoster.addClass('border-light')
+		savedMoviePoster.attr('src', movie.poster)
+
+
+		console.log(movie.title)
+		console.log(movie.poster)
+		console.log(movie.id)
+
+	movieCard.append(savedMoviePoster, savedMovieTitle)
+	savedMoviesArea.append(movieCard)	
+	}
+}
+}
+
 
 
 // todo getRecipeLocalStorage()
@@ -353,7 +389,6 @@ function setMovieLocalStorage(){
 
 
 
-// todo displaySavedMovies()
 // todo displaySavedRecipes()
 // todo displaySavedMatches()
 
@@ -605,6 +640,12 @@ function displayList () {
 
 
 // todo displayMovieFilmCombination
+
+
+$(document).ready(function(){
+	displaySavedMovies()
+
+})
 
 
 
