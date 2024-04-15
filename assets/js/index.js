@@ -92,42 +92,43 @@ $('#randomMoviesBtn').on('click', function(event){
 })
 
 // *function for populating movie results area
-// todo add poster to button, title on top or below poster?
+// todo title on top or below poster?
 // todo create area when (random)btn is clicked instead of having it already displaying
 function displayMovieResults(page){
-	
-	for(let i = 0; i<9; i++){
+	$('#movies').show()
+	for(let i = 0; i<10; i++){
 		const movieDetails = page.results[i]
 		const movieCard = $('<div>')
 		movieCard.addClass('card')
 		// console.log(movieDetails)
 
 		const backDropBtn = $('<button>')
-		backDropBtn.addClass('rounded-lg')
+		backDropBtn.addClass('rounded-lg relative overflow-hidden')
 		backDropBtn.attr({
 			'data-movie-id': movieDetails.id,
 			'id':'selectedMovieBtn',
 			'type':'button'
 		})
 
-		const backDrop = movieDetails.backdrop_path
-		const backdropUrl = `https://image.tmdb.org/t/p/w92/${backDrop}`
 		const backdrop = $('<img>')
-		// backdrop.addClass('w-10 h-auto')
-		backdrop.attr('src', backdropUrl)
+		.attr('src', `https://image.tmdb.org/t/p/w92/${movieDetails.backdrop_path}`)
+		.addClass('w-full h-auto')
 
+		const titleOverlay = $('<div>')
+		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2')
+		.text(movieDetails.title)
 
-		const titleBtn = $('<button>')
-		titleBtn.addClass('rounded-full')
-		titleBtn.attr({
-			'data-movie-id': movieDetails.id,
-			'id': 'selectMovieBtn',
-			'type': 'button'})
-		titleBtn.text(movieDetails.title)
-		// console.log(movieDetails.id)
+		// const titleBtn = $('<button>')
+		// titleBtn.addClass('rounded-full absolute bottom-0 left-0 right-0 bg-white text-center px-4 py-2')
+		// titleBtn.attr({
+		// 	'data-movie-id': movieDetails.id,
+		// 	'id': 'selectMovieBtn',
+		// 	'type': 'button'})
+		// titleBtn.text(movieDetails.title)
+		// // console.log(movieDetails.id)
 
-		backDropBtn.append(backdrop)
-		movieCard.append(backDropBtn,titleBtn)
+		backDropBtn.append(backdrop, titleOverlay)
+		movieCard.append(backDropBtn)
 		movieResultsArea.append(movieCard)
 	}
 }
@@ -164,7 +165,8 @@ $(document).on('click','#selectMovieBtn', function() {
 	}
 	fetchMovieId()
 })
-// * function to fetch by id to get selected movie modal details by backdrop button
+
+// * function to fetch by id for selectedMovieModal
 $(document).on('click','#selectedMovieBtn', function() {
 	const movieId = $(this).attr('data-movie-id')
 	console.log(movieId)
@@ -199,8 +201,6 @@ $(document).on('click','#selectedMovieBtn', function() {
 
 
 // *function to display movie details in selectedMovieModal
-// todo clear appropriate info before repopulating.
-// todo figure out poster/backdrop
 function displaySelectedMovie(movie){
 	const movieModal = $('#movieModal')
 	const dynamicElements = $('<div>')
@@ -309,11 +309,7 @@ getRandomRecipeBtn.on('click', function(event){
 // * function for closing modal when you click off modal/don't want right now.
 // $(document).click(function(event){
 // 	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
-// 		selectedMovieModal.hide()
-// 	}
-// })
-
-
+// 		selectedMovieModal.hide()}})
 
 function getMovieLocalStorage(){
 	console.log(localStorage.movies)
@@ -341,7 +337,6 @@ function setMovieLocalStorage(){
 	
 }
 
-// todo displaySavedMovies()
 function displaySavedMovies(){
 	const movies = 	getMovieLocalStorage()
 	const savedMoviesArea = $('#savedMoviesArea')
@@ -437,7 +432,7 @@ $('#randomRecipeBtn').on('click', function(event){
 	displayRandomRecipe();
 })
 
-// // todo filter by main ingredient
+// todo filter by main ingredient
 function fetchRecipeByMainIngredient() {
 	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
 	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
@@ -514,7 +509,7 @@ function displayList () {
 
 }
 
-// todo makeLater()
+// todo makeRecipeLater()
 
 
 
