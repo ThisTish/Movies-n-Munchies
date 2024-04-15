@@ -70,7 +70,7 @@ function fetchRandomMovies(){
 			throw response.json()
 		}
 		return response.json()
-		console.log(andomesponse)
+		console.log(response)
 	})
 	.then(page => {
 		console.log(page)
@@ -291,7 +291,10 @@ saveForLaterBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
 
-getRandomRecipeBtn.on('click', fetchRandomRecipe())
+getRandomRecipeBtn.on('click', function(event){ 
+	event.preventDefault()
+	fetchRandomRecipe()
+})
 
 // * function for closing modal when you click off modal
 $(document).click(function(event){
@@ -449,67 +452,107 @@ function displayList () {
 // todo click function for findRecipeBtn
 // todo function to pull genre
 // todo if statements to pair genres with types of food
+
+const fetchRecipeByAreaApi = `www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
+const fetchRecipeByTypeApi = `www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+const fetchRecipeByIdApi = `www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
 const genre = movie.genre[0]
 if (genre.name === 'Action' || genre.id === 28) {
+	let area = 'American'
 }
 
-if (genre.name === 'Adventure' || genre.id === 12) {
+else if (genre.name === 'Adventure' || genre.id === 12) {
+	let category = 'Miscellaneous'
 }
 
-if (genre.name === 'Animation' || genre.id === 16) {
+else if (genre.name === 'Animation' || genre.id === 16) {
+	let category = 'Breakfast'
 }
 
-if (genre.name === 'Comedy' || genre.id === 35) {
+else if (genre.name === 'Comedy' || genre.id === 35 || genre.name === 'Music' || genre.id === 10402) {
+	let category = 'Starter'
 }
 
-if (genre.name === 'Crime' || genre.id === 80) {
+else if (genre.name === 'Crime' || genre.id === 80 || genre.name === 'War' || genre.id === 10752) {
+	let area = 'British'
 }
 
-if (genre.name === 'Documentary' || genre.id === 99) {
+else if (genre.name === 'Documentary' || genre.id === 99) {
+	let category = 'Vegetarian'
 }
 
-if (genre.name === 'Drama' || genre.id === 18) {
+else if (genre.name === 'Drama' || genre.id === 18) {
+	let category = 'Pasta'
 }
 
-if (genre.name === 'Family' || genre.id === 10751) {
+else if (genre.name === 'Family' || genre.id === 10751) {
+	let category = 'Side'
 }
 
-if (genre.name === 'Fantasy' || genre.id === 14) {
+else if (genre.name === 'Fantasy' || genre.id === 14) {
+	let area = 'Greek'
 }
 
-if (genre.name === 'History' || genre.id === 36) {
+else if (genre.name === 'History' || genre.id === 36) {
+	let category = 'Lamb'
 }
 
-if (genre.name === 'Horror' || genre.id === 27) {
+else if (genre.name === 'Horror' || genre.id === 27) {
+	let area = 'Chinese'
 }
 
-if (genre.name === 'Music' || genre.id === 10402) {
+else if (genre.name === 'Mystery' || genre.id === 9648) {
+	let Area = 'Italian'
 }
 
-if (genre.name === 'Mystery' || genre.id === 9648) {
+else if (genre.name === 'Romance' || genre.id === 10749) {
+	let category = 'Dessert'
 }
 
-if (genre.name === 'Romance' || genre.id === 10749) {
+else if (genre.name === 'Science Fiction' || genre.id === 878) {
+	let category = 'Chicken'
 }
 
-if (genre.name === 'Science Fiction' || genre.id === 878) {
+else if (genre.name === 'TV Movie' || genre.id === 10770) {
+	let category = 'Pork'
 }
 
-if (genre.name === 'TV Movie' || genre.id === 10770) {
+else if (genre.name === 'Thriller' || genre.id === 53) {
+	let area = 'Japanese'
 }
 
-if (genre.name === 'Thriller' || genre.id === 53) {
+else if (genre.name === 'Western' || genre.id === 37) {
+	let category = 'Beef'
 }
 
-if (genre.name === 'War' || genre.id === 10752) {
-}
-
-if (genre.name === 'Western' || genre.id === 37) {
-}
-
-// todo fetchRecipesByType
-const keyword = 
-const searchRecipeAPI = `www.themealdb.com/api/json/v1/1/search.php?s=${keyword}`
+// !searching by name doesn't give much.
+// // todo fetchRecipeByName
+// $('#recipeByName').on('click', function(event){
+// 	event.preventDefault()
+// 	const keyword = $('#recipeName').val()
+// 	console.log(keyword)
+// 	function fetchRecipeByName(){
+// 		const searchRecipeAPI = `www.themealdb.com/api/json/v1/1/search.php?s=${keyword}`
+	
+// 		fetch(searchRecipeAPI)
+// 		.then(response => {
+// 			if (!response.ok) {
+// 				throw response.json()
+// 			}
+// 			return response.json()
+// 			console.log(response)
+// 		})
+// 		.then(movie => {
+// 			console.log(recipes)
+// 			// displayRecipes(recipes)
+// 		})
+// 		.catch(error => {
+// 			console.error('Fetch error:', error)
+// 		});
+// 	}
+// 	fetchRecipeByName()
+	
+// })
 
 
 
