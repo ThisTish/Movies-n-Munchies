@@ -36,9 +36,13 @@
 
 // *function for movie title search
 // todo need the searchInput to work
+$('#harryPotter').on('click', () =>{
+	console.log("you're a wizard harry")
+	fetchMovieTitleApi()
+})
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=${apiKey}`
+	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=harry%20potter&api_key=${apiKey}`
 	
 	fetch(searchMovieTitleApi)
 	.then(response => {
@@ -48,8 +52,9 @@ function fetchMovieTitleApi(search){
 		return response.json()
 		console.log(response)
 	})
-	.then(data => {
-		console.log(data)
+	.then(harry => {
+		console.log(harry)
+		displayMovieResults(harry)
 	})
 	.catch(error => {
 		console.error('Fetch error:', error)
@@ -111,21 +116,13 @@ function displayMovieResults(page){
 		})
 
 		const backdrop = $('<img>')
-		.attr('src', `https://image.tmdb.org/t/p/w92/${movieDetails.backdrop_path}`)
+		.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
 		.addClass('w-full h-auto')
 
 		const titleOverlay = $('<div>')
-		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2')
+		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
 		.text(movieDetails.title)
-
-		// const titleBtn = $('<button>')
-		// titleBtn.addClass('rounded-full absolute bottom-0 left-0 right-0 bg-white text-center px-4 py-2')
-		// titleBtn.attr({
-		// 	'data-movie-id': movieDetails.id,
-		// 	'id': 'selectMovieBtn',
-		// 	'type': 'button'})
-		// titleBtn.text(movieDetails.title)
-		// // console.log(movieDetails.id)
+		
 
 		backDropBtn.append(backdrop, titleOverlay)
 		movieCard.append(backDropBtn)
@@ -204,7 +201,7 @@ $(document).on('click','#selectedMovieBtn', function() {
 function displaySelectedMovie(movie){
 	const movieModal = $('#movieModal')
 	const dynamicElements = $('<div>')
-	dynamicElements.addClass('movieModalDynamic p-3')
+	dynamicElements.addClass('movieModalDynamic p-3 text-white')
 
 	const movieModalHeader = $('<header>')
 
@@ -220,7 +217,7 @@ function displaySelectedMovie(movie){
 	const moviePoster = movie.poster_path
 	const posterUrl = `https://image.tmdb.org/t/p/w92/${moviePoster}`
 	const poster = $('<img>')
-	poster.addClass('w-10 h-auto')
+	poster.addClass('w-50 h-auto')
 	poster.attr({
 		'src': posterUrl,
 		'id' :'moviePoster'
@@ -293,12 +290,12 @@ $(document).on('click', '.close', function() {
 	selectedMovieModal.hide()
 })
 
-//* setMovieLocalStorage
 saveForLaterBtnM.on('click', function(event){
 	event.preventDefault()
 	console.log('click')
 	setMovieLocalStorage()
 	selectedMovieModal.hide()
+	displaySavedMovies()
 })
 
 getRandomRecipeBtn.on('click', function(event){ 
@@ -312,7 +309,7 @@ getRandomRecipeBtn.on('click', function(event){
 // 		selectedMovieModal.hide()}})
 
 function getMovieLocalStorage(){
-	console.log(localStorage.movies)
+	console.log(`localStorage${localStorage.movies}`)
 	let movies = (JSON.parse(localStorage.getItem('movies')))
 	if(!movies){
 		movies=[]
@@ -399,7 +396,6 @@ function displaySavedMovies(){
 
 // todo searchRecipe()
 // *fetch recipe api's not in use yet.
-// const fetchRecipeByAreaApi = `www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
 // const fetchRecipeByTypeApi = `www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
 // const fetchRecipeByIdApi = `www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
 
@@ -444,9 +440,9 @@ function fetchRecipeByMainIngredient() {
 		})
 		.then(list => console.log(list))
 		.catch(error => {
-            console.error('Error fetching list:', error)
+			console.error('Error fetching list:', error)
 		})}
-
+		
 $('#mainIngredientBTN').on('click', function(event){
 	event.preventDefault();
 	fetchRecipeByMainIngredient();
@@ -458,7 +454,7 @@ $('#mainIngredientBTN').on('click', function(event){
 // todo RANDOM displayRecipeResults()
 // do we want to make the random recipe populate the recipe modal?
 function displayRandomRecipe (meals){
-
+	
 	const recipeResultArea = $('#recipeResults')
 	const resultsCard = $('<div>')
 	resultsCard.appendTo(recipeResultArea)
@@ -466,21 +462,21 @@ function displayRandomRecipe (meals){
 	const mealName = $('<h4>')
 	mealName.appendTo(resultsCard)
 	mealName.text(meals[0].strMeal)
-
+	
 	const category = $('<p>')
 	category.appendTo(resultsCard)
 	category.text(meals[0].strCategory)
-
+	
 	const instructions = $('<p>')
 	instructions.appendTo(resultsCard)
 	instructions.text(meals[0].strInstructions)
-
+	
 	// need for loop to get all ingredients and measurements
-
+	
 	const ingredients = $('<p>')
 	ingredients.appendTo(resultsCard)
 	instructions.text(meals[0].strIngredient)
-
+	
 	const measurements = $('<p>')
 	measurements.appendTo(resultsCard)
 	measurements.text(meals[0].strMeasure)
@@ -492,21 +488,21 @@ function displayRandomRecipe (meals){
 	const youTube = $('<a>')
 	youTube.appendTo(resultsCard)
 	youTube.text(meals[0].strYoutube)
-
+	
 }
 
 
 
 // todo list for recipe by main ingridient
 function displayList () {
-
+	
 	const recipeResultArea = $('#recipeResults');
 	if (list.meals){
-	list.meals.forEach ( meal => {
+		list.meals.forEach ( meal => {
 		
-	});
-}
-
+		});
+	}
+	
 }
 
 // todo makeRecipeLater()
@@ -523,6 +519,30 @@ function displayList () {
 
 
 
+// // *mess, working on genre's and categories
+// function fetchRecipeByArea(){
+// 	const genreName = 'American'
+// 	if (genreName === 'Action' ) {
+// 			let area = 'American'
+// 		}
+// 	const fetchRecipeByAreaApi = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
+// 	fetch(fetchRecipeByAreaApi)
+// 	.then(response => {
+// 		if (!response.ok){
+// 			throw response.json()
+// 		}
+// 		console.log(response);
+// 		return response.json()
+		
+// 	})
+// 	.then(recipes => console.log(recipes))
+// 	.catch(error => {
+// 		console.error('Error fetching recipe:', error)
+// 	}) 
+// }
+
+
+
 
 // todo nowPickMunchies()
 // todo fetchRecipesFromMovie()**
@@ -531,44 +551,41 @@ function displayList () {
 // todo if statements to pair genres with types of food
 // *if statements to match genre's with keywords.
 // const genre = movie.genre[0]
-// if (genre.name === 'Action' || genre.id === 28) {
-// 	let area = 'American'
-// }
 
-// else if (genre.name === 'Adventure' || genre.id === 12) {
-// 	let category = 'Miscellaneous'
-// }
+	// else if (genre.name === 'Adventure' || genre.id === 12) {
+		// 	let category = 'Miscellaneous'
+		// }
+		
+		// else if (genre.name === 'Animation' || genre.id === 16) {
+			// 	let category = 'Breakfast'
+			// }
+			
+			// else if (genre.name === 'Comedy' || genre.id === 35 || genre.name === 'Music' || genre.id === 10402) {
+				// 	let category = 'Starter'
+				// }
+				
+				// else if (genre.name === 'Crime' || genre.id === 80 || genre.name === 'War' || genre.id === 10752) {
+					// 	let area = 'British'
+					// }
+					
+					// else if (genre.name === 'Documentary' || genre.id === 99) {
+						// 	let category = 'Vegetarian'
+						// }
+						
+						// else if (genre.name === 'Drama' || genre.id === 18) {
+							// 	let category = 'Pasta'
+							// }
 
-// else if (genre.name === 'Animation' || genre.id === 16) {
-// 	let category = 'Breakfast'
-// }
+							// else if (genre.name === 'Family' || genre.id === 10751) {
+								// 	let category = 'Side'
+								// }
 
-// else if (genre.name === 'Comedy' || genre.id === 35 || genre.name === 'Music' || genre.id === 10402) {
-// 	let category = 'Starter'
-// }
-
-// else if (genre.name === 'Crime' || genre.id === 80 || genre.name === 'War' || genre.id === 10752) {
-// 	let area = 'British'
-// }
-
-// else if (genre.name === 'Documentary' || genre.id === 99) {
-// 	let category = 'Vegetarian'
-// }
-
-// else if (genre.name === 'Drama' || genre.id === 18) {
-// 	let category = 'Pasta'
-// }
-
-// else if (genre.name === 'Family' || genre.id === 10751) {
-// 	let category = 'Side'
-// }
-
-// else if (genre.name === 'Fantasy' || genre.id === 14) {
-// 	let area = 'Greek'
+								// else if (genre.name === 'Fantasy' || genre.id === 14) {
+									// 	let area = 'Greek'
 // }
 
 // else if (genre.name === 'History' || genre.id === 36) {
-// 	let category = 'Lamb'
+	// 	let category = 'Lamb'
 // }
 
 // else if (genre.name === 'Horror' || genre.id === 27) {
@@ -576,17 +593,17 @@ function displayList () {
 // }
 
 // else if (genre.name === 'Mystery' || genre.id === 9648) {
-// 	let Area = 'Italian'
-// }
+	// 	let Area = 'Italian'
+	// }
+	
+	// else if (genre.name === 'Romance' || genre.id === 10749) {
+		// 	let category = 'Dessert'
+		// }
 
-// else if (genre.name === 'Romance' || genre.id === 10749) {
-// 	let category = 'Dessert'
-// }
-
-// else if (genre.name === 'Science Fiction' || genre.id === 878) {
-// 	let category = 'Chicken'
-// }
-
+		// else if (genre.name === 'Science Fiction' || genre.id === 878) {
+			// 	let category = 'Chicken'
+			// }
+			
 // else if (genre.name === 'TV Movie' || genre.id === 10770) {
 // 	let category = 'Pork'
 // }
@@ -639,6 +656,7 @@ function displayList () {
 
 $(document).ready(function(){
 	displaySavedMovies()
+	fetchRecipeByArea()
 
 })
 
@@ -663,7 +681,6 @@ $(document).ready(function(){
 // OPTIONAL
 // todo slidingResults()
 
-// more functions for searching random....
 
 
 // more functions to search by sliders/checkboxes
