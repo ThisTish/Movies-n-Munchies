@@ -93,7 +93,7 @@ $('#randomMoviesBtn').on('click', function(event){
 
 // *function for populating movie results area
 // todo add poster to button, title on top or below poster?
-// todo create area when (random)btn is clicked
+// todo create area when (random)btn is clicked instead of having it already displaying
 function displayMovieResults(page){
 	
 	for(let i = 0; i<9; i++){
@@ -277,6 +277,7 @@ const selectedMovieModal = $('#movieModal')//can go up top and get rid of one in
 const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
 const saveForLaterBtn = $('#save-for-later')
+const getRandomRecipeBtn =$('#getRandomRecipe')
 goBackBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
@@ -289,6 +290,8 @@ saveForLaterBtn.on('click', () =>{
 	// setLocalStorage() not done
 	selectedMovieModal.hide()
 })
+
+getRandomRecipeBtn.on('click', fetchRandomRecipe())
 
 // * function for closing modal when you click off modal
 $(document).click(function(event){
@@ -322,106 +325,109 @@ $(document).click(function(event){
 // todo searchRecipe()
 
 
-// // *function to fetch random recipe
-// function fetchRandomRecipe() {
-// 	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
+// *function to fetch random recipe
+function fetchRandomRecipe() {
+	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
 	
-// 	fetch(randomRecipeUrl)
-// 	.then(response => {
-// 		if (!response.ok){
-// 			throw response.json()
-// 		}
-// 		console.log(response);
-// 		return response.json()
+	fetch(randomRecipeUrl)
+	.then(response => {
+		if (!response.ok){
+			throw response.json()
+		}
+		console.log(response);
+		return response.json()
 		
-// 	})
-// 	.then(randomRecipe => console.log(randomRecipe))
-// 	.catch(error => {
-// 		console.error('Error fetching recipe:', error)
-// 	}) 
-// }
+	})
+	.then(randomRecipe => console.log(randomRecipe))
+	.catch(error => {
+		console.error('Error fetching recipe:', error)
+	}) 
+}
 
-// const randomRecipeBtn = $('#randomRecipeBtn')
+const randomRecipeBtn = $('#randomRecipeBtn')
 
-// $('#randomRecipeBtn').on('click', function(event){
-// 	event.preventDefault();
-// 	fetchRandomRecipe();
-// 	displayRandomRecipe();
-// })
+$('#randomRecipeBtn').on('click', function(event){
+	event.preventDefault();
+	fetchRandomRecipe();
+	displayRandomRecipe();
+})
 
 // // todo filter by main ingredient
-// function fetchRecipeByMainIngredient() {
-// 	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
-// 	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
+function fetchRecipeByMainIngredient() {
+	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
+	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
 	
-// 	fetch(mainIngredientUrl)
-// 	.then(response => {
-// 		console.log(response);
-// 			return response.json()
-// 		})
-// 		.then(list => console.log(list))
-// 		.catch(error => {
-//             console.error('Error fetching list:', error)
-// 		})}
+	fetch(mainIngredientUrl)
+	.then(response => {
+		console.log(response);
+			return response.json()
+		})
+		.then(list => console.log(list))
+		.catch(error => {
+            console.error('Error fetching list:', error)
+		})}
 
-// $('#mainIngredientBTN').on('click', function(event){
-// 	event.preventDefault();
-// 	fetchRecipeByMainIngredient();
-// 	displayList();
-// })
+$('#mainIngredientBTN').on('click', function(event){
+	event.preventDefault();
+	fetchRecipeByMainIngredient();
+	displayList();
+})
 
 
 
-// // todo RANDOM displayRecipeResults()
-// function displayRandomRecipe (meals){
+// todo RANDOM displayRecipeResults()
+// do we want to make the random recipe populate the recipe modal?
+function displayRandomRecipe (meals){
 
-// 	const recipeResultArea = $('#recipeResults')
-// 	const resultsCard = $('<div>')
-// 	resultsCard.appendTo(recipeResultArea)
+	const recipeResultArea = $('#recipeResults')
+	const resultsCard = $('<div>')
+	resultsCard.appendTo(recipeResultArea)
 	
-// 	const mealName = $('<h4>')
-// 	mealName.appendTo(resultsCard)
-// 	mealName.text(meals[0].strMeal)
+	const mealName = $('<h4>')
+	mealName.appendTo(resultsCard)
+	mealName.text(meals[0].strMeal)
 
-// 	const category = $('<p>')
-// 	category.appendTo(resultsCard)
-// 	category.text(meals[0].strCategory)
+	const category = $('<p>')
+	category.appendTo(resultsCard)
+	category.text(meals[0].strCategory)
 
-// 	const instructions = $('<p>')
-// 	instructions.appendTo(resultsCard)
-// 	instructions.text(meals[0].strInstructions)
+	const instructions = $('<p>')
+	instructions.appendTo(resultsCard)
+	instructions.text(meals[0].strInstructions)
 
-// 	// need for loop to get all ingredients and measurements
+	// need for loop to get all ingredients and measurements
 
-// 	const ingredients = $('<p>')
-// 	ingredients.appendTo(resultsCard)
-// 	instructions.text(meals[0].strIngredient)
+	const ingredients = $('<p>')
+	ingredients.appendTo(resultsCard)
+	instructions.text(meals[0].strIngredient)
 
-// 	const measurements = $('<p>')
-// 	measurements.appendTo(resultsCard)
-// 	measurements.text(meals[0].strMeasure)
+	const measurements = $('<p>')
+	measurements.appendTo(resultsCard)
+	measurements.text(meals[0].strMeasure)
 
-// 	const source = $('<a>')
-// 	source.appendTo(resultsCard)
-// 	source.text(meals[0].strSource)
+	const source = $('<a>')
+	source.appendTo(resultsCard)
+	source.text(meals[0].strSource)
 
-// 	const youTube = $('<a>')
-// 	youTube.appendTo(resultsCard)
-// 	youTube.text(meals[0].strYoutube)
+	const youTube = $('<a>')
+	youTube.appendTo(resultsCard)
+	youTube.text(meals[0].strYoutube)
 
-// }
+}
 
-// // todo list for recipe by main ingridient
-// function displayList () {
 
-// 	const recipeResultArea = $('#recipeResults');
-// 	if (list.meals){
-// 	list.meals.forEach ( meal => {
+
+// todo list for recipe by main ingridient
+function displayList () {
+
+	const recipeResultArea = $('#recipeResults');
+	if (list.meals){
+	list.meals.forEach ( meal => {
 		
-// 	});
-// }
+	});
+}
 
-// }
+}
 
 // todo makeLater()
 
@@ -432,6 +438,10 @@ $(document).click(function(event){
 
 
 // todo nowPickMunchies()
+function findRandomRecipe(){
+
+}
+
 
 
 
@@ -440,7 +450,10 @@ $(document).click(function(event){
 
 
 // todo fetchRecipesFromMovie()**
-
+// todo click funtion for findRecipeBtn
+// todo function to pull genre
+// todo if statements to pair genres with types of food
+// todo fetchRecipesByType
 
 
 // todo fetchMoviesFromRecipes()
