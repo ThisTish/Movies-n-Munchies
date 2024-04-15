@@ -1,45 +1,45 @@
-const searchBtnEl = $('#search-button')
-//* for search modal
+// const searchBtnEl = $('#search-button')
+// * for search modal
 
-// Get the modal
-var modal = document.getElementById("myModal");
+// // Get the modal
+// var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+// // Get the button that opens the modal
+// var btn = document.getElementById("myBtn");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+// // Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-	modal.style.display = "block";
-}
+// // When the user clicks on the button, open the modal
+// btn.onclick = function() {
+// 	modal.style.display = "block";
+// }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-	modal.style.display = "none";
-}
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function() {
+// 	modal.style.display = "none";
+// }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
-}
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function(event) {
+// 	if (event.target == modal) {
+// 		modal.style.display = "none";
+// 	}
+// }
 
-// todo tie to searchmodal
-$('#search-form').on('submit', function(event){
-	event.preventDefault()
-	const searchInputEl = $('#search-input').val()
-	fetchMovieTitleApi(searchInputEl)
-})
+// // todo tie to searchmodal
+// $('#search-form').on('submit', function(event){
+// 	event.preventDefault()
+// 	const searchInputEl = $('#search-input').val()
+// 	fetchMovieTitleApi(searchInputEl)
+// })
 
 // *function for movie title search
+// todo need the searchInput to work
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
 	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=${apiKey}`
 	
-	// todo cleanup
 	fetch(searchMovieTitleApi)
 	.then(response => {
 		if (!response.ok) {
@@ -58,10 +58,10 @@ function fetchMovieTitleApi(search){
 }
 
 
-// *function for random movie
+// *function to fetch random movies
 function fetchRandomMovie(){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-	const randomPage = Math.floor(Math.random() * 500) + 1//might need to change number-only goes to 500 
+	const randomPage = Math.floor(Math.random() * 500) + 1
 	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
 
 	fetch(randomMovieApi)
@@ -82,9 +82,12 @@ function fetchRandomMovie(){
 
 }
 
-// *function for random button fetch
+const movieResultsArea= $('#movieResults')
+
+// *function for random movie button
 $('#random-button').on('click', function(event){
 	event.preventDefault()
+	movieResultsArea.empty()
 	fetchRandomMovie()
 })
 
@@ -92,7 +95,6 @@ $('#random-button').on('click', function(event){
 // todo add poster to button, title on top or below poster?
 // todo create area when (random)btn is clicked
 function displayMovieResults(page){
-	const movieResultsArea= $('#movieResults')
 	
 	for(let i = 0; i<9; i++){
 		const movieDetails = page.results[i]
@@ -106,7 +108,7 @@ function displayMovieResults(page){
 			'id': 'selectMovieBtn',
 			'type': 'button'})
 		titleBtn.text(movieDetails.original_title)
-		console.log(movieDetails.id)
+		// console.log(movieDetails.id)
 
 
 		movieCard.append(titleBtn)
@@ -118,6 +120,12 @@ function displayMovieResults(page){
 $(document).on('click','#selectMovieBtn', function() {
 	const movieId = $(this).attr('data-movie-id')
 	console.log(movieId)
+
+	function clearModal() {
+		$('.movieModalDynamic').empty()
+	}
+	clearModal()
+
 	function fetchMovieId(){
 		const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
 		const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
@@ -141,14 +149,15 @@ $(document).on('click','#selectMovieBtn', function() {
 	fetchMovieId()
 })
 
+
 // *function to display movie details in selectedMovieModal
 // todo clear appropriate info before repopulating.
 // todo figure out poster/backdrop
 function displaySelectedMovie(movie){
 	const movieModal = $('#movieModal')
 	const dynamicElements = $('<div>')
-	dynamicElements.addClass('p-3')
-	dynamicElements.empty()
+	dynamicElements.addClass('movieModalDynamic p-3')
+	// dynamicElements.html('')
 
 	const movieModalHeader = $('<header>')
 
@@ -201,7 +210,7 @@ function displaySelectedMovie(movie){
 	const homepage = $('<a>')
 	homepage.addClass('text-center')
 	homepage.attr('href', movie.homepage)
-	homepage.text(movie.homepage)//could make the image the anchor...maybe
+	homepage.text('Hompage')//could make the image the anchor...maybe
 	
 	movieModalDetails.append(year, overview, rating, genre, runtime, homepage)
 	movieModalHeader.append(movieTitle, close)
@@ -214,7 +223,7 @@ function displaySelectedMovie(movie){
 
 //* Selected Movie Modal Button Functions
 // todo make these one liners
-const selectedMovieModal = $('#movieModal')
+const selectedMovieModal = $('#movieModal')//can go up top and get rid of one in displaySelectedMovie function
 const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
 const saveForLaterBtn = $('#save-for-later')
@@ -222,16 +231,16 @@ goBackBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
 
-closeBtn.on('click', () =>{
+$(document).on('click', closeBtn, function() {
 	selectedMovieModal.hide()
 })
 
 saveForLaterBtn.on('click', () =>{
 	// setLocalStorage() not done
 	selectedMovieModal.hide()
-	
 })
 
+// * function for closing modal when you click off modal
 $(document).click(function(event){
 	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
 		selectedMovieModal.hide()
@@ -262,117 +271,107 @@ $(document).click(function(event){
 
 // todo searchRecipe()
 
-// todo RANDOM button()
 
-const randomRecipeBtn = $('#randomRecipeBtn')
-
-
-
-
-
-// todo RANDOM fetchRecipeApi()
-function fetchRandomRecipe() {
-	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
-
-	fetch(randomRecipeUrl)
-		.then(response => {
-			if (!response.ok){
-				throw response.json()
-			}
-			console.log(response);
-			return response.json()
-
-		})
-		.then(randomRecipe => console.log(randomRecipe))
-		.catch(error => {
-            console.error('Error fetching recipe:', error)
-	}) }
-
-	$('#randomRecipeBtn').on('click', function(event){
-		event.preventDefault();
-		fetchRandomRecipe();
-		displayRandomRecipe();
-		})
-
-
-
-// todo filter by main ingredient
-
-function fetchRecipeByMainIngredient() {
-	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
-	// const apiKeyRecipes = "1"
-	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
-
-	fetch(mainIngredientUrl)
-		.then(response => {
-			console.log(response);
-			return response.json()
-		})
-		.then(list => console.log(list))
-		.catch(error => {
-            console.error('Error fetching list:', error)
-		})}
-
-$('#mainIngredientBTN').on('click', function(event){
-	event.preventDefault();
-	fetchRecipeByMainIngredient();
-	displayList();
-})
-
-
-
-// todo RANDOM displayRecipeResults()
-
-function displayRandomRecipe (meals){
-
-	const recipeResultArea = $('#recipeResults')
-	const resultsCard = $('<div>')
-	resultsCard.appendTo(recipeResultArea)
+// // *function to fetch random recipe
+// function fetchRandomRecipe() {
+// 	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
 	
-	const mealName = $('<h4>')
-	mealName.appendTo(resultsCard)
-	mealName.text(meals[0].strMeal)
-
-	const category = $('<p>')
-	category.appendTo(resultsCard)
-	category.text(meals[0].strCategory)
-
-	const instructions = $('<p>')
-	instructions.appendTo(resultsCard)
-	instructions.text(meals[0].strInstructions)
-
-	// need for loop to get all ingredients and measurements
-
-	const ingredients = $('<p>')
-	ingredients.appendTo(resultsCard)
-	instructions.text(meals[0].strIngredient)
-
-	const measurements = $('<p>')
-	measurements.appendTo(resultsCard)
-	measurements.text(meals[0].strMeasure)
-
-	const source = $('<a>')
-	source.appendTo(resultsCard)
-	source.text(meals[0].strSource)
-
-	const youTube = $('<a>')
-	youTube.appendTo(resultsCard)
-	youTube.text(meals[0].strYoutube)
-
-}
-
-// todo list for recipe by main ingridient
-
-function displayList () {
-
-	const recipeResultArea = $('#recipeResults');
-	if (list.meals){
-	list.meals.forEach ( meal => {
+// 	fetch(randomRecipeUrl)
+// 	.then(response => {
+// 		if (!response.ok){
+// 			throw response.json()
+// 		}
+// 		console.log(response);
+// 		return response.json()
 		
-	});
-}
+// 	})
+// 	.then(randomRecipe => console.log(randomRecipe))
+// 	.catch(error => {
+// 		console.error('Error fetching recipe:', error)
+// 	}) 
+// }
 
-}
+// const randomRecipeBtn = $('#randomRecipeBtn')
+
+// $('#randomRecipeBtn').on('click', function(event){
+// 	event.preventDefault();
+// 	fetchRandomRecipe();
+// 	displayRandomRecipe();
+// })
+
+// // todo filter by main ingredient
+// function fetchRecipeByMainIngredient() {
+// 	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
+// 	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
+	
+// 	fetch(mainIngredientUrl)
+// 	.then(response => {
+// 		console.log(response);
+// 			return response.json()
+// 		})
+// 		.then(list => console.log(list))
+// 		.catch(error => {
+//             console.error('Error fetching list:', error)
+// 		})}
+
+// $('#mainIngredientBTN').on('click', function(event){
+// 	event.preventDefault();
+// 	fetchRecipeByMainIngredient();
+// 	displayList();
+// })
+
+
+
+// // todo RANDOM displayRecipeResults()
+// function displayRandomRecipe (meals){
+
+// 	const recipeResultArea = $('#recipeResults')
+// 	const resultsCard = $('<div>')
+// 	resultsCard.appendTo(recipeResultArea)
+	
+// 	const mealName = $('<h4>')
+// 	mealName.appendTo(resultsCard)
+// 	mealName.text(meals[0].strMeal)
+
+// 	const category = $('<p>')
+// 	category.appendTo(resultsCard)
+// 	category.text(meals[0].strCategory)
+
+// 	const instructions = $('<p>')
+// 	instructions.appendTo(resultsCard)
+// 	instructions.text(meals[0].strInstructions)
+
+// 	// need for loop to get all ingredients and measurements
+
+// 	const ingredients = $('<p>')
+// 	ingredients.appendTo(resultsCard)
+// 	instructions.text(meals[0].strIngredient)
+
+// 	const measurements = $('<p>')
+// 	measurements.appendTo(resultsCard)
+// 	measurements.text(meals[0].strMeasure)
+
+// 	const source = $('<a>')
+// 	source.appendTo(resultsCard)
+// 	source.text(meals[0].strSource)
+
+// 	const youTube = $('<a>')
+// 	youTube.appendTo(resultsCard)
+// 	youTube.text(meals[0].strYoutube)
+
+// }
+
+// // todo list for recipe by main ingridient
+// function displayList () {
+
+// 	const recipeResultArea = $('#recipeResults');
+// 	if (list.meals){
+// 	list.meals.forEach ( meal => {
+		
+// 	});
+// }
+
+// }
 
 // todo makeLater()
 
@@ -390,7 +389,7 @@ function displayList () {
 
 
 
-// todo fetchRecipesFromMovie()
+// todo fetchRecipesFromMovie()**
 
 
 
