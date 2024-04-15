@@ -437,23 +437,80 @@ function displayList () {
 
 
 
-// todo nowPickMunchies()
-function findRandomRecipe(){
-
-}
-
-
-
 
 // todo nowPickMovies()
 
 
 
+
+
+// todo nowPickMunchies()
 // todo fetchRecipesFromMovie()**
-// todo click funtion for findRecipeBtn
+// todo click function for findRecipeBtn
 // todo function to pull genre
 // todo if statements to pair genres with types of food
+const genre = movie.genre[0]
+if (genre.name === 'Action' || genre.id === 28) {
+}
+
+if (genre.name === 'Adventure' || genre.id === 12) {
+}
+
+if (genre.name === 'Animation' || genre.id === 16) {
+}
+
+if (genre.name === 'Comedy' || genre.id === 35) {
+}
+
+if (genre.name === 'Crime' || genre.id === 80) {
+}
+
+if (genre.name === 'Documentary' || genre.id === 99) {
+}
+
+if (genre.name === 'Drama' || genre.id === 18) {
+}
+
+if (genre.name === 'Family' || genre.id === 10751) {
+}
+
+if (genre.name === 'Fantasy' || genre.id === 14) {
+}
+
+if (genre.name === 'History' || genre.id === 36) {
+}
+
+if (genre.name === 'Horror' || genre.id === 27) {
+}
+
+if (genre.name === 'Music' || genre.id === 10402) {
+}
+
+if (genre.name === 'Mystery' || genre.id === 9648) {
+}
+
+if (genre.name === 'Romance' || genre.id === 10749) {
+}
+
+if (genre.name === 'Science Fiction' || genre.id === 878) {
+}
+
+if (genre.name === 'TV Movie' || genre.id === 10770) {
+}
+
+if (genre.name === 'Thriller' || genre.id === 53) {
+}
+
+if (genre.name === 'War' || genre.id === 10752) {
+}
+
+if (genre.name === 'Western' || genre.id === 37) {
+}
+
 // todo fetchRecipesByType
+const keyword = 
+const searchRecipeAPI = `www.themealdb.com/api/json/v1/1/search.php?s=${keyword}`
+
 
 
 // todo fetchMoviesFromRecipes()
