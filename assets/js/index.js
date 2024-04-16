@@ -103,7 +103,6 @@ function fetchARandomMovie(){
 	.then(page => {
 		console.log(page)
 		return page
-		displaySingleMovie()
 	})
 	.catch(error => {
 		console.error('Fetch error:', error)
@@ -115,7 +114,7 @@ function randomMovie(movies){
 	const randomIndex = Math.floor(Math.random()*20 + 1)
 	const atRandomMovie = movies.results[randomIndex]
 	console.log(atRandomMovie)
-
+	return atRandomMovie 
 
 }
 
@@ -124,7 +123,9 @@ $('#randomMovieBtn').on('click', function(event){
 	singleMovieArea.empty()
 	fetchARandomMovie()
 		.then(movies => {
-			randomMovie(movies)
+			const randomMovieDetails = randomMovie(movies)
+		displaySingleMovie(randomMovieDetails)
+
 		})
 		.catch(error =>{
 			console.error('fetch error', error)
@@ -133,82 +134,35 @@ $('#randomMovieBtn').on('click', function(event){
 
 // *function to display single random movie
 const singleMovieArea = $('#singleMovie')
-function displaySingleMovie(page){
+function displaySingleMovie(movieDetails){
 	$('#movie').show()
-	const dynamicElements = $('<div>')
-	dynamicElements.addClass('movieModalDynamic p-3 text-white')
+	console.log(movieDetails)
+	const movieCard = $('<div>')
+		movieCard.addClass('card')
 
-	const movieModalHeader = $('<header>')
-
-	const movieTitle = $('<h2>')
-	movieTitle.addClass('text-pink')
-	movieTitle.text(movie.title) 
-	movieTitle.attr('id', 'movieModalTitle')
-
-	const close = $('<span>')//might add back to html
-	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
-	close.html('&times;')
-
-	const moviePoster = movie.poster_path
-	const posterUrl = `https://image.tmdb.org/t/p/w92/${moviePoster}`
-	const poster = $('<img>')
-	poster.addClass('w-50 h-auto')
-	poster.attr({
-		'src': posterUrl,
-		'id' :'moviePoster'
-	})
-	
-	const movieModalDetails = $('<div>')
-	movieModalDetails.attr({
-		'id':'movieDeets',
-		'data-movie-id': movie.id
-
+	const backDropBtn = $('<button>')
+	backDropBtn.addClass('rounded-lg relative overflow-hidden')
+	backDropBtn.attr({
+		'data-movie-id': movieDetails.id,
+		'id':'selectedMovieBtn',
+		'type':'button'
 	})
 
+	const backdrop = $('<img>')
+	.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
+	.addClass('w-full h-auto')
 
-	if(movie.tagline){
-		const tagline = $('<p>')
-		tagline.addClass('text-green')
-		tagline.text(movie.tagline)
-		movieModalDetails.append(tagline)
-	}
+	const titleOverlay = $('<div>')
+	.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
+	.text(movieDetails.title)
+		
 
-	
-	const date = movie.release_date
-	const justYear = date.split('-')[0]
-	const year = $('<p>')
-	year.addClass('text-purple')
-	year.text(`${justYear}`)
+	backDropBtn.append(backdrop, titleOverlay)
+	movieCard.append(backDropBtn)
+	singleMovieArea.append(movieCard)
 
-	const overview = $('<p>')
-	overview.addClass('tracking-tight')
-	overview.text(movie.overview)
-
-	const rating = $('<p>')
-	rating.addClass('text-orange')
-	rating.text(movie.vote_average)//could find star rating image that goes with this, but that's a whole other function for a whole other day.
-
-	const genre = $('<p>')
-	genre.addClass('font-bold')
-	genre.text(movie.genres[0].name)//could add more IF they have more...later
-
-	const runtime = $('<p>')
-	runtime.addClass('text-sm')
-	runtime.text(`${movie.runtime} min`)
-
-	const homepage = $('<a>')
-	homepage.addClass('text-center')
-	homepage.attr('href', movie.homepage)
-	homepage.text('Homepage')//could make the image the anchor...maybe
-	
-	movieModalDetails.append(poster, year, overview, rating, genre, runtime, homepage)
-	movieModalHeader.append(movieTitle, close)
-	dynamicElements.append(movieModalHeader, movieModalDetails)
-	movieModal.prepend(dynamicElements)
 
 }
-
-
 // * function to FETCH by ID for selectedMOVIE MODAL with movie click
 $(document).on('click','#selectedMovieBtn', function() {
 	const movieId = $(this).attr('data-movie-id')
@@ -361,7 +315,9 @@ const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
 const saveForLaterBtnM = $('#saveForLaterM')
 const getRandomRecipeBtn =$('#getRandomRecipe')
-goBackBtn.on('click', () =>{
+// !go back button not working
+goBackBtn.on('click',function(event){
+	event.preventDefault()
 	selectedMovieModal.hide()
 })
 $(document).on('click', '.close', function() {
@@ -369,7 +325,6 @@ $(document).on('click', '.close', function() {
 })
 saveForLaterBtnM.on('click', function(event){
 	event.preventDefault()
-	console.log('click')
 	setMovieLocalStorage()
 	selectedMovieModal.hide()
 	displaySavedMovies()
