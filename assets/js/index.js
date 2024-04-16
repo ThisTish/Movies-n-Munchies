@@ -1,22 +1,22 @@
-const searchBtnEl = $('#search-button')
+const modalSubmitSearchBtn = $('#submitSearch')
 //* for search modal
 
 // Get the modal
-var modal = document.getElementById("myModal");
+var modal = document.getElementById("searchModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+var modalSearchBtn = document.getElementById("searchBtn");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var searchCloseBtn = document.getElementsByClassName("searchCloseBtn")[0];
 
 // When the user clicks on the button, open the modal
-btn.onclick = function() {
+modalSearchBtn.onclick = function() {
 	modal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+searchCloseBtn.onclick = function() {
 	modal.style.display = "none";
 }
 
@@ -28,9 +28,9 @@ window.onclick = function(event) {
 }
 
 // todo tie to searchmodal
-$('#search-form').on('submit', function(event){
+$('#searchForm').on('submit', function(event){
 	event.preventDefault()
-	const searchInputEl = $('#search-input').val()
+	const searchInputEl = $('#searchInput').val()
 	fetchMovieTitleApi(searchInputEl)
 })
 
