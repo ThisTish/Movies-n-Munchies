@@ -132,7 +132,7 @@ $('#randomMovieBtn').on('click', function(event){
 		})
 })
 
-// *function to display single random movie
+// *function to display SINGLE RANDOM MOVIE
 const singleMovieArea = $('#singleMovie')
 function displaySingleMovie(movieDetails){
 	$('#movie').show()
@@ -328,6 +328,7 @@ saveForLaterBtnM.on('click', function(event){
 	setMovieLocalStorage()
 	selectedMovieModal.hide()
 	displaySavedMovies()
+	
 })
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
@@ -449,7 +450,8 @@ function fetchRandomRecipe() {
 	}) 
 }
 
-// * function to POPULATE RANDOM RECIPE
+
+// * function to POPULATE RANDOM RECIPE w/ details
 function displayRandomRecipe (randomRecipe){
 
 	$('#recipe').show()
@@ -478,14 +480,14 @@ function displayRandomRecipe (randomRecipe){
 		const ingredient = recipeArray['strIngredient' + i];
 		const measurement = recipeArray['strMeasure' + i];
 		if (ingredient) {
-            const listItem = $('<li>').text(`${measurement} ${ingredient}`);
+			const listItem = $('<li>').text(`${measurement} ${ingredient}`);
 
-            listItem.appendTo(ingredientsList);
-        } else {
-            // If there are no more ingredients, break the loop
-            break;
-        }
-    }
+			listItem.appendTo(ingredientsList);
+		} else {
+			// If there are no more ingredients, break the loop
+			break;
+		}
+	}
 	ingredientsList.appendTo(resultsCard);
 
 	// const measurements = $('<p>')
@@ -534,6 +536,76 @@ function displayRandomRecipe (randomRecipe){
 	event.preventDefault();
 	saveRecipe();
 	});
+}
+
+
+
+
+
+//*functions for random recipe card..................
+function fetchRandomRecipeCard() {
+	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
+	
+	fetch(randomRecipeUrl)
+	.then(response => {
+		if (!response.ok){
+			throw response.json()
+		}
+		console.log(response);
+		return response.json()
+		
+	})
+	.then(randomRecipe => {
+		console.log(randomRecipe)
+		displayRecipeCard(randomRecipe)
+	})
+		
+	.catch(error => {
+		console.error('Error fetching recipe:', error)
+	}) 
+}
+
+$('#recipeCardBtn').on('click', function(event){
+	event.preventDefault()
+	recipeCardArea.empty()
+	fetchRandomRecipeCard()
+
+})
+
+// *function to POPULATE RANDOM RECIPE CARD
+const recipeCardArea = $('#randomRecipeArea')
+function displayRecipeCard(recipeDetails){
+	const recipeList = recipeDetails.meals[0]
+	$('#recipeCardArea').show()
+	console.log(recipeDetails)
+	console.log(recipeList)
+	console.log(recipeList.strMeal)
+	console.log(recipeList.strMealThumb)
+	
+	const recipeCard = $('<div>')
+		recipeCard.addClass('card')
+
+	const backDropBtn = $('<button>')
+	backDropBtn.addClass('rounded-lg relative overflow-hidden')
+	backDropBtn.attr({
+		'data-recipe-id': recipeList.idMeal,
+		'id':'selectedRecipeBtn',
+		'type':'button'
+	})
+
+	const backdrop = $('<img>')
+	.attr('src', recipeList.strMealThumb)
+	.addClass('w-40 h-auto')
+
+	// !only showing background when clicked on.
+	const titleOverlay = $('<div>')
+	.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
+	.text(recipeList.strMeal)
+		
+
+	backDropBtn.append(backdrop, titleOverlay)
+	recipeCard.append(backDropBtn)
+	recipeCardArea.append(recipeCard)
 }
 
 // *function for RECIPE SEARCH button click
