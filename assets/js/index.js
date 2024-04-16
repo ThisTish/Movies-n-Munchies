@@ -1,296 +1,38 @@
 const modalSubmitSearchBtn = $('#submitSearch')
+const movieResultsArea= $('#movieResults')
+
+
 //* for search modal
-
-// Get the modal
 var modal = document.getElementById("searchModal");
-
-// Get the button that opens the modal
 var modalSearchBtn = document.getElementById("searchBtn");
-
-// Get the <span> element that closes the modal
 var searchCloseBtn = document.getElementsByClassName("searchCloseBtn")[0];
-
-// When the user clicks on the button, open the modal
 modalSearchBtn.onclick = function() {
 	modal.style.display = "block";
 }
-
-// When the user clicks on <span> (x), close the modal
 searchCloseBtn.onclick = function() {
 	modal.style.display = "none";
 }
-
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 	if (event.target == modal) {
 		modal.style.display = "none";
 	}
 }
 
-// todo tie to searchmodal
+// todo tie to searchmodalform
 $('#searchForm').on('submit', function(event){
 	event.preventDefault()
 	const searchInputEl = $('#searchInput').val()
 	fetchMovieTitleApi(searchInputEl)
 })
 
-// *function for movie title search
-function fetchMovieTitleApi(search){
-	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=${apiKey}`
-	
-	// todo cleanup
-	fetch(searchMovieTitleApi)
-	.then(response => {
-		if (!response.ok) {
-			throw new Error('Network response was not ok')
-		}
-		return response.json()
-		console.log(response)
-	})
-	.then(data => {
-		console.log(data)
-	})
-	.catch(error => {
-		console.error('Fetch error:', error)
-	})
-	
-}
-
-
-// *function for random movie
-function fetchRandomMovie(){
-	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-	const randomPage = Math.floor(Math.random() * 500) + 1//might need to change number-only goes to 500 
-	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
-
-	fetch(randomMovieApi)
-	.then(response => {
-		if (!response.ok) {
-			throw response.json()
-		}
-		return response.json()
-		console.log(response)
-	})
-	.then(page => {
-		console.log(page)
-		displayMovieResults(page)
-	})
-	.catch(error => {
-		console.error('Fetch error:', error)
-	});
-
-}
-
-// *function for random button fetch
-$('#random-button').on('click', function(event){
-	event.preventDefault()
-	fetchRandomMovie()
-})
-
-// *function for populating movie results area
-// todo add poster to button, title on top or below poster?
-// todo create area when (random)btn is clicked
-function displayMovieResults(page){
-	const movieResultsArea= $('#movieResults')
-	
-	for(let i = 0; i<9; i++){
-		const movieDetails = page.results[i]
-		const movieCard = $('<div>')
-		// console.log(movieDetails)
-
-		const titleBtn = $('<button>')
-		titleBtn.addClass('rounded-full')
-		titleBtn.attr({
-			'data-movie-id': movieDetails.id,
-			'id': 'selectMovieBtn',
-			'type': 'button'})
-		titleBtn.text(movieDetails.original_title)
-		console.log(movieDetails.id)
-
-
-		movieCard.append(titleBtn)
-		movieResultsArea.append(movieCard)
-	}
-}
-
-// *function to search by id to get selectedMovieModal details
-$(document).on('click','#selectMovieBtn', function() {
-	const movieId = $(this).attr('data-movie-id')
-	console.log(movieId)
-	function fetchMovieId(){
-		const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-		const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
-	
-		fetch(movieIdApi)
-		.then(response => {
-			if (!response.ok) {
-				throw response.json()
-			}
-			return response.json()
-			console.log(response)
-		})
-		.then(movie => {
-			console.log(movie)
-			displaySelectedMovie(movie)
-		})
-		.catch(error => {
-			console.error('Fetch error:', error)
-		});
-	}
-	fetchMovieId()
-})
-
-// *function to display movie details in selectedMovieModal
-// todo clear appropriate info before repopulating.
-// todo figure out poster/backdrop
-function displaySelectedMovie(movie){
-	const movieModal = $('#movieModal')
-	const dynamicElements = $('<div>')
-	dynamicElements.addClass('p-3')
-	dynamicElements.empty()
-
-	const movieModalHeader = $('<header>')
-
-	const movieTitle = $('<h2>')
-	movieTitle.addClass('text-pink')
-	movieTitle.text(movie.title) 
-
-	const close = $('<span>')//might add back to html
-	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
-	close.html('&times;')
-
-	// const poster = $('<img>')
-	// poster.addClass('w-10 h-auto')
-	// poster.attr('src', movie.poster_path)
-
-	console.log(movie.poster_path)//poster--how to get to show? maybe backdrop_path?
-	
-	const movieModalDetails = $('<div>')
-
-	if(movie.tagline){
-		const tagline = $('<p>')
-		tagline.addClass('text-green')
-		tagline.text(movie.tagline)
-		movieModalDetails.append(tagline)
-	}
-
-	
-	const date = movie.release_date
-	const justYear = date.split('-')[0]
-	const year = $('<p>')
-	year.addClass('text-purple')
-	year.text(`${justYear}`)
-
-	const overview = $('<p>')
-	overview.addClass('tracking-tight')
-	overview.text(movie.overview)
-
-	const rating = $('<p>')
-	rating.addClass('text-orange')
-	rating.text(movie.vote_average)//could find star rating image that goes with this, but that's a whole other function for a whole other day.
-
-	const genre = $('<p>')
-	genre.addClass('font-bold')
-	genre.text(movie.genres[0].name)//could add more IF they have more...later
-
-	const runtime = $('<p>')
-	runtime.addClass('text-sm')
-	runtime.text(`${movie.runtime} min`)
-
-	const homepage = $('<a>')
-	homepage.addClass('text-center')
-	homepage.attr('href', movie.homepage)
-	homepage.text(movie.homepage)//could make the image the anchor...maybe
-	
-	movieModalDetails.append(year, overview, rating, genre, runtime, homepage)
-	movieModalHeader.append(movieTitle, close)
-	dynamicElements.append(movieModalHeader, movieModalDetails)
-	movieModal.prepend(dynamicElements)
-	
-	selectedMovieModal.show()
-	
-}
-
-//* Selected Movie Modal Button Functions
-// todo make these one liners
-const selectedMovieModal = $('#movieModal')
-const goBackBtn = $('#go-back')
-const closeBtn = $('.close')
-const saveForLaterBtn = $('#save-for-later')
-goBackBtn.on('click', () =>{
-	selectedMovieModal.hide()
-})
-
-closeBtn.on('click', () =>{
-	selectedMovieModal.hide()
-})
-
-saveForLaterBtn.on('click', () =>{
-	// setLocalStorage() not done
-	selectedMovieModal.hide()
-	
-})
-
-$(document).click(function(event){
-	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
-		selectedMovieModal.hide()
-	}
-})
-
-
-
-// todo getLocalStorage()
-
-
-
-// todo setLocalStorage()
-
-
-
-// todo displaySavedCards()
-// const searchBtnEl = $('#search-button')
-// * for search modal
-
-// // Get the modal
-// var modal = document.getElementById("myModal");
-
-// // Get the button that opens the modal
-// var btn = document.getElementById("myBtn");
-
-// // Get the <span> element that closes the modal
-// var span = document.getElementsByClassName("close")[0];
-
-// // When the user clicks on the button, open the modal
-// btn.onclick = function() {
-// 	modal.style.display = "block";
-// }
-
-// // When the user clicks on <span> (x), close the modal
-// span.onclick = function() {
-// 	modal.style.display = "none";
-// }
-
-// // When the user clicks anywhere outside of the modal, close it
-// window.onclick = function(event) {
-// 	if (event.target == modal) {
-// 		modal.style.display = "none";
-// 	}
-// }
-
-// // todo tie to searchmodal
-// $('#search-form').on('submit', function(event){
-// 	event.preventDefault()
-// 	const searchInputEl = $('#search-input').val()
-// 	fetchMovieTitleApi(searchInputEl)
-// })
-
-// *function for movie title search
+// *function for MOVIE TITLE search button CLICK
 // todo need the searchInput to work
 $('#harryPotter').on('click', () =>{
 	console.log("you're a wizard harry")
 	fetchMovieTitleApi()
 })
+
+// *function for MOVIE TITLE FETCH
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
 	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=harry%20potter&api_key=${apiKey}`
@@ -313,9 +55,16 @@ function fetchMovieTitleApi(search){
 	
 }
 
+// *function for RANDOM MOVIE button click
+$('#randomMoviesBtn').on('click', function(event){
+	event.preventDefault()
+	movieResultsArea.empty()
+	fetchRandomMovies()
+})
 
-// *function to fetch random movies
-function fetchRandomMovies(){
+// *function for FETCH random MOVIES
+// todo change all to "movies" or "lists"
+function fetchRandomMovie(){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
 	const randomPage = Math.floor(Math.random() * 500) + 1
 	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
@@ -338,83 +87,7 @@ function fetchRandomMovies(){
 
 }
 
-const movieResultsArea= $('#movieResults')
-
-// *function for random movie button
-$('#randomMoviesBtn').on('click', function(event){
-	event.preventDefault()
-	movieResultsArea.empty()
-	fetchRandomMovies()
-})
-
-// *function for populating movie results area
-// todo title on top or below poster?
-// todo create area when (random)btn is clicked instead of having it already displaying
-function displayMovieResults(page){
-	$('#movies').show()
-	for(let i = 0; i<10; i++){
-		const movieDetails = page.results[i]
-		const movieCard = $('<div>')
-		movieCard.addClass('card')
-		// console.log(movieDetails)
-
-		const backDropBtn = $('<button>')
-		backDropBtn.addClass('rounded-lg relative overflow-hidden')
-		backDropBtn.attr({
-			'data-movie-id': movieDetails.id,
-			'id':'selectedMovieBtn',
-			'type':'button'
-		})
-
-		const backdrop = $('<img>')
-		.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
-		.addClass('w-full h-auto')
-
-		const titleOverlay = $('<div>')
-		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
-		.text(movieDetails.title)
-		
-
-		backDropBtn.append(backdrop, titleOverlay)
-		movieCard.append(backDropBtn)
-		movieResultsArea.append(movieCard)
-	}
-}
-
-// *function to fetch by id to get selectedMovieModal details by title button
-$(document).on('click','#selectMovieBtn', function() {
-	const movieId = $(this).attr('data-movie-id')
-	console.log(movieId)
-
-	function clearModal() {
-		$('.movieModalDynamic').empty()
-	}
-	clearModal()
-
-	function fetchMovieId(){
-		const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-		const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
-	
-		fetch(movieIdApi)
-		.then(response => {
-			if (!response.ok) {
-				throw response.json()
-			}
-			return response.json()
-			console.log(response)
-		})
-		.then(movie => {
-			console.log(movie)
-			displaySelectedMovie(movie)
-		})
-		.catch(error => {
-			console.error('Fetch error:', error)
-		});
-	}
-	fetchMovieId()
-})
-
-// * function to fetch by id for selectedMovieModal
+// * function to FETCH by ID for selectedMOVIE MODAL with movie click
 $(document).on('click','#selectedMovieBtn', function() {
 	const movieId = $(this).attr('data-movie-id')
 	console.log(movieId)
@@ -447,8 +120,40 @@ $(document).on('click','#selectedMovieBtn', function() {
 	fetchMovieId()
 })
 
+// *function for POPULATE MOVIE RESULTS area
+function displayMovieResults(page){
+	$('#movies').show()
+	for(let i = 0; i<10; i++){
+		const movieDetails = page.results[i]
+		const movieCard = $('<div>')
+		movieCard.addClass('card')
+		// console.log(movieDetails)
 
-// *function to display movie details in selectedMovieModal
+		const backDropBtn = $('<button>')
+		backDropBtn.addClass('rounded-lg relative overflow-hidden')
+		backDropBtn.attr({
+			'data-movie-id': movieDetails.id,
+			'id':'selectedMovieBtn',
+			'type':'button'
+		})
+
+		const backdrop = $('<img>')
+		.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
+		.addClass('w-full h-auto')
+
+		const titleOverlay = $('<div>')
+		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
+		.text(movieDetails.title)
+		
+
+		backDropBtn.append(backdrop, titleOverlay)
+		movieCard.append(backDropBtn)
+		movieResultsArea.append(movieCard)
+	}
+}
+
+
+// *function to POPULATE MOVIE details in selectedMOVIE MODAL
 function displaySelectedMovie(movie){
 	const movieModal = $('#movieModal')
 	const dynamicElements = $('<div>')
@@ -515,7 +220,7 @@ function displaySelectedMovie(movie){
 	const homepage = $('<a>')
 	homepage.addClass('text-center')
 	homepage.attr('href', movie.homepage)
-	homepage.text('Hompage')//could make the image the anchor...maybe
+	homepage.text('Homepage')//could make the image the anchor...maybe
 	
 	movieModalDetails.append(poster, year, overview, rating, genre, runtime, homepage)
 	movieModalHeader.append(movieTitle, close)
@@ -526,7 +231,8 @@ function displaySelectedMovie(movie){
 	
 }
 
-//* Selected Movie Modal Button Functions
+
+//* Selected MOVIE MODAL BUTTONS Functions
 // todo make these one liners
 const selectedMovieModal = $('#movieModal')
 const goBackBtn = $('#go-back')
@@ -536,11 +242,9 @@ const getRandomRecipeBtn =$('#getRandomRecipe')
 goBackBtn.on('click', () =>{
 	selectedMovieModal.hide()
 })
-
 $(document).on('click', '.close', function() {
 	selectedMovieModal.hide()
 })
-
 saveForLaterBtnM.on('click', function(event){
 	event.preventDefault()
 	console.log('click')
@@ -548,17 +252,19 @@ saveForLaterBtnM.on('click', function(event){
 	selectedMovieModal.hide()
 	displaySavedMovies()
 })
-
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
 	fetchRandomRecipe()
 })
-
 // * function for closing modal when you click off modal/don't want right now.
 // $(document).click(function(event){
 // 	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
 // 		selectedMovieModal.hide()}})
 
+
+
+
+// *function to get MOVIE LOCALSTORAGE
 function getMovieLocalStorage(){
 	console.log(`localStorage${localStorage.movies}`)
 	let movies = (JSON.parse(localStorage.getItem('movies')))
@@ -567,7 +273,7 @@ function getMovieLocalStorage(){
 	}
 	return movies
 }
-
+// *function to set MOVIE LOCALSTORAGE
 function setMovieLocalStorage(){
 	let movies = getMovieLocalStorage()
 	
@@ -584,7 +290,7 @@ function setMovieLocalStorage(){
 	console.log(localStorage.movies)
 	
 }
-
+// *function POPULATE SAVED MOVIES
 function displaySavedMovies(){
 	const movies = 	getMovieLocalStorage()
 	const savedMoviesArea = $('#savedMoviesArea')
@@ -622,11 +328,9 @@ function displaySavedMovies(){
 
 
 
-// todo getRecipeLocalStorage()
 
 // todo getMatchLocalStorage()
 
-// todo setRecipeLocalStorage()
 
 // todo setMatchLocalStorage()
 
@@ -636,23 +340,19 @@ function displaySavedMovies(){
 // todo displaySavedMatches()
 
 
-
-// todo openSearchModal()
-
-
-
-// todo searchMovie()
-
-
-
 // todo searchRecipe()
 // *fetch recipe api's not in use yet.
 // const fetchRecipeByTypeApi = `www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
 // const fetchRecipeByIdApi = `www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
 
+// *function for RANDOM RECIPE button click
+const randomRecipeBtn = $('#randomRecipeBtn')
+$('#randomRecipeBtn').on('click', function(event){
+	event.preventDefault();
+	fetchRandomRecipe();
+})
 
-
-// *function to fetch random recipe
+// *function to FETCH RANDOM RECIPE
 function fetchRandomRecipe() {
 	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
 	
@@ -675,36 +375,7 @@ function fetchRandomRecipe() {
 	}) 
 }
 
-const randomRecipeBtn = $('#randomRecipeBtn')
-
-$('#randomRecipeBtn').on('click', function(event){
-	event.preventDefault();
-	fetchRandomRecipe();
-})
-
-// todo filter by main ingredient
-function fetchRecipeByMainIngredient() {
-	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
-	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
-	
-	fetch(mainIngredientUrl)
-	.then(response => {
-		console.log(response);
-			return response.json()
-		})
-		.then(list => console.log(list))
-		.catch(error => {
-			console.error('Error fetching list:', error)
-		})}
-		
-$('#mainIngredientBTN').on('click', function(event){
-	event.preventDefault();
-	fetchRecipeByMainIngredient();
-	displayList();
-})
-
-// todo RANDOM displayRecipeResults()
-// do we want to make the random recipe populate the recipe modal?
+// * function to POPULATE RANDOM RECIPE
 function displayRandomRecipe (randomRecipe){
 
 	$('#recipe').show()
@@ -791,11 +462,37 @@ function displayRandomRecipe (randomRecipe){
 	});
 }
 
-// array to save recipes
+// *function for RECIPE SEARCH button click
+$('#mainIngredientBTN').on('click', function(event){
+	event.preventDefault();
+	fetchRecipeByMainIngredient();
+	displayList();
+})
+
+// todo filter by main ingredient
+// todo not working 4/16 810am
+function fetchRecipeByMainIngredient() {
+	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
+	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
+	
+	fetch(mainIngredientUrl)
+	.then(response => {
+		console.log(response);
+			return response.json()
+	})
+	.then(list => console.log(list))
+	.catch(error => {
+		console.error('Error fetching list:', error)
+	})
+}
+
+
+
+// *array to save recipes
 let savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
 console.log(savedRecipes);
 
-// function to save meal id to array
+//* function to save meal id to array
 function saveRecipe(){
 
 	const savedmeal = {
@@ -808,7 +505,8 @@ function saveRecipe(){
 	displaySavedRecipes();
 }
 
-// function to display saved recipes as link list in div
+//* function to GET and POPULATE recipes as link list in div
+// todo needs work 4/16 820am
 function displaySavedRecipes (){
 	localStorage.getItem(savedMeal)
 
@@ -819,6 +517,7 @@ function displaySavedRecipes (){
 
 
 // todo list for recipe by main ingridient
+//todo needs work
 function displayList () {
 	
 	const recipeResultArea = $('#recipeResults');
@@ -830,17 +529,17 @@ function displayList () {
 	
 }
 
-// todo makeRecipeLater()
-
-
-
 // todo displaySelectedRecipe()
-
-
 
 
 // todo nowPickMovies()
 
+$(document).ready(function(){
+	displaySavedMovies()
+	displaySavedRecipes()
+	// fetchRecipeByArea()
+
+})
 
 
 
@@ -979,11 +678,6 @@ function displayList () {
 // todo displayMovieFilmCombination
 
 
-$(document).ready(function(){
-	displaySavedMovies()
-	fetchRecipeByArea()
-
-})
 
 
 
@@ -1005,8 +699,5 @@ $(document).ready(function(){
 
 // OPTIONAL
 // todo slidingResults()
-
-// more functions for searching random....
-
 
 // more functions to search by sliders/checkboxes
