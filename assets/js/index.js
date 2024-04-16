@@ -64,7 +64,7 @@ $('#randomMoviesBtn').on('click', function(event){
 
 // *function for FETCH random MOVIES
 // todo change all to "movies" or "lists"
-function fetchRandomMovie(){
+function fetchRandomMovies(){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
 	const randomPage = Math.floor(Math.random() * 500) + 1
 	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
@@ -86,6 +86,128 @@ function fetchRandomMovie(){
 	});
 
 }
+
+// * function for a random movie
+function fetchARandomMovie(){
+	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
+	const randomPage = Math.floor(Math.random() * 500) + 1
+	const randomMovieApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&region=United%20States&api_key=${apiKey}&page=${randomPage}`
+
+	return fetch(randomMovieApi)
+	.then(response => {
+		if (!response.ok) {
+			throw response.json()
+		}
+		return response.json()
+		})
+	.then(page => {
+		console.log(page)
+		return page
+		displaySingleMovie()
+	})
+	.catch(error => {
+		console.error('Fetch error:', error)
+	});
+
+}
+// *function to get random movie from array
+function randomMovie(movies){
+	const randomIndex = Math.floor(Math.random()*20 + 1)
+	const atRandomMovie = movies.results[randomIndex]
+	console.log(atRandomMovie)
+
+
+}
+
+$('#randomMovieBtn').on('click', function(event){
+	event.preventDefault()
+	singleMovieArea.empty()
+	fetchARandomMovie()
+		.then(movies => {
+			randomMovie(movies)
+		})
+		.catch(error =>{
+			console.error('fetch error', error)
+		})
+})
+
+// *function to display single random movie
+const singleMovieArea = $('#singleMovie')
+function displaySingleMovie(page){
+	$('#movie').show()
+	const dynamicElements = $('<div>')
+	dynamicElements.addClass('movieModalDynamic p-3 text-white')
+
+	const movieModalHeader = $('<header>')
+
+	const movieTitle = $('<h2>')
+	movieTitle.addClass('text-pink')
+	movieTitle.text(movie.title) 
+	movieTitle.attr('id', 'movieModalTitle')
+
+	const close = $('<span>')//might add back to html
+	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
+	close.html('&times;')
+
+	const moviePoster = movie.poster_path
+	const posterUrl = `https://image.tmdb.org/t/p/w92/${moviePoster}`
+	const poster = $('<img>')
+	poster.addClass('w-50 h-auto')
+	poster.attr({
+		'src': posterUrl,
+		'id' :'moviePoster'
+	})
+	
+	const movieModalDetails = $('<div>')
+	movieModalDetails.attr({
+		'id':'movieDeets',
+		'data-movie-id': movie.id
+
+	})
+
+
+	if(movie.tagline){
+		const tagline = $('<p>')
+		tagline.addClass('text-green')
+		tagline.text(movie.tagline)
+		movieModalDetails.append(tagline)
+	}
+
+	
+	const date = movie.release_date
+	const justYear = date.split('-')[0]
+	const year = $('<p>')
+	year.addClass('text-purple')
+	year.text(`${justYear}`)
+
+	const overview = $('<p>')
+	overview.addClass('tracking-tight')
+	overview.text(movie.overview)
+
+	const rating = $('<p>')
+	rating.addClass('text-orange')
+	rating.text(movie.vote_average)//could find star rating image that goes with this, but that's a whole other function for a whole other day.
+
+	const genre = $('<p>')
+	genre.addClass('font-bold')
+	genre.text(movie.genres[0].name)//could add more IF they have more...later
+
+	const runtime = $('<p>')
+	runtime.addClass('text-sm')
+	runtime.text(`${movie.runtime} min`)
+
+	const homepage = $('<a>')
+	homepage.addClass('text-center')
+	homepage.attr('href', movie.homepage)
+	homepage.text('Homepage')//could make the image the anchor...maybe
+	
+	movieModalDetails.append(poster, year, overview, rating, genre, runtime, homepage)
+	movieModalHeader.append(movieTitle, close)
+	dynamicElements.append(movieModalHeader, movieModalDetails)
+	movieModal.prepend(dynamicElements)
+
+}
+
 
 // * function to FETCH by ID for selectedMOVIE MODAL with movie click
 $(document).on('click','#selectedMovieBtn', function() {
@@ -254,6 +376,7 @@ saveForLaterBtnM.on('click', function(event){
 })
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
+	selectedMovieModal.hide()
 	fetchRandomRecipe()
 })
 // * function for closing modal when you click off modal/don't want right now.
@@ -266,7 +389,7 @@ getRandomRecipeBtn.on('click', function(event){
 
 // *function to get MOVIE LOCALSTORAGE
 function getMovieLocalStorage(){
-	console.log(`localStorage${localStorage.movies}`)
+	// console.log(`localStorage${localStorage.movies}`)
 	let movies = (JSON.parse(localStorage.getItem('movies')))
 	if(!movies){
 		movies=[]
@@ -315,10 +438,6 @@ function displaySavedMovies(){
 		savedMoviePoster.addClass('border-light')
 		savedMoviePoster.attr('src', movie.poster)
 
-
-		console.log(movie.title)
-		console.log(movie.poster)
-		console.log(movie.id)
 
 	movieCard.append(savedMoviePoster, savedMovieTitle)
 	savedMoviesArea.append(movieCard)	
@@ -508,7 +627,7 @@ function saveRecipe(){
 //* function to GET and POPULATE recipes as link list in div
 // todo needs work 4/16 820am
 function displaySavedRecipes (){
-	localStorage.getItem(savedMeal)
+	localStorage.getItem('savedMeal')
 
 	const savedRecipesList = $('#savedRecipesList')
 
@@ -536,7 +655,7 @@ function displayList () {
 
 $(document).ready(function(){
 	displaySavedMovies()
-	displaySavedRecipes()
+	// displaySavedRecipes()
 	// fetchRecipeByArea()
 
 })
