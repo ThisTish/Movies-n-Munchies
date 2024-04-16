@@ -11,16 +11,33 @@
 <body class="bg-gray-400">
 
     <header class="px-4 flex justify-center items-center">
-        <img src="" alt="">
+        <img src="assets/images/logo2.webp" alt="film roll">
         <h1 class="y-4 font-bold text-white text-6xl">Movies'n'Munchies</h1>
     </header>
     
     <main>
         <div class="p-4 text-white flex justify-center align-center">
-            <h2>description/slogan</h2>
+            <h2>Browse our site for what feels right and let us help you plan your night!</h2>
         </div>
         
-        <button id="random-button" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RaNdoM</button>
+        <button id="randomMoviesBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RaNdoM mOviEs</button>
+        <button id="randomRecipeBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE</button>
+
+        <form action="">
+            <label for="mainIngredient">Search by Main Ingredient</label>
+            <input type="text" id="mainIngredient">
+            <button id="mainIngredientBTN"class="bg-yellow-500" >Search</button>
+        </form>
+
+<!-- *harry potter button to fetch by title, will replace with searchInput -->
+        <button id="harryPotter" class="button bg-blue-800 text-yellow-500">Harry Potter</button>
+        <!-- !tied to fetchrecipeByName, kinda worthless right now. -->
+        <!-- <form id="recipeByName" action="">
+            <label for="recipeName">Search by Recipe Name</label>
+            <input type="text" id="recipeName">
+            <button id="recipeNameBtn"class="bg-yellow-500">Search</button>
+        </form> -->
+
 
         <!-- *MODALS -->
 
@@ -89,12 +106,11 @@
                     </div>
                     
                     <div class="p-4 flex-row justify-center align-center">
-                        <section id="movies" class="p-4 flex-col justify-center align-center border-4 h-80">
+                        <section id="movies" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
                             <p class="p-4 text-white flex justify-center align-center">Movie Results</p>
-                            <div id="movieResults">
-                                    <!--dynamically created button(title)(js) -->
-                                </div>
-                            </section>
+                            <div id="movieResults" class="flex flex-wrap justify-evenly">
+                            </div>
+                        </section>
                             
                             <section id="recipe" class="p-4 flex-col justify-center align-center border-4 h-80">
                                 <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
@@ -107,16 +123,15 @@
                     
                     
                     <!-- selected movie modal -->
-                    <!--todo populate function in js.  -->
-                    <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
-                        <div class="movieModalBody modal-content text-white rounded-lg p-4">
-                            
-                            <img id="poster" class="w-10 h-auto mx-auto mb-4" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
+                    <!--todo design, dynamic elements in js need design as well -->
+                    <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto">
+                        <div class="movieModalBody text-white rounded-lg p-4">
                             
                             <footer id="bottomButtons">
-                                <button id ="save-for-later" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
+                                <button id ="saveForLaterM" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
                                 <button id ="go-back" type="close" class="button bg-blue-600 rounded-4 mx-4">go back</button>
-                                <button id ="pair" type="button" class="button bg-blue-600 rounded-4 mx-4">Find Munchie</button>
+                                <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button>
+                                <button id ="getRandomRecipe" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM reCipE</button>
                             </footer>
                         </div>
                     </div>
@@ -128,7 +143,7 @@
             
             <div id="savedMovies" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
                 <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
-                    <div>
+                    <div id="savedMoviesArea">
 
                     </div>
             </div>
@@ -151,8 +166,11 @@
 
     <footer class="px-4 h-20 text-white flex-col justify-center items-center">
         <div>
-            <p>Disclaimer:</p>
+            <p>This [website, program, service, application, product] uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.</p>
             <p>&copy; 2024 My Website. All rights reserved.</p>
+        </div>
+        <div>
+            <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="The Movie Database logo">
         </div>
     </footer>
     
