@@ -23,12 +23,22 @@
     <title>Movies-n-Munchies</title>
 </head>
 
-<body class=" bg-gradient-to-b from-red-950 via-orange-300 to-yellow-300">
+<body class=" bg-gradient-to-b from-primary-100 via-primary-300 to-primary-400">
 
     <header class="px-4 flex justify-center items-center position: static">
         <img class="rounded-xl" src="assets/images/logo2.webp" alt="film roll">
         <div class="position: absolute flex justify-center">
-        <h1 class="text-primary-200 y-4 font-bold text-6xl">Movies'n'Munchies</h1>
+        <h1 class="text-primary-200 y-4 font-bold text-6xl">
+            <div class="inline-flex text-primary-100">
+                Movies
+            </div>
+            <div class="inline-flex text-primary-300">
+                'n'
+            </div>
+            <div class="inline-flex text-primary-400">
+                Munchies!
+            </div>
+        </h1>
         </div>
     </header>
     
@@ -36,20 +46,20 @@
         <div class="p-4 text-xl underline text-[#63262] flex justify-center align-center">
             <h2 class=" rounded-md bg-white p-1">Browse our site for what feels right and let us help you plan your night!</h2>
         </div>
-        
-        <button id="randomMoviesBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RaNdoM mOviEs</button>
-        <button id="randomMovieBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RandoM MOVIE</button>
-        <button id="randomRecipeBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE</button>
-        <button id="recipeCardBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE Card</button>
-
-        <form action="">
-            <label for="mainIngredient" class="">Search by Main Ingredient</label>
+        <div class="flex justify-evenly">
+            <button id="randomMoviesBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RaNdoM mOviEs</button>
+            <button id="randomMovieBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RandoM MOVIE</button>
+            <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE</button>
+            <button id="recipeCardBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE Card</button>
+        </div>
+        <form action="" class="flex justify-center p-8 position-static">
+            <label for="mainIngredient" class="text-xl pl-6 bg-primary-400 pr-4 border-black border-2 rounded-l-lg">Search by Main Ingredient:</label>
             <input type="text" id="mainIngredient">
-            <button id="mainIngredientBTN"class="bg-yellow-500" >Search</button>
+            <button id="mainIngredientBTN"class="bg-yellow-400 rounded-r-lg" >Search!</button>
         </form>
 
 <!-- *harry potter button to fetch by title, will replace with searchInput -->
-        <button id="harryPotter" class="button bg-blue-800 text-yellow-500 rounded-full p-1 border-solid hover:border-double border-4 border-black hover:border-white">Harry Potter</button>
+        <button id="harryPotter" class="button bg-primary-100 text-primary-400 rounded-full p-1 border-solid hover:border-double border-4 border-black hover:border-white">Harry Potter</button>
         <!-- !tied to fetchrecipeByName, kinda worthless right now. -->
         <!-- <form id="recipeByName" action="">
             <label for="recipeName">Search by Recipe Name</label>
@@ -175,19 +185,22 @@
                     
                     <div id="save" class="p-4 flex flex-row justify-around align-center">
             
-            <div id="savedMovies" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
+            <div id="savedMovies" class="p-4 flex justify-center align-center border-4 h-auto w-1/3">
                 <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
                     <div id="savedMoviesArea">
 
                     </div>
             </div>
                         
-            <div id="savedRecipes" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
-                <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
-                    <div id="recipeIdLinks"></div>
+            <div id="savedRecipes" class="p-4 flex-col justify-center align-center border-4 h-auto w-1/3">
+                <div>
+                    <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
+                </div>
+
+                <div id="recipeIdLinks"></div>
             </div>
             
-            <div id="saveForLater" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
+            <div id="saveForLater" class="p-4 flex justify-center align-center border-4 h-auto w-1/3">
                 <h4 class="p-4 text-white flex justify-center align-center">Saved for Later</h4>
                     <div id="savedRecipesList"></div>
             </div>
