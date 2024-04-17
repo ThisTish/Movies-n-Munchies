@@ -52,6 +52,7 @@
             <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE</button>
             <button id="recipeCardBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE Card</button>
             <button id="selectedRecipeModalBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">selected recipe modal</button>
+            <button id="letUsCreateMatch" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">let us plan your night</button>
         </div>
         <form action="" class="flex justify-center p-8 position-static">
             <label for="mainIngredient" class="text-xl pl-6 bg-primary-400 pr-4 border-black border-2 rounded-l-lg">Search by Main Ingredient:</label>
@@ -59,8 +60,6 @@
             <button id="mainIngredientBTN"class="bg-yellow-400 rounded-r-lg" >Search!</button>
         </form>
 
-<!-- *harry potter button to fetch by title, will replace with searchInput -->
-        <button id="harryPotter" class="button bg-primary-100 text-primary-400 rounded-full p-1 border-solid hover:border-double border-4 border-black hover:border-white">Harry Potter</button>
         <!-- !tied to fetchrecipeByName, kinda worthless right now. -->
         <!-- <form id="recipeByName" action="">
             <label for="recipeName">Search by Recipe Name</label>
@@ -68,23 +67,23 @@
             <button id="recipeNameBtn"class="bg-yellow-500">Search</button>
         </form> -->
 
-
+        
         <!-- *MODALS -->
-
+        
         <!-- Search Form Modal -->
         <!--todo button to trigger modal. Label id's & classes. Fix html structure. function in js-->
         <button id="searchBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
 
         <div id="searchModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
-        <form id="searchForm">
+            <form id="searchForm">
             <header>
             <h3>Get your search on!</h3>
             <span class="searchCloseBtn absolute text-white top-0 right-0 p-4 cursor-pointer">&times;</span>
             </header>
             <div>
-            <label>Search Movie or Recipe</label>
-            <input id="searchInput">
-            <button type="submit" id="submitSearch" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
+                <label>Search Movie or Recipe</label>
+                <input id="searchInput">
+                <button type="submit" id="submitSearch" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
             </div>
             <label class="movieRadio">
                 <input type="radio" name="movieRadio" value="movie">
@@ -98,27 +97,40 @@
                 Recipe
             </label>
         </form>
-        </div>
-
-        
-        
-        
-        <!-- selected recipe modal -->
-        <!-- todo reformat. filter out non needed items -->
-        <h2>Recipe Modal</h2>
-<!-- this will go into the "recipe results container, needs more formatting" -->
-<div id="recipeModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
-    <div class="recipeModalBody modal-content text-white rounded-lg p-4">
-        
-        <img id="poster" class="w-10 h-auto mx-auto mb-4" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
-        
-        <footer id="bottomButtons">
-            <button id ="save-for-later" type="submit" class="button bg-blue-600 rounded-4 mx-4">munch later</button>
-            <button id ="go-back" type="button" class="button bg-blue-600 rounded-4 mx-4">go back</button>
-            <button id ="pair" type="button" class="button bg-blue-600 rounded-4 mx-4">Find Movie</button>
-        </footer>
     </div>
-</div>
+    
+
+    <!-- selected movie modal -->
+    <!--todo design, dynamic elements in js need design as well -->
+    <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto">
+        <div class="movieModalBody text-white rounded-lg p-4">
+            
+            <footer id="bottomButtons">
+                <button id ="saveForLaterM" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
+                <button id ="go-back" type="close" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+                <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button>
+                <button id ="getRandomRecipe" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM reCipE</button>
+            </footer>
+        </div>
+    </div>
+        
+    <!-- selected recipe modal -->
+        <!-- todo reformat. filter out non needed items -->
+        <div id="recipeModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto">
+            <h2>Recipe Modal</h2>
+            <div class="recipeModalBody text-white rounded-lg p-4">
+                
+                <footer id="bottomButtons">
+                    <!-- ?is this linked to set recipe local function -->
+                    <button id ="save-for-later" type="submit" class="button bg-blue-600 rounded-4 mx-4">munch later</button>
+                    <!-- todo not working -->
+                    <button id ="go-back" type="close" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+                    <!-- <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button> not applicable right now--> 
+                    <!-- todo call fetchARandomMovie & display functions -->
+                    <button id ="getRandomMovie" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM reCipE</button>
+                </footer>
+            </div>
+        </div>
 
         
         
@@ -166,19 +178,6 @@
                     </div>
                     
                     
-                    <!-- selected movie modal -->
-                    <!--todo design, dynamic elements in js need design as well -->
-                    <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto">
-                        <div class="movieModalBody text-white rounded-lg p-4">
-                            
-                            <footer id="bottomButtons">
-                                <button id ="saveForLaterM" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
-                                <button id ="go-back" type="close" class="button bg-blue-600 rounded-4 mx-4">go back</button>
-                                <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button>
-                                <button id ="getRandomRecipe" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM reCipE</button>
-                            </footer>
-                        </div>
-                    </div>
                     
                     
                     <!--*SAVE COLUMNS-->
