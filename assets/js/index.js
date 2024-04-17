@@ -303,20 +303,21 @@ function displaySelectedMovie(movie){
 
 
 //* Selected MOVIE MODAL BUTTONS Functions
-// todo copy & alter what needed for recipe modals
 // todo make these one liners
 const selectedMovieModal = $('#movieModal')
 const goBackBtn = $('#go-back')
 const closeBtn = $('.close')
 const saveForLaterBtnM = $('#saveForLaterM')
 const getRandomRecipeBtn =$('#getRandomRecipe')
-// !go back button not working
 goBackBtn.on('click', function(event){
 	event.preventDefault()
 	selectedMovieModal.hide()
+	
 })
 $(document).on('click', '.close', function() {
 	selectedMovieModal.hide()
+	selectedRecipeModal.hide()
+
 })
 saveForLaterBtnM.on('click', function(event){
 	event.preventDefault()
@@ -327,8 +328,9 @@ saveForLaterBtnM.on('click', function(event){
 })
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
-	selectedMovieModal.hide()
 	fetchRandomRecipe()
+	// movieResultsArea.hide()//need to have funtion to get id and display in left half of match area first
+	selectedMovieModal.hide()
 })
 // * function for closing modal when you click off modal/don't want right now.
 // $(document).click(function(event){
@@ -549,7 +551,7 @@ function fetchRandomRecipeCard() {
 $('#recipeCardBtn').on('click', function(event){
     event.preventDefault();
     recipeCardArea.empty();
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 2; i++) {
         fetchRandomRecipeCard();
     }
 });
@@ -566,10 +568,7 @@ const recipeCardArea = $('#randomRecipeArea')
 function displayRecipeCard(recipeDetails){
 	const recipeList = recipeDetails.meals[0]
 	$('#recipeCardArea').show()
-	console.log(recipeDetails)
-	console.log(recipeList.idMeal)
-	console.log(recipeList.strMeal)
-	console.log(recipeList.strMealThumb)
+	
 	
 	const recipeCard = $('<div>')
 	recipeCard.addClass('card')
@@ -710,10 +709,41 @@ function displaySelectedRecipe(randomRecipe){
 	recipeModalDynamics.append(resultsCard)
 	selectedRecipeBody.prepend(recipeModalDynamics) 
 	
-	const selectedRecipeModal = $('#recipeModal')
 	selectedRecipeModal.show()
 }
 
+// *recipe modal buttons
+const selectedRecipeModal = $('#recipeModal')
+const saveForLaterBtnR = $('#saveForLaterR')
+saveForLaterBtnR.on('click', function(event){
+	event.preventDefault()
+	selectedRecipeModal.hide()
+	saveRecipe()
+
+	displaySavedRecipes()
+})
+const goBackBtnR = $('#goBack')
+goBackBtnR.on('click', function(event){
+	event.preventDefault()
+	selectedRecipeModal.hide()
+})
+
+const randomMovieR = $('#getRandomMovie')
+randomMovieR.on('click', function(event){
+	event.preventDefault()
+	singleMovieArea.empty()
+	fetchARandomMovie()
+		.then(movies => {
+			const randomMovieDetails = randomMovie(movies)
+		displaySingleMovie(randomMovieDetails)
+
+		})
+		.catch(error =>{
+			console.error('fetch error', error)
+		})
+		// recipeCardArea.hide()need to have funtion to get id and display*details(?) in right half of match area first
+		selectedRecipeModal.hide()
+})
 
 
 
@@ -761,7 +791,6 @@ function saveRecipe(){
 }
 
 //* function to GET and POPULATE recipes as link list in div
-// todo needs work 4/16 820am
 function displaySavedRecipes (){
 	
 	const recipeIdLinks = $('#recipeIdLinks')

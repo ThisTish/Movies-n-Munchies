@@ -165,3 +165,31 @@ getRandomMovieBtn.on('click', function(event){
 	selectedMovieModal.hide()
 	fetchARandomMovie()
 })
+
+
+const selectedMovieModal = $('#movieModal')
+const goBackBtn = $('#go-back')
+const closeBtn = $('.close')
+const saveForLaterBtnM = $('#saveForLaterM')
+const getRandomRecipeBtn =$('#getRandomRecipe')
+// !go back button not working
+goBackBtn.on('click', function(event){
+	event.preventDefault()
+	selectedMovieModal.hide()
+})
+$(document).on('click', '.close', function() {
+	selectedMovieModal.hide()
+	selectedRecipeModal.hide()
+})
+saveForLaterBtnM.on('click', function(event){
+	event.preventDefault()
+	setMovieLocalStorage()
+	selectedMovieModal.hide()
+	displaySavedMovies()
+	
+})
+getRandomRecipeBtn.on('click', function(event){ 
+	event.preventDefault()
+	selectedMovieModal.hide()
+	fetchRandomRecipe()
+})
