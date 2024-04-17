@@ -634,7 +634,7 @@ function fetchRecipeByMainIngredient() {
 
 
 
-// // *array to save recipes
+// *array to save recipes
 let savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
 console.log(savedRecipes);
 
@@ -643,8 +643,10 @@ function saveRecipe(){
 
 	const savedmeal = {
 		mealName: ($('#mealNameResult').text()),
-		mealUrl: ($('#sourceResultLink').text()),
+		mealUrl: ($('#sourceResultLink').attr('href')),
 	}
+
+	console.log($('#sourceResultLink').attr('href'));
 	console.log(savedmeal)
 	savedRecipes.push(savedmeal)
 	localStorage.setItem('savedmeal', JSON.stringify(savedRecipes));
