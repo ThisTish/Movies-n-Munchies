@@ -38,7 +38,9 @@
         </div>
         
         <button id="randomMoviesBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RaNdoM mOviEs</button>
+        <button id="randomMovieBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RandoM MOVIE</button>
         <button id="randomRecipeBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE</button>
+        <button id="recipeCardBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE Card</button>
 
         <form action="">
             <label for="mainIngredient" class="">Search by Main Ingredient</label>
@@ -60,75 +62,57 @@
 
         <!-- Search Form Modal -->
         <!--todo button to trigger modal. Label id's & classes. Fix html structure. function in js-->
-        <!-- <p><form id="search-form">
-            <h3>Header size 3</h3>
-            <label>Search Movie</label>
-            <input id="search-input">
-            <button type="submit" id="search-button">Search</button>
-            <label class="radio-button">
-                <input type="radio" name="example-radio" value="option1">
+        <button id="searchBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
+
+        <div id="searchModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
+        <form id="searchForm">
+            <header>
+            <h3>Get your search on!</h3>
+            <span class="searchCloseBtn absolute text-white top-0 right-0 p-4 cursor-pointer">&times;</span>
+            </header>
+            <div>
+            <label>Search Movie or Recipe</label>
+            <input id="searchInput">
+            <button type="submit" id="submitSearch" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
+            </div>
+            <label class="movieRadio">
+                <input type="radio" name="movieRadio" value="movie">
                 <span class="radio"></span>
                 Movie
             </label>
             
-            <label class="radio-button">
-                <input type="radio" name="example-radio" value="option2">
+            <label class="recipeRadio">
+                <input type="radio" name="recipeRadio" value="recipe">
                 <span class="radio"></span>
                 Recipe
             </label>
-        </form></p>
+        </form>
+        </div>
 
-        <hr> -->
         
         
         
         <!-- selected recipe modal -->
         <!-- todo reformat. filter out non needed items -->
-        <!-- <h2>Recipe Modal</h2> -->
-        
-        <!-- Modal content -->
-        <!-- <div class="modal-content"> -->
-            <!-- <span class="close">&times;</span> -->
-            <!-- <p>Movie or Recipe?</p> -->
-        <!-- </div> -->
+        <h2>Recipe Modal</h2>
+       
 <!-- this will go into the "recipe results container, needs more formatting" -->
-<!-- <button id="recipeBtn">Open Modal</button>
+<div id="recipeModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
+    <div class="recipeModalBody modal-content text-white rounded-lg p-4">
+        
+        <img id="poster" class="w-10 h-auto mx-auto mb-4" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
+        
+        <footer id="bottomButtons">
+            <button id ="save-for-later" type="submit" class="button bg-blue-600 rounded-4 mx-4">munch later</button>
+            <button id ="go-back" type="button" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+            <button id ="pair" type="button" class="button bg-blue-600 rounded-4 mx-4">Find Movie</button>
+        </footer>
+    </div>
+</div>
 
-<div id="recipeModal" class="modal">
-    
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p><form id="search-form">
-            <h3>Recipe Results</h3>
-            <label>Search Movie</label>
-            <input id="search-input">
-            <button type="submit" id="search-button">Search</button>
-            <label class="radio-button">
-                <h4>Title of Recipe</h4>
-                ratings
-                <src>picture</src>
-                ingredients
-                prep&cook times
-                instructions
-                <source>
-                <link ytlink>
-                <button id="sflBtn">Save for Later</button>
-                        <button id="gbBtn">go back</button>
-                        <input type="radio" name="example-radio" value="option1">
-                        <span class="radio"></span>
-                        Movie
-                    </label>
-                    <label class="radio-button">
-                        <input type="radio" name="example-radio" value="option2">
-                        <span class="radio"></span>
-                        Recipe
-                    </label>
-                </form></p>
-			</div>
-            
-        </div>-->
-
-
+        
+        
+        
 
             <!-- Results and save lists -->
 
@@ -141,16 +125,31 @@
                     </div>
                     
                     <div class="p-4 flex-row justify-center align-center">
+                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center border-4 h-80 bg-green-400">
+                            <p class="p-4 text-white flex justify-center align-center">Recipe Card</p>
+                            <div id="randomRecipeArea" class="flex flex-wrap justify-evenly">
+                            </div>
+                        </section>
+
+                        <section id="movie" class="hidden p-4 flex-col justify-center align-center border-4 h-80 bg-green-400">
+                            <p class="p-4 text-white flex justify-center align-center">Movie</p>
+                            <div id="singleMovie" class="flex flex-wrap justify-evenly">
+                            </div>
+                        </section>
+                    
                         <section id="movies" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
                             <p class="p-4 text-white flex justify-center align-center">Movie Results</p>
                             <div id="movieResults" class="flex flex-wrap justify-evenly">
                             </div>
                         </section>
                             
-                            <section id="recipe" class="p-4 flex-col justify-center align-center border-4 h-80">
+                            <section id="recipe" class="hidden p-4 flex-col justify-center align-center border-4 h-auto">
                                 <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
-                                <div id="recipeResults">
+                                <div id="recipeResults" class="text-white text-center">
                                     <!--button for movie modal for now -->
+                                </div>
+                                <div>
+                                    <button type="submit" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button>
                                 </div>
                             </section>
                         </div>
@@ -185,16 +184,12 @@
                         
             <div id="savedRecipes" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
                 <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
-                    <div>
-
-                    </div>
+                    <div id="recipeIdLinks"></div>
             </div>
             
             <div id="saveForLater" class="p-4 flex justify-center align-center border-4 h-80 w-1/3">
                 <h4 class="p-4 text-white flex justify-center align-center">Saved for Later</h4>
-                    <div>
-
-                    </div>
+                    <div id="savedRecipesList"></div>
             </div>
             
         </div>
