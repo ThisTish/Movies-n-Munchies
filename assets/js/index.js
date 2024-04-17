@@ -272,6 +272,7 @@ function displaySelectedMovie(movie){
 
 	
 	const date = movie.release_date
+	console.log(date)
 	const justYear = date.split('-')[0]
 	const year = $('<p>')
 	year.addClass('text-purple')
@@ -606,6 +607,42 @@ function displayRecipeCard(recipeDetails){
 	recipeCard.append(backDropBtn)
 	recipeCardArea.append(recipeCard)
 }
+
+const selectedRecipeModalBtn = $('#selectedRecipeModalBtn')
+selectedRecipeModalBtn.attr('data-recipe-id', '52772')
+
+// * function to FETCH by ID for selectedRecipe MODAL with movie click
+$(document).on('click','#selectedRecipeModalBtn', function() {
+	const recipeID = $(this).attr('data-recipe-id')
+	console.log(recipeID)
+
+	function clearModal() {
+		$('.recipeModalDynamics').empty()
+	}
+	clearModal()
+
+	function fetchRecipebyId(){
+		const recipeIdApi = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`
+	
+		fetch(recipeIdApi)
+		.then(response => {
+			if (!response.ok) {
+				throw response.json()
+			}
+			return response.json()
+			console.log(response)
+		})
+		.then(recipe => {
+			console.log(recipe)
+			// displaySelectedRecipeModal(recipe)
+		})
+		.catch(error => {
+			console.error('Fetch error:', error)
+		});
+	}
+	fetchRecipebyId()
+})
+
 
 
 
