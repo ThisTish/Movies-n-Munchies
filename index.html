@@ -138,31 +138,42 @@
             </div>
             
                     <div class="p-4 flex-row justify-center align-center">
-                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center border-4 h-80 bg-green-400">
-                            <p class="p-4 text-white flex justify-center align-center">Recipe Card</p>
-                            <div id="randomRecipeArea" class="flex flex-wrap justify-evenly">
-                            </div>
-                        </section>
-
-                        <section id="movie" class="hidden p-4 flex-col justify-center align-center border-4 h-80 bg-green-400">
+                        <div class="flex flex-row">
+                        <section id="movie" class="hidden p-4 flex-col justify-center align-center border-4 h-80 ">
                             <p class="p-4 text-white flex justify-center align-center">Movie</p>
                             <div id="singleMovie" class="flex flex-wrap justify-evenly">
                             </div>
+                            <div>
+                                <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Watch Later</button>
+                                <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Find a different movie</button>
+                                <!-- <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button> -->
+                            </div>
                         </section>
+
+                        <section id="recipe" class="hidden p-4 flex-col justify-center align-center border-4 h-auto">
+                            <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
+                            <div id="recipeResults" class="text-white text-center">
+                            </div>
+                            <div>
+                                <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Munch Later</button>
+                                <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Find a different recipe</button>
+                                <!-- <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button> -->
+                            </div>
+                        </section>
+                    </div>
                         
+
                         <section id="movies" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
                             <p class="p-4 text-white flex justify-center align-center">Movie Results</p>
                             <div id="movieResults" class="flex flex-wrap justify-evenly">
                             </div>
                         </section>
                         
-                        <section id="recipe" class="hidden p-4 flex-col justify-center align-center border-4 h-auto">
-                            <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
-                            <div id="recipeResults" class="text-white text-center">
-                                <!--button for movie modal for now -->
-                            </div>
-                            <div>
-                                <button type="submit" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button>
+                        
+                        <!-- random receipes list area -->
+                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
+                            <p class="p-4 text-white flex justify-center align-center">Recipe Card</p>
+                            <div id="randomRecipeArea" class="flex flex-wrap justify-evenly">
                             </div>
                         </section>
                     </div>
