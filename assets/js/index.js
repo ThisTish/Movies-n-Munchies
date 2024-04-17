@@ -825,6 +825,26 @@ function displayList () {
 
 
 
+// *functions for RANDOM MATCH UP>>>>>>>>>>>>>>>>>>>>>>
+const randomMatchUpBtn = $('#matchUpRandom')
+randomMatchUpBtn.on('click', function(event){
+	event.preventDefault()
+	fetchRandomRecipe()
+	fetchARandomMovie()
+		.then(movies => {
+			const randomMovieDetails = randomMovie(movies)
+		displaySingleMovie(randomMovieDetails)
+
+		})
+		.catch(error =>{
+			console.error('fetch error', error)
+		})
+	
+	console.log('matching.....')
+})
+
+
+
 $(document).ready(function(){
 	displaySavedMovies()
     displaySavedRecipes();
