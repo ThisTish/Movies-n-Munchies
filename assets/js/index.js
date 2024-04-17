@@ -421,6 +421,7 @@ function displaySavedMovies(){
 
 
 
+
 // todo displaySavedMatches()
 
 
@@ -634,20 +635,111 @@ function fetchRecipeByMainIngredient() {
 	.then(response => {
 		console.log(response);
 			return response.json()
-	})
-	.then(list => console.log(list))
-	.catch(error => {
-		console.error('Error fetching list:', error)
-	})
+		})
+		.then(list => console.log(list))
+		.catch(error => {
+			console.error('Error fetching list:', error)
+		})}
+		
+$('#mainIngredientBTN').on('click', function(event){
+	event.preventDefault();
+	fetchRecipeByMainIngredient();
+	displayList();
+})
+
+// todo RANDOM displayRecipeResults()
+// do we want to make the random recipe populate the recipe modal?
+function displayRandomRecipe (randomRecipe){
+
+	$('#recipe').show()
+
+	const recipeArray = randomRecipe.meals[0]
+
+	const recipeResultArea = $('#recipeResults')
+	const resultsCard = $('<div>')
+	resultsCard.appendTo(recipeResultArea)
+	
+	const mealName = $('<h4>')
+	mealName.appendTo(resultsCard)
+	mealName.text(`Meal: ${recipeArray.strMeal}`)
+	mealName.addClass('underline decoration-1')
+	mealName.attr('id', 'mealNameResult')
+
+	const category = $('<p>')
+	category.appendTo(resultsCard)
+	category.text(`Category: ${recipeArray.strCategory}`)
+	
+	// need for loop to get all ingredients and measurements
+	
+	const ingredientsList = $('<ul>')
+	ingredientsList.text(`Ingredients & Measurements:`)
+	for (let  i=1; i<=20; i++){
+		const ingredient = recipeArray['strIngredient' + i];
+		const measurement = recipeArray['strMeasure' + i];
+		if (ingredient) {
+            const listItem = $('<li>').text(`${measurement} ${ingredient}`);
+
+            listItem.appendTo(ingredientsList);
+        } else {
+            // If there are no more ingredients, break the loop
+            break;
+        }
+    }
+	ingredientsList.appendTo(resultsCard);
+
+	// const measurements = $('<p>')
+	// measurements.appendTo(resultsCard)
+	// measurements.text(recipeArray.strMeasure)
+
+	const instructions = $('<p>')
+	instructions.appendTo(resultsCard)
+	instructions.text(`Instructions: ${recipeArray.strInstructions}`)
+
+	// padding margin tailwind 
+
+	const source = $('<a>');
+	source.appendTo(resultsCard);
+	// Check if recipeArray.strSource exists and is not an empty string
+	if (recipeArray.strSource && recipeArray.strSource.trim() !== ""){
+		source.text(`Source: ${recipeArray.strSource}`)
+	source.attr('href', recipeArray.strSource);
+	source.attr('target', '_blank')
+	source.attr('id', 'sourceResultLink')
+	source.addClass('text-green-200')
+	} else {
+		// Handle the case where the source link is not provided
+		source.text('Source not available')
+		source.addClass('text-red-600')
+	}
+	
+	resultsCard.append('<br>');
+
+	const youTube = $('<a>');
+	youTube.appendTo(resultsCard);
+	if (recipeArray.strYoutube && recipeArray.strYoutube.trim() !== "") {
+		youTube.text(`YouTube Video: ${recipeArray.strYoutube}`)
+		youTube.attr('href', recipeArray.strYoutube);
+		youTube.attr('target', '_blank')
+		youTube.addClass('text-red-700')
+	}else {
+		// Handle the case where the youtube link is not provided
+		youTube.text('YouTube link not available');
+		youTube.addClass('text-red-600')
+	}
+
+	const saveRecipeLaterBtn = $('#saveRecipe')
+
+	saveRecipeLaterBtn.on('click', function(event) {
+	event.preventDefault();
+	saveRecipe();
+	});
 }
 
-
-
-// *array to save recipes
+// array to save recipes
 let savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
 console.log(savedRecipes);
 
-//* function to save meal id to array
+// function to save meal id to array
 function saveRecipe(){
 
 	const savedmeal = {
@@ -660,10 +752,9 @@ function saveRecipe(){
 	displaySavedRecipes();
 }
 
-//* function to GET and POPULATE recipes as link list in div
-// todo needs work 4/16 820am
+// function to display saved recipes as link list in div
 function displaySavedRecipes (){
-	localStorage.getItem('savedMeal')
+	localStorage.getItem(savedMeal)
 
 	const savedRecipesList = $('#savedRecipesList')
 
