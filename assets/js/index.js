@@ -601,12 +601,13 @@ function displayRecipeCard(recipeDetails){
 	const titleOverlay = $('<div>')
 	.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
 	.text(recipeList.strMeal)
-		
-
+	
 	backDropBtn.append(backdrop, titleOverlay)
 	recipeCard.append(backDropBtn)
 	recipeCardArea.append(recipeCard)
 }
+
+
 
 // *function for RECIPE SEARCH button click
 $('#mainIngredientBTN').on('click', function(event){
