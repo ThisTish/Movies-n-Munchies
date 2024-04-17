@@ -111,7 +111,22 @@ function randomMovie(movies){
 
 }
 
+// *function for random movie clicks
 $('#randomMovieBtn').on('click', function(event){
+	event.preventDefault()
+	singleMovieArea.empty()
+	fetchARandomMovie()
+		.then(movies => {
+			const randomMovieDetails = randomMovie(movies)
+		displaySingleMovie(randomMovieDetails)
+
+		})
+		.catch(error =>{
+			console.error('fetch error', error)
+		})
+})
+// same as above but for the movie area
+$('#randomMovieBtnAgain').on('click', function(event){
 	event.preventDefault()
 	singleMovieArea.empty()
 	fetchARandomMovie()
@@ -130,7 +145,8 @@ $('#randomMovieBtn').on('click', function(event){
 // TODO DISPLAY MOVIE DETAILS FOR THE RANDOM MATCH UP NEXT TO THE RECIPE.
 // *function to display SINGLE RANDOM MOVIE
 const singleMovieArea = $('#singleMovie')
-function displaySingleMovie(movieDetails){
+function displaySingleMovie(movie){
+	// console.log(movieDe?tails)
 	$('#movie').show()
 
 	const movieModalHeader = $('<header>')
@@ -170,7 +186,7 @@ function displaySingleMovie(movieDetails){
 
 	
 	const date = movie.release_date
-	console.log(date)
+	// console.log(date)
 	const justYear = date.split('-')[0]
 	const year = $('<p>')
 	year.addClass('text-purple')
@@ -186,7 +202,7 @@ function displaySingleMovie(movieDetails){
 
 	const genre = $('<p>')
 	genre.addClass('font-bold')
-	genre.text(movie.genres[0].name)//could add more IF they have more...later
+	// genre.text(movie.genres[0].name)//could add more IF they have more...later
 
 	const runtime = $('<p>')
 	runtime.addClass('text-sm')
@@ -265,7 +281,7 @@ $(document).on('click','#selectedMovieBtn', function() {
 // *function for POPULATE MOVIE RESULTS area
 function displayMovieResults(page){
 	$('#movies').show()
-	for(let i = 0; i<10; i++){
+	for(let i = 0; i<7; i++){
 		const movieDetails = page.results[i]
 		const movieCard = $('<div>')
 		movieCard.addClass('card')
@@ -399,6 +415,15 @@ saveForLaterBtnM.on('click', function(event){
 	displaySavedMovies()
 	
 })
+// same as above but for movie area
+$('#saveMovie').on('click', function(event){
+	event.preventDefault()
+	setMovieLocalStorage()
+	selectedMovieModal.hide()
+	displaySavedMovies()
+	
+})
+
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
 	fetchRandomRecipe()
@@ -482,6 +507,11 @@ $('#randomRecipeBtn').on('click', function(event){
 	event.preventDefault();
 	fetchRandomRecipe();
 })
+// same thing but for the one in the results area
+$('#randomRecipeAgain').on('click', function(event){
+	event.preventDefault()
+	fetchRandomRecipe()
+})
 
 // *function to FETCH RANDOM RECIPE
 function fetchRandomRecipe() {
@@ -498,6 +528,7 @@ function fetchRandomRecipe() {
 	})
 	.then(randomRecipe => {
 		console.log(randomRecipe)
+		$('#recipeResults').empty()
 		displayRandomRecipe(randomRecipe)
 	})
 		
@@ -511,6 +542,7 @@ function fetchRandomRecipe() {
 function displayRandomRecipe (randomRecipe){
 	
 	$('#recipe').show()
+	
 	
 	const recipeArray = randomRecipe.meals[0]
 	
@@ -624,7 +656,7 @@ function fetchRandomRecipeCard() {
 $('#recipeCardBtn').on('click', function(event){
     event.preventDefault();
     recipeCardArea.empty();
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 7; i++) {
         fetchRandomRecipeCard();
     }
 });
@@ -902,10 +934,12 @@ function displayList () {
 const randomMatchUpBtn = $('#matchUpRandom')
 randomMatchUpBtn.on('click', function(event){
 	event.preventDefault()
+	singleMovieArea.empty()
 	fetchRandomRecipe()
 	fetchARandomMovie()
 		.then(movies => {
 			const randomMovieDetails = randomMovie(movies)
+
 		displaySingleMovie(randomMovieDetails)
 
 		})
