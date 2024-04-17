@@ -644,8 +644,10 @@ function saveRecipe(){
 
 	const savedmeal = {
 		mealName: ($('#mealNameResult').text()),
-		mealUrl: ($('#sourceResultLink').text()),
+		mealUrl: ($('#sourceResultLink').attr('href')),
 	}
+
+	console.log($('#sourceResultLink').attr('href'));
 	console.log(savedmeal)
 	savedRecipes.push(savedmeal)
 	localStorage.setItem('savedmeal', JSON.stringify(savedRecipes));
@@ -655,13 +657,25 @@ function saveRecipe(){
 //* function to GET and POPULATE recipes as link list in div
 // todo needs work 4/16 820am
 function displaySavedRecipes (){
-	localStorage.getItem('savedMeal')
 
-	const savedRecipesList = $('#savedRecipesList')
+	const recipeIdLinks = $('#recipeIdLinks')
+	recipeIdLinks.empty();
 
-	savedRecipes.forEach()
+	savedRecipes.forEach(function(savedmeal) {
+		const listItem = $('<li>'); // Create <li> element
+		const link = $('<a>'); // Create <a> element
+	
+		link.attr('href', savedmeal.mealUrl); 
+		link.text(savedmeal.mealName); 
+		listItem.append(link); 
+		recipeIdLinks.append(listItem);
+});
 }
 
+$(document).ready(function() {
+    // const savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
+    displaySavedRecipes(savedRecipes);
+});
 
 // todo list for recipe by main ingridient
 //todo needs work
