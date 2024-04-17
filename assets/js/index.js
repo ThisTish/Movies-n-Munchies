@@ -196,40 +196,51 @@ $(document).on('click','#selectedMovieBtn', function() {
 	fetchMovieId()
 })
 
-// *function for POPULATE MOVIE RESULTS area
-function displayMovieResults(page){
-	$('#movies').show()
-	for(let i = 0; i<10; i++){
-		const movieDetails = page.results[i]
-		const movieCard = $('<div>')
-		movieCard.addClass('card')
-		// console.log(movieDetails)
+// * function to fetch by id for selectedMovieModal
+$(document).on('click','#selectedMovieBtn', function() {
+	const movieId = $(this).attr('data-movie-id')
+	console.log(movieId)
 
-		const backDropBtn = $('<button>')
-		backDropBtn.addClass('rounded-lg relative overflow-hidden')
-		backDropBtn.attr({
-			'data-movie-id': movieDetails.id,
-			'id':'selectedMovieBtn',
-			'type':'button'
-		})
-
-		const backdrop = $('<img>')
-		.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
-		.addClass('w-full h-auto')
-
-		const titleOverlay = $('<div>')
-		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
-		.text(movieDetails.title)
-		
-
-		backDropBtn.append(backdrop, titleOverlay)
-		movieCard.append(backDropBtn)
-		movieResultsArea.append(movieCard)
+	function clearModal() {
+		$('.movieModalDynamic').empty()
 	}
-}
+	clearModal()
+
+	function fetchMovieId(){
+		const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
+		const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
+	
+		fetch(movieIdApi)
+		.then(response => {
+			if (!response.ok) {
+				throw response.json()
+			}
+			return response.json()
+			console.log(response)
+		})
+		.then(movie => {
+			console.log(movie)
+			displaySelectedMovie(movie)
+		})
+		.catch(error => {
+			console.error('Fetch error:', error)
+		});
+	}
+	fetchMovieId()
+})
 
 
-// *function to POPULATE MOVIE details in selectedMOVIE MODAL
+//*function to show recipe details modal
+// function displayRecipeModal(){
+// 	const recipeModalBtn = $('#recipeModalBtn')
+// 	const recipeModal = $('#recipeModal')
+// 	recipeModalBtn.on("click",
+// function (){
+// recipeModal.show()
+// })
+// }
+
+// *function to display movie details in selectedMovieModal
 function displaySelectedMovie(movie){
 	const movieModal = $('#movieModal')
 	const dynamicElements = $('<div>')
@@ -310,9 +321,7 @@ function displaySelectedMovie(movie){
 
 //* Selected MOVIE MODAL BUTTONS Functions
 // todo make these one liners
-const selectedMovieModal = $('#movieModal')
-const goBackBtn = $('#go-back')
-const closeBtn = $('.close')
+
 const saveForLaterBtnM = $('#saveForLaterM')
 const getRandomRecipeBtn =$('#getRandomRecipe')
 // !go back button not working
@@ -824,6 +833,14 @@ $(document).ready(function(){
 // todo displayMovieFilmCombination
 
 
+$(document).ready(function(){
+	displaySavedMovies()
+	fetchRecipeByArea()
+	$('#recipeModalBtn').on("click", function(){
+		$('#recipeModal').show()
+	})
+	
+})
 
 
 
