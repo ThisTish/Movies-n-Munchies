@@ -21,3 +21,13 @@ Directions for future development.
 
 Links to the deployed application and the GitHub repository.
 
+Acceptance criteria
+Given a the movies and munchines site
+when i arrrive obn the page
+I am pressented wieth a button to search for random movies (and a button top search for random recipes)
+when i click on random recipes an area appears with a backdrop image and title of the movie 
+ehrn ii click on a movie a modal givingh more details appears and i am presented witha  watch later button that eill sve to local storage and display ion a saved movies area there is also a go back button that will closer the window and a random recipe button and ewhen that is clicked an area that is populated with details of a recipe appears on the main page
+I am also presentsed with a search button that when cliicked a modal with a searach form pops up when i sewarch by a moiview title and click the movie radio button when i submit a movie title witht the movie raio cllicked movie results willl appaer in the movie area when io submit a main ingredient and click the recipe radio button a list of recipe cards will populate a recipe resultys area when i click on a recipe card a modal with the recipe details pops up anf it has the same buttons but vice versa when the "let us create your night button" is clciked an area with a random movie card with a random recipe card pop up, in those cards there will be a be a movie to pick another random movie or recipe that will randomize the appropriate item there will also be a button to save for another night when that button is clicked it will save locally and display in a saved for later area
+
+
+When
