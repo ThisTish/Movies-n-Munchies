@@ -111,7 +111,22 @@ function randomMovie(movies){
 
 }
 
+// *function for random movie clicks
 $('#randomMovieBtn').on('click', function(event){
+	event.preventDefault()
+	singleMovieArea.empty()
+	fetchARandomMovie()
+		.then(movies => {
+			const randomMovieDetails = randomMovie(movies)
+		displaySingleMovie(randomMovieDetails)
+
+		})
+		.catch(error =>{
+			console.error('fetch error', error)
+		})
+})
+// same as above but for the movie area
+$('#randomMovieBtnAgain').on('click', function(event){
 	event.preventDefault()
 	singleMovieArea.empty()
 	fetchARandomMovie()
@@ -130,8 +145,7 @@ $('#randomMovieBtn').on('click', function(event){
 // TODO DISPLAY MOVIE DETAILS FOR THE RANDOM MATCH UP NEXT TO THE RECIPE.
 // *function to display SINGLE RANDOM MOVIE
 const singleMovieArea = $('#singleMovie')
-function displaySingleMovie(movieDetails){
-	$('#movie').show()
+function displaySingleMovie(movie){
 
 	const movieModalHeader = $('<header>')
 
@@ -140,9 +154,6 @@ function displaySingleMovie(movieDetails){
 	movieTitle.text(movie.title) 
 	movieTitle.attr('id', 'movieModalTitle')
 
-	const close = $('<span>')
-	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
-	close.html('&times;')
 
 	const moviePoster = movie.poster_path
 	const posterUrl = `https://image.tmdb.org/t/p/w92/${moviePoster}`
@@ -170,7 +181,7 @@ function displaySingleMovie(movieDetails){
 
 	
 	const date = movie.release_date
-	console.log(date)
+	// console.log(date)
 	const justYear = date.split('-')[0]
 	const year = $('<p>')
 	year.addClass('text-purple')
@@ -186,7 +197,7 @@ function displaySingleMovie(movieDetails){
 
 	const genre = $('<p>')
 	genre.addClass('font-bold')
-	genre.text(movie.genres[0].name)//could add more IF they have more...later
+	// genre.text(movie.genres[0].name)//could add more IF they have more...later
 
 	const runtime = $('<p>')
 	runtime.addClass('text-sm')
@@ -265,7 +276,7 @@ $(document).on('click','#selectedMovieBtn', function() {
 // *function for POPULATE MOVIE RESULTS area
 function displayMovieResults(page){
 	$('#movies').show()
-	for(let i = 0; i<10; i++){
+	for(let i = 0; i<7; i++){
 		const movieDetails = page.results[i]
 		const movieCard = $('<div>')
 		movieCard.addClass('card')
@@ -399,6 +410,15 @@ saveForLaterBtnM.on('click', function(event){
 	displaySavedMovies()
 	
 })
+// same as above but for movie area
+$('#saveMovie').on('click', function(event){
+	event.preventDefault()
+	setMovieLocalStorage()
+	selectedMovieModal.hide()
+	displaySavedMovies()
+	
+})
+
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
 	fetchRandomRecipe()
@@ -482,6 +502,11 @@ $('#randomRecipeBtn').on('click', function(event){
 	event.preventDefault();
 	fetchRandomRecipe();
 })
+// same thing but for the one in the results area
+$('#randomRecipeAgain').on('click', function(event){
+	event.preventDefault()
+	fetchRandomRecipe()
+})
 
 // *function to FETCH RANDOM RECIPE
 function fetchRandomRecipe() {
@@ -498,6 +523,7 @@ function fetchRandomRecipe() {
 	})
 	.then(randomRecipe => {
 		console.log(randomRecipe)
+		$('#recipeResults').empty()
 		displayRandomRecipe(randomRecipe)
 	})
 		
@@ -512,10 +538,15 @@ function displayRandomRecipe (randomRecipe){
 	
 	$('#recipe').show()
 	
+	
 	const recipeArray = randomRecipe.meals[0]
 	
 	const recipeResultArea = $('#recipeResults')
 	const resultsCard = $('<div>')
+	.attr({
+		'id': 'resultsCard',
+		'data-recipe-id' : recipeArray.idMeal
+	})
 	resultsCard.appendTo(recipeResultArea)
 	
 	const mealName = $('<h4>')
@@ -523,6 +554,18 @@ function displayRandomRecipe (randomRecipe){
 	mealName.text(`Meal: ${recipeArray.strMeal}`)
 	mealName.addClass('underline decoration-1')
 	mealName.attr('id', 'mealNameResult')
+
+	// const thumbnail = recipeArray.strMealThumb
+	// console.log(thumbnail)
+
+	const recipeThumb = $('<img>')
+	.attr({
+		'src': recipeArray.strMealThumb,
+		'id': 'recipeImg'
+})
+	.addClass('w-40 h-auto')
+	recipeThumb.appendTo(resultsCard)
+
 	
 	const category = $('<p>')
 	category.appendTo(resultsCard)
@@ -567,6 +610,7 @@ function displayRandomRecipe (randomRecipe){
 		source.addClass('text-green-200')
 	} else {
 		// Handle the case where the source link is not provided
+		// ?if we don't put this else, it just won't create the elements and won't mess up the display. either way, your choice :)
 		source.text('Source not available')
 		source.addClass('text-red-600')
 	}
@@ -624,7 +668,7 @@ function fetchRandomRecipeCard() {
 $('#recipeCardBtn').on('click', function(event){
     event.preventDefault();
     recipeCardArea.empty();
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 7; i++) {
         fetchRandomRecipeCard();
     }
 });
@@ -669,7 +713,6 @@ function displayRecipeCard(recipeDetails){
 
 // * function to FETCH by ID for selectedRecipe MODAL(card click)
 const selectedRecipeModalBtn = $('#selectedRecipeModalBtn')
-// selectedRecipeModalBtn.attr('data-recipe-id', '52772')
 
 $(document).on('click','#selectedRecipeModalBtn', function() {
 	const recipeID = $(this).attr('data-recipe-id')
@@ -773,10 +816,6 @@ function displaySelectedRecipe(randomRecipe){
 	
 	
 	
-	// saveRecipeLaterBtn.on('click', function(event) {
-	// 	event.preventDefault();
-	// 	saveRecipe();
-	// });
 	recipeDetailsHeader.append(mealName, close)
 	resultsCard.append(recipeDetailsHeader, category, ingredientsList, instructions, source, youTube)
 	recipeModalDynamics.append(resultsCard)
@@ -902,33 +941,148 @@ function displayList () {
 const randomMatchUpBtn = $('#matchUpRandom')
 randomMatchUpBtn.on('click', function(event){
 	event.preventDefault()
+	singleMovieArea.empty()
 	fetchRandomRecipe()
 	fetchARandomMovie()
 		.then(movies => {
 			const randomMovieDetails = randomMovie(movies)
+
 		displaySingleMovie(randomMovieDetails)
 
 		})
 		.catch(error =>{
 			console.error('fetch error', error)
 		})
-	
+
+	$('#matchContainer').show()
 	console.log('matching.....')
 })
 
-
-
-$(document).ready(function(){
-	displaySavedMovies()
-    displaySavedRecipes();
-	// displaySavedMatches() to do still
+$('#saveForAnotherNight').on('click', function(){
+	setMatches()
+	displaySavedMatches()
 })
+
 
 // todo getMatchLocalStorage()
 
-// todo setMatchLocalStorage()
 
-// todo displaySavedMatches()
+// *function to get match LOCALSTORAGE
+function getMatches(){
+	let matches = (JSON.parse(localStorage.getItem('matches')))
+	if(!matches){
+		matches=[]
+	}
+	return matches
+	console.log(matches)
+}
+// *function to set match LOCALSTORAGE
+function setMatches(){
+	let matches = getMatches()
+	
+	const savedMatchObject = {
+		movie: {
+			title: ($('#movieModalTitle').text()),
+			poster: ($('#moviePoster').attr('src')),
+			id: ($('#movieDeets').attr('data-movie-id'))
+		},
+		recipe: {
+			mealName: ($('#mealNameResult').text()),
+			mealUrl: ($('#sourceResultLink').attr('href')),
+			thumbnail: ($('#recipeImg').attr('src')),
+			id: ($('#resultsCard').attr('data-recipe-id'))
+		}
+	}
+	matches.push(savedMatchObject)
+	
+	localStorage.setItem('matches', JSON.stringify(matches))
+	console.log(savedMatchObject)
+	console.log(localStorage.matches)
+	
+}
+// // *function POPULATE SAVED matches
+function displaySavedMatches(){
+	const matchObjects = getMatches()
+	console.log(matchObjects)
+	const savedMatchesArea = $('#savedMatchesArea')
+	savedMatchesArea.empty()
+	
+	if(Array.isArray(matchObjects)){
+		for(let match of matchObjects){
+			const matchCard = $('<div>')
+			.addClass('card')
+			.attr('id','matchCard')
+
+			const movie = match.movie
+			const recipe = match.recipe
+			console.log(match.movie)
+			console.log(match.recipe)
+
+			const movieCard = $('<card>')
+			// movieCard.addClass('card')
+			movieCard.attr({
+				'id': 'movieCard',
+				'data-movie-id': movie.id
+			})			
+			const savedMovieTitle = $('<h2>')
+			savedMovieTitle.addClass('font-bold')
+			savedMovieTitle.text(movie.title)
+			
+			const savedMoviePoster = $('<img>')
+			savedMoviePoster.addClass('border-light')
+			savedMoviePoster.attr('src', movie.poster)
+			
+			
+			movieCard.append(savedMoviePoster, savedMovieTitle)
+			savedMatchesArea.append(movieCard)	
+
+
+
+
+			const recipeCard = $('<div>')
+			// recipeCard.addClass('card')
+
+			const backDropBtn = $('<button>')
+			backDropBtn.addClass('rounded-lg relative overflow-hidden')
+			backDropBtn.attr({
+				'data-recipe-id': recipe.id,
+				'id':'selectedRecipeModalBtn',
+				'type':'button'
+			})
+			
+			const backdrop = $('<img>')
+			.attr('src', recipe.thumbnail)
+			.addClass('w-40 h-auto')
+
+			const titleOverlay = $('<div>')
+			.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
+			.text(recipe.mealName)
+
+			const recipeSrc = ($('<a>'))
+			recipeSrc.attr({
+				'id':'recipeLink',
+				'src': recipe.mealUrl
+			})
+			// recipeSrc.text('Recipe Link')
+			
+			backDropBtn.append(backdrop, titleOverlay)
+			recipeCard.append(backDropBtn)
+			matchCard.append(recipeCard, movieCard)
+			savedMatchesArea.append(matchCard)
+		}
+	}
+}
+	// 	}
+	// }
+// }
+
+$(document).ready(function(){
+	displaySavedMovies()
+	displaySavedRecipes();
+	// displaySavedMatches() to do still
+})
+
+
 
 // *fetch recipe api's not in use yet.
 // const fetchRecipeByTypeApi = `www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
