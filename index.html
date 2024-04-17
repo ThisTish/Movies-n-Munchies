@@ -47,10 +47,19 @@
             <h2 class=" rounded-md bg-white p-1">Browse our site for what feels right and let us help you plan your night!</h2>
         </div>
         <div class="flex justify-evenly">
+<<<<<<< HEAD
+            <button id="randomMoviesBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RaNdoM mOviEs</button>
+            <button id="recipeCardBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RanDoM rEciPes</button>
+            <button id="randomMovieBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RandoM MOVIE</button>
+            <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE</button>
+            <!-- todo change this to random recipes after function works -->
+            <button id="matchUpRandom" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">let us plan your night</button>
+=======
             <button id="randomMoviesBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">RaNdoM mOviEs</button>
             <button id="randomMovieBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">RandoM MOVIE</button>
             <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">RANDOM RECIPE</button>
             <button id="recipeCardBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">RANDOM RECIPE Card</button>
+>>>>>>> main
         </div>
         <form action="" class="flex justify-center p-8 position-static">
             <label for="mainIngredient" class="text-xl pl-6 bg-primary-400 pr-4 border-black border-2 rounded-l-lg">Search by Main Ingredient:</label>
@@ -58,32 +67,24 @@
             <button id="mainIngredientBTN"class="bg-yellow-400 rounded-r-lg hover:bg-primary-200" >Search!</button>
         </form>
 
-<!-- *harry potter button to fetch by title, will replace with searchInput -->
-        <button id="harryPotter" class="button bg-primary-100 text-primary-400 rounded-full p-1 border-solid hover:border-double border-4 border-black hover:border-white">Harry Potter</button>
-        <!-- !tied to fetchrecipeByName, kinda worthless right now. -->
-        <!-- <form id="recipeByName" action="">
-            <label for="recipeName">Search by Recipe Name</label>
-            <input type="text" id="recipeName">
-            <button id="recipeNameBtn"class="bg-yellow-500">Search</button>
-        </form> -->
-
-
+        
+        
         <!-- *MODALS -->
-
+        
         <!-- Search Form Modal -->
-        <!--todo button to trigger modal. Label id's & classes. Fix html structure. function in js-->
+        <!--todo Label id's & classes. Fix html structure. function in js-->
         <button id="searchBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
-
-        <div id="searchModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
-        <form id="searchForm">
+        
+        <div id="searchModal" class="modal hidden fixed text-white inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
+            <form id="searchForm">
             <header>
             <h3>Get your search on!</h3>
             <span class="searchCloseBtn absolute text-white top-0 right-0 p-4 cursor-pointer">&times;</span>
             </header>
             <div>
-            <label>Search Movie or Recipe</label>
-            <input id="searchInput">
-            <button type="submit" id="submitSearch" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
+                <label>Search Movie or Recipe</label>
+                <input id="searchInput">
+                <button type="submit" id="submitSearch" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
             </div>
             <label class="movieRadio">
                 <input type="radio" name="movieRadio" value="movie">
@@ -97,100 +98,107 @@
                 Recipe
             </label>
         </form>
-        </div>
-
-        
-        
-        
-        <!-- selected recipe modal -->
-        <!-- todo reformat. filter out non needed items -->
-        <h2>Recipe Modal</h2>
-       
-<!-- this will go into the "recipe results container, needs more formatting" -->
-<div id="recipeModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
-    <div class="recipeModalBody modal-content text-white rounded-lg p-4">
-        
-        <img id="poster" class="w-10 h-auto mx-auto mb-4" src="https://p7.hiclipart.com/preview/64/272/981/coraline-jones-film-poster-film-poster-coraline-jones-thumbnail.jpg">
-        
-        <footer id="bottomButtons">
-            <button id ="save-for-later" type="submit" class="button bg-blue-600 rounded-4 mx-4">munch later</button>
-            <button id ="go-back" type="button" class="button bg-blue-600 rounded-4 mx-4">go back</button>
-            <button id ="pair" type="button" class="button bg-blue-600 rounded-4 mx-4">Find Movie</button>
-        </footer>
     </div>
-</div>
+    
 
-        
-        
-        
-
-            <!-- Results and save lists -->
-
-            <!-- results -->
+    <!-- selected movie modal -->
+    <!--todo design, dynamic elements in js need design as well -->
+    <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto z-50">
+        <div class="movieModalBody text-white rounded-lg p-4">
             
-            <div id="results" class="p-4 flex-col justify-around align-center ">
-                
-                <div class="p-4 text-white text-2xl flex justify-center align-center">
-                        <h3>Results</h3>
-                    </div>
-                    
+            <footer id="bottomButtons">
+                <button id ="saveForLaterM" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
+                <button id ="go-back" type="button" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+                <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button>
+                <button id ="getRandomRecipe" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM reCipE</button>
+            </footer>
+        </div>
+    </div>
+        
+    <!-- selected recipe modal -->
+    <div id="recipeModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto z-50">
+        <h2>Recipe Modal</h2>
+        <div class="recipeModalBody text-white rounded-lg p-4">
+            
+            <footer id="bottomButtons">
+                <button id ="saveForLaterR" type="submit" class="button bg-blue-600 rounded-4 mx-4">munch later</button>
+                    <button id ="goBack" type="button" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+                    <!-- <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button> not applicable right now--> 
+                    <!-- todo call fetchARandomMovie & display functions -->
+                    <button id ="getRandomMovie" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM moViE</button>
+                </footer>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        <!-- Results and save lists -->
+        
+        <!-- results -->
+        
+        <div id="results" class="p-4 flex-col justify-around align-center ">
+            
+            <div class="p-4 text-white text-2xl flex justify-center align-center">
+                <h3>Results</h3>
+            </div>
+            
                     <div class="p-4 flex-row justify-center align-center">
-                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center border-4 h-80 bg-green-400">
-                            <p class="p-4 text-white flex justify-center align-center">Recipe Card</p>
-                            <div id="randomRecipeArea" class="flex flex-wrap justify-evenly">
-                            </div>
-                        </section>
-
-                        <section id="movie" class="hidden p-4 flex-col justify-center align-center border-4 h-80 bg-green-400">
+                        <div class="flex flex-row">
+                        <section id="movie" class="hidden p-4 flex-col justify-center align-center border-4 h-80 ">
                             <p class="p-4 text-white flex justify-center align-center">Movie</p>
                             <div id="singleMovie" class="flex flex-wrap justify-evenly">
                             </div>
+                            <div>
+                                <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Watch Later</button>
+                                <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Find a different movie</button>
+                                <!-- <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button> -->
+                            </div>
                         </section>
-                    
+
+                        <section id="recipe" class="hidden p-4 flex-col justify-center align-center border-4 h-auto">
+                            <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
+                            <div id="recipeResults" class="text-white text-center">
+                            </div>
+                            <div>
+                                <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Munch Later</button>
+                                <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Find a different recipe</button>
+                                <!-- <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button> -->
+                            </div>
+                        </section>
+                    </div>
+                        
+
                         <section id="movies" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
                             <p class="p-4 text-white flex justify-center align-center">Movie Results</p>
                             <div id="movieResults" class="flex flex-wrap justify-evenly">
                             </div>
                         </section>
-                            
-                            <section id="recipe" class="hidden p-4 flex-col justify-center align-center border-4 h-auto">
-                                <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
-                                <div id="recipeResults" class="text-white text-center">
-                                    <!--button for movie modal for now -->
-                                </div>
-                                <div>
-                                    <button type="submit" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button>
-                                </div>
-                            </section>
-                        </div>
+                        
+                        
+                        <!-- random receipes list area -->
+                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
+                            <p class="p-4 text-white flex justify-center align-center">Recipe Card</p>
+                            <div id="randomRecipeArea" class="flex flex-wrap justify-evenly">
+                            </div>
+                        </section>
                     </div>
-                    
-                    
-                    <!-- selected movie modal -->
-                    <!--todo design, dynamic elements in js need design as well -->
-                    <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto">
-                        <div class="movieModalBody text-white rounded-lg p-4">
-                            
-                            <footer id="bottomButtons">
-                                <button id ="saveForLaterM" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
-                                <button id ="go-back" type="close" class="button bg-blue-600 rounded-4 mx-4">go back</button>
-                                <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button>
-                                <button id ="getRandomRecipe" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM reCipE</button>
-                            </footer>
-                        </div>
-                    </div>
-                    
-                    
-                    <!--*SAVE COLUMNS-->
+                </div>
+                
+                
+                
+                
+                <!--*SAVE COLUMNS-->
                     
                     <div id="save" class="p-4 flex flex-row justify-around align-center">
-            
-            <div id="savedMovies" class="p-4 flex justify-center align-center border-4 h-auto w-1/3">
-                <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
+                        
+                        <div id="savedMovies" class="p-4 flex justify-center align-center border-4 h-auto w-1/3">
+                            <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
                     <div id="savedMoviesArea">
-
+                        
                     </div>
-            </div>
+                </div>
                         
             <div id="savedRecipes" class="p-4 flex-col justify-center align-center border-4 h-auto w-1/3">
                 <div>
@@ -215,10 +223,22 @@
         </div>
     </footer>
     
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
 	<script src="assets/js/index.js"></script>
-
+    
 </body>
 
 </html>
+
+
+
+
+<!-- !tied to fetchrecipeByName, kinda worthless right now. -->
+<!-- <form id="recipeByName" action="">
+    <label for="recipeName">Search by Recipe Name</label>
+    <input type="text" id="recipeName">
+    <button id="recipeNameBtn"class="bg-yellow-500">Search</button>
+</form> -->
+
+
