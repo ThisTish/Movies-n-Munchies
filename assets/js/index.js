@@ -25,13 +25,6 @@ $('#searchForm').on('submit', function(event){
 	fetchMovieTitleApi(searchInputEl)
 })
 
-// *function for MOVIE TITLE search button CLICK
-// todo need the searchInput to work
-$('#harryPotter').on('click', () =>{
-	console.log("you're a wizard harry")
-	fetchMovieTitleApi()
-})
-
 // *function for MOVIE TITLE FETCH
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
@@ -242,7 +235,7 @@ function displaySelectedMovie(movie){
 	movieTitle.text(movie.title) 
 	movieTitle.attr('id', 'movieModalTitle')
 
-	const close = $('<span>')//might add back to html
+	const close = $('<span>')
 	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
 	close.html('&times;')
 
@@ -552,19 +545,29 @@ function fetchRandomRecipeCard() {
 		console.error('Error fetching recipe:', error)
 	}) 
 }
+
 $('#recipeCardBtn').on('click', function(event){
-	event.preventDefault()
-	recipeCardArea.empty()
-	fetchRandomRecipeCard()
+    event.preventDefault();
+    recipeCardArea.empty();
+    for (let i = 0; i < 10; i++) {
+        fetchRandomRecipeCard();
+    }
+});
+
+
+// $('#recipeCardBtn').on('click', function(event){
+// 	event.preventDefault()
+// 	recipeCardArea.empty()
+// 	fetchRandomRecipeCard()
 	
-})
+// })
 // *function to POPULATE RANDOM RECIPE CARD
 const recipeCardArea = $('#randomRecipeArea')
 function displayRecipeCard(recipeDetails){
 	const recipeList = recipeDetails.meals[0]
 	$('#recipeCardArea').show()
 	console.log(recipeDetails)
-	console.log(recipeList)
+	console.log(recipeList.idMeal)
 	console.log(recipeList.strMeal)
 	console.log(recipeList.strMealThumb)
 	
@@ -575,7 +578,7 @@ function displayRecipeCard(recipeDetails){
 	backDropBtn.addClass('rounded-lg relative overflow-hidden')
 	backDropBtn.attr({
 		'data-recipe-id': recipeList.idMeal,
-		'id':'selectedRecipeBtn',
+		'id':'selectedRecipeModalBtn',
 		'type':'button'
 	})
 	
@@ -583,7 +586,6 @@ function displayRecipeCard(recipeDetails){
 	.attr('src', recipeList.strMealThumb)
 	.addClass('w-40 h-auto')
 
-	// !only showing background when clicked on.
 	const titleOverlay = $('<div>')
 	.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
 	.text(recipeList.strMeal)
@@ -593,19 +595,14 @@ function displayRecipeCard(recipeDetails){
 	recipeCardArea.append(recipeCard)
 }
 
-//todo where i left off during class time........................................
 // * function to FETCH by ID for selectedRecipe MODAL(card click)
 const selectedRecipeModalBtn = $('#selectedRecipeModalBtn')
-selectedRecipeModalBtn.attr('data-recipe-id', '52772')
+// selectedRecipeModalBtn.attr('data-recipe-id', '52772')
 
 $(document).on('click','#selectedRecipeModalBtn', function() {
 	const recipeID = $(this).attr('data-recipe-id')
 	console.log(recipeID)
 	
-	// function clearModal() {
-	// 	$('.recipeModalDynamics').empty()
-	// }
-	// clearModal()
 	$('.recipeModalDynamics').empty()
 
 	function fetchRecipebyId(){
@@ -629,6 +626,94 @@ $(document).on('click','#selectedRecipeModalBtn', function() {
 	}
 	fetchRecipebyId()
 })
+
+// * function for Selected Recipe Modal.
+function displaySelectedRecipe(randomRecipe){
+	const selectedRecipeBody = $('.recipeModalBody')
+
+	const recipeModalDynamics = $('<div>')
+	recipeModalDynamics.addClass('recipeElements p-3 text-white')
+	
+	const recipeArray = randomRecipe.meals[0]
+	
+	const resultsCard = $('<div>')
+	resultsCard.addClass('card')
+
+	const recipeDetailsHeader = $('<header>').addClass('header')
+	
+	const mealName = $('<h4>')
+	mealName.text(`Meal: ${recipeArray.strMeal}`)
+	mealName.addClass('underline decoration-1')
+	mealName.attr('id', 'mealNameResult')
+
+	const close = $('<span>')//might add back to html
+	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
+	close.html('&times;')
+	
+	const category = $('<p>')
+	category.text(`Category: ${recipeArray.strCategory}`)
+	
+	const ingredientsList = $('<ul>')
+	ingredientsList.text(`Ingredients & Measurements:`)
+	for (let  i=1; i<=20; i++){
+		const ingredient = recipeArray['strIngredient' + i];
+		const measurement = recipeArray['strMeasure' + i];
+		if (ingredient) {
+			const listItem = $('<li>').text(`${measurement} ${ingredient}`);
+			
+		} else {
+			break;
+		}
+	}
+	// ? not sure if you wanted these. 
+	// const measurements = $('<p>')
+	// measurements.appendTo(resultsCard)
+	// measurements.text(recipeArray.strMeasure)
+	
+	const instructions = $('<p>')
+	instructions.text(`Instructions: ${recipeArray.strInstructions}`)
+
+	const source = $('<a>');
+	if (recipeArray.strSource && recipeArray.strSource.trim() !== ""){
+		source.text(`Source: ${recipeArray.strSource}`)
+	source.attr('href', recipeArray.strSource);
+	source.attr('target', '_blank')
+	source.attr('id', 'sourceResultLink')
+	source.addClass('text-green-200')
+	} else {
+		source.text('Source not available')
+		source.addClass('text-red-600')
+	}
+	// *added another set of parenthesis
+	resultsCard.append($('<br>'));
+	
+	const youTube = $('<a>');
+	if (recipeArray.strYoutube && recipeArray.strYoutube.trim() !== "") {
+		youTube.text(`YouTube Video: ${recipeArray.strYoutube}`)
+		youTube.attr('href', recipeArray.strYoutube);
+		youTube.attr('target', '_blank')
+		youTube.addClass('text-red-700')
+	}else {
+		youTube.text('YouTube link not available');
+		youTube.addClass('text-red-600')
+	}
+	
+	
+	
+	
+	// saveRecipeLaterBtn.on('click', function(event) {
+	// 	event.preventDefault();
+	// 	saveRecipe();
+	// });
+	recipeDetailsHeader.append(mealName, close)
+	resultsCard.append(recipeDetailsHeader, category, ingredientsList, instructions, source, youTube)
+	recipeModalDynamics.append(resultsCard)
+	selectedRecipeBody.prepend(recipeModalDynamics) 
+	
+	const selectedRecipeModal = $('#recipeModal')
+	selectedRecipeModal.show()
+}
+
 
 
 
@@ -709,87 +794,6 @@ function displayList () {
 	
 }
 
-// todo displaySelectedRecipe()
-// * function for Selected Recipe Modal.
-
-function displaySelectedRecipe(randomRecipe){
-	const selectedRecipeBody = $('.recipeModalBody')
-	const recipeModalDynamics = $('<div>')
-	recipeModalDynamics.addClass('recipeElements p-3 text-white')
-	
-
-	const recipeArray = randomRecipe.meals[0]
-	
-	const recipeResultArea = $('#recipeResults')
-	const resultsCard = $('<div>')
-	
-	const mealName = $('<h4>')
-	mealName.text(`Meal: ${recipeArray.strMeal}`)
-	mealName.addClass('underline decoration-1')
-	mealName.attr('id', 'mealNameResult')
-	
-	const category = $('<p>')
-	category.text(`Category: ${recipeArray.strCategory}`)
-	
-	const ingredientsList = $('<ul>')
-	ingredientsList.text(`Ingredients & Measurements:`)
-	for (let  i=1; i<=20; i++){
-		const ingredient = recipeArray['strIngredient' + i];
-		const measurement = recipeArray['strMeasure' + i];
-		if (ingredient) {
-			const listItem = $('<li>').text(`${measurement} ${ingredient}`);
-			
-		} else {
-			break;
-		}
-	}
-	// ? not sure if you wanted these. 
-	// const measurements = $('<p>')
-	// measurements.appendTo(resultsCard)
-	// measurements.text(recipeArray.strMeasure)
-	
-	const instructions = $('<p>')
-	instructions.text(`Instructions: ${recipeArray.strInstructions}`)
-
-	const source = $('<a>');
-	if (recipeArray.strSource && recipeArray.strSource.trim() !== ""){
-		source.text(`Source: ${recipeArray.strSource}`)
-	source.attr('href', recipeArray.strSource);
-	source.attr('target', '_blank')
-	source.attr('id', 'sourceResultLink')
-	source.addClass('text-green-200')
-	} else {
-		source.text('Source not available')
-		source.addClass('text-red-600')
-	}
-	// *added another set of parenthesis
-	resultsCard.append($('<br>'));
-	
-	const youTube = $('<a>');
-	if (recipeArray.strYoutube && recipeArray.strYoutube.trim() !== "") {
-		youTube.text(`YouTube Video: ${recipeArray.strYoutube}`)
-		youTube.attr('href', recipeArray.strYoutube);
-		youTube.attr('target', '_blank')
-		youTube.addClass('text-red-700')
-	}else {
-		youTube.text('YouTube link not available');
-		youTube.addClass('text-red-600')
-	}
-	
-	
-	
-	
-	// saveRecipeLaterBtn.on('click', function(event) {
-	// 	event.preventDefault();
-	// 	saveRecipe();
-	// });
-	resultsCard.append(mealName, category, ingredientsList, instructions, source, youTube)
-	recipeModalDynamics.append(resultsCard)
-	selectedRecipeBody.prepend(recipeModalDynamics) 
-	
-	const selectedRecipeModal = $('#recipeModal')
-	selectedRecipeModal.show()
-}
 
 
 $(document).ready(function(){
