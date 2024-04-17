@@ -545,7 +545,8 @@ function displayRandomRecipe (randomRecipe){
 	const resultsCard = $('<div>')
 	.attr({
 		'id': 'resultsCard',
-		'data-recipe-id' : recipeArray.idMeal)
+		'data-recipe-id' : recipeArray.idMeal
+	})
 	resultsCard.appendTo(recipeResultArea)
 	
 	const mealName = $('<h4>')
@@ -815,10 +816,6 @@ function displaySelectedRecipe(randomRecipe){
 	
 	
 	
-	// saveRecipeLaterBtn.on('click', function(event) {
-	// 	event.preventDefault();
-	// 	saveRecipe();
-	// });
 	recipeDetailsHeader.append(mealName, close)
 	resultsCard.append(recipeDetailsHeader, category, ingredientsList, instructions, source, youTube)
 	recipeModalDynamics.append(resultsCard)
@@ -957,19 +954,14 @@ randomMatchUpBtn.on('click', function(event){
 			console.error('fetch error', error)
 		})
 
-	// $('#matchUpArea').prepend($('<button>')
-	// .addClass("button bg-green-400 text-base text-white z-0")
-	// .attr({
-	// 	'id': 'saveForAnotherNight',
-	// 	'type': 'button'
-	// })
-	// .html('Save pairing'))
-	// $('<hr>')
 	$('#matchContainer').show()
 	console.log('matching.....')
 })
 
-
+$('#saveForAnotherNight').on('click', function(){
+	setMatches()
+	displaySavedMatches()
+})
 
 
 // todo getMatchLocalStorage()
@@ -977,12 +969,12 @@ randomMatchUpBtn.on('click', function(event){
 
 // *function to get match LOCALSTORAGE
 function getMatches(){
-	console.log(`localStorage${localStorage.matches}`)
 	let matches = (JSON.parse(localStorage.getItem('matches')))
 	if(!matches){
 		matches=[]
 	}
 	return matches
+	console.log(matches)
 }
 // *function to set match LOCALSTORAGE
 function setMatches(){
@@ -1009,36 +1001,80 @@ function setMatches(){
 	
 }
 // // *function POPULATE SAVED matches
-// function displaySavedMatches(){
-// 	const matches = 	getMatches()
-// 	const savedMatchesArea = $('#savedmatchesArea')
+function displaySavedMatches(){
+	const matchObjects = getMatches()
+	console.log(matchObjects)
+	const savedMatchesArea = $('#savedMatchesArea')
+	savedMatchesArea.empty()
 	
-// 	savedmatchesArea.empty()
-	
-	// if(Array.isArray(matches)){
-	// 	for(let match of matches){
+	if(Array.isArray(matchObjects)){
+		for(let match of matchObjects){
+			const matchCard = $('<div>')
+			.addClass('card')
+			.attr('id','matchCard')
+
+			const movie = match.movie
+			const recipe = match.recipe
+			console.log(match.movie)
+			console.log(match.recipe)
+
+			const movieCard = $('<card>')
+			// movieCard.addClass('card')
+			movieCard.attr({
+				'id': 'movieCard',
+				'data-movie-id': movie.id
+			})			
+			const savedMovieTitle = $('<h2>')
+			savedMovieTitle.addClass('font-bold')
+			savedMovieTitle.text(movie.title)
 			
-	// 		const movieCard = $('<card>')
-	// 		movieCard.addClass('card')
-	// 		movieCard.attr({
-	// 			'id': 'movieCard',
-	// 			'data-movie-id': movie.id
-	// 		})
-			
-	// 		const savedMovieTitle = $('<h2>')
-	// 		savedMovieTitle.addClass('font-bold')
-	// 		savedMovieTitle.text(movie.title)
-			
-	// 		const savedMoviePoster = $('<img>')
-	// 		savedMoviePoster.addClass('border-light')
-	// 		savedMoviePoster.attr('src', movie.poster)
+			const savedMoviePoster = $('<img>')
+			savedMoviePoster.addClass('border-light')
+			savedMoviePoster.attr('src', movie.poster)
 			
 			
-	// 		movieCard.append(savedMoviePoster, savedMovieTitle)
-	// 		savedmatchesArea.append(movieCard)	
+			movieCard.append(savedMoviePoster, savedMovieTitle)
+			savedMatchesArea.append(movieCard)	
+
+
+
+
+			const recipeCard = $('<div>')
+			// recipeCard.addClass('card')
+
+			const backDropBtn = $('<button>')
+			backDropBtn.addClass('rounded-lg relative overflow-hidden')
+			backDropBtn.attr({
+				'data-recipe-id': recipe.id,
+				'id':'selectedRecipeModalBtn',
+				'type':'button'
+			})
+			
+			const backdrop = $('<img>')
+			.attr('src', recipe.thumbnail)
+			.addClass('w-40 h-auto')
+
+			const titleOverlay = $('<div>')
+			.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
+			.text(recipe.mealName)
+
+			const recipeSrc = ($('<a>'))
+			recipeSrc.attr({
+				'id':'recipeLink',
+				'src': recipe.mealUrl
+			})
+			// recipeSrc.text('Recipe Link')
+			
+			backDropBtn.append(backdrop, titleOverlay)
+			recipeCard.append(backDropBtn)
+			matchCard.append(recipeCard, movieCard)
+			savedMatchesArea.append(matchCard)
+		}
+	}
+}
 	// 	}
 	// }
-}
+// }
 
 $(document).ready(function(){
 	displaySavedMovies()
