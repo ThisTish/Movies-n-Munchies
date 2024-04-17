@@ -4,20 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: {
+                        100: "#632626",
+                        200: "#9D5353",
+                        300: "#BF8B67",
+                        400: "#DACC96",
+                    }
+                }
+            }
+        }
+    }
+    </script>
     <link rel="stylesheet" type ="text/css" href="assets/css/style.css">
     <title>Movies-n-Munchies</title>
 </head>
 
-<body class="bg-gray-400">
+<body class=" bg-gradient-to-b from-red-950 via-orange-300 to-yellow-300">
 
-    <header class="px-4 flex justify-center items-center">
-        <img src="assets/images/logo2.webp" alt="film roll">
-        <h1 class="y-4 font-bold text-white text-6xl">Movies'n'Munchies</h1>
+    <header class="px-4 flex justify-center items-center position: static">
+        <img class="rounded-xl" src="assets/images/logo2.webp" alt="film roll">
+        <div class="position: absolute flex justify-center">
+        <h1 class="text-primary-200 y-4 font-bold text-6xl">Movies'n'Munchies</h1>
+        </div>
     </header>
     
     <main>
-        <div class="p-4 text-white flex justify-center align-center">
-            <h2>Browse our site for what feels right and let us help you plan your night!</h2>
+        <div class="p-4 text-xl underline text-[#63262] flex justify-center align-center">
+            <h2 class=" rounded-md bg-white p-1">Browse our site for what feels right and let us help you plan your night!</h2>
         </div>
         
         <button id="randomMoviesBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RaNdoM mOviEs</button>
@@ -26,13 +43,13 @@
         <button id="recipeCardBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE Card</button>
 
         <form action="">
-            <label for="mainIngredient">Search by Main Ingredient</label>
+            <label for="mainIngredient" class="">Search by Main Ingredient</label>
             <input type="text" id="mainIngredient">
             <button id="mainIngredientBTN"class="bg-yellow-500" >Search</button>
         </form>
 
 <!-- *harry potter button to fetch by title, will replace with searchInput -->
-        <button id="harryPotter" class="button bg-blue-800 text-yellow-500">Harry Potter</button>
+        <button id="harryPotter" class="button bg-blue-800 text-yellow-500 rounded-full p-1 border-solid hover:border-double border-4 border-black hover:border-white">Harry Potter</button>
         <!-- !tied to fetchrecipeByName, kinda worthless right now. -->
         <!-- <form id="recipeByName" action="">
             <label for="recipeName">Search by Recipe Name</label>
@@ -101,7 +118,7 @@
 
             <!-- results -->
             
-            <div id="results" class="p-4 flex-col justify-around align-center">
+            <div id="results" class="p-4 flex-col justify-around align-center ">
                 
                 <div class="p-4 text-white text-2xl flex justify-center align-center">
                         <h3>Results</h3>
@@ -177,13 +194,13 @@
             
         </div>
 
-    <footer class="px-4 h-20 text-white flex-col justify-center items-center">
+    <footer class="p-8 h-20 text-white flex-col justify-center items-center">
         <div>
             <p>This [website, program, service, application, product] uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.</p>
             <p>&copy; 2024 My Website. All rights reserved.</p>
         </div>
         <div>
-            <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="The Movie Database logo">
+        <!---    <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="The Movie Database logo"> -->
         </div>
     </footer>
     
