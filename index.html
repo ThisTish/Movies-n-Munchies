@@ -28,14 +28,14 @@
     <header class="px-4 flex justify-center items-center position: static">
         <img class="rounded-xl" src="assets/images/logo2.webp" alt="film roll">
         <div class="position: absolute flex justify-center">
-        <h1 class="text-primary-200 y-4 font-bold text-6xl">
-            <div class="inline-flex text-primary-100">
+        <h1 class="text-primary-200 y-4 font-bold text-6xl drop-shadow-2xl text-outline-black">
+            <div class="inline-flex text-primary-100 drop-shadow-2xl">
                 Movies
             </div>
-            <div class="inline-flex text-primary-300">
+            <div class="inline-flex text-primary-300 drop-shadow-2xl">
                 'n'
             </div>
-            <div class="inline-flex text-primary-400">
+            <div class="inline-flex text-primary-400 drop-shadow-2xl">
                 Munchies!
             </div>
         </h1>
@@ -47,15 +47,15 @@
             <h2 class=" rounded-md bg-white p-1">Browse our site for what feels right and let us help you plan your night!</h2>
         </div>
         <div class="flex justify-evenly">
-            <button id="randomMoviesBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RaNdoM mOviEs</button>
-            <button id="randomMovieBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RandoM MOVIE</button>
-            <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE</button>
-            <button id="recipeCardBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded">RANDOM RECIPE Card</button>
+            <button id="randomMoviesBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">RaNdoM mOviEs</button>
+            <button id="randomMovieBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">RandoM MOVIE</button>
+            <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">RANDOM RECIPE</button>
+            <button id="recipeCardBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">RANDOM RECIPE Card</button>
         </div>
         <form action="" class="flex justify-center p-8 position-static">
             <label for="mainIngredient" class="text-xl pl-6 bg-primary-400 pr-4 border-black border-2 rounded-l-lg">Search by Main Ingredient:</label>
             <input type="text" id="mainIngredient">
-            <button id="mainIngredientBTN"class="bg-yellow-400 rounded-r-lg" >Search!</button>
+            <button id="mainIngredientBTN"class="bg-yellow-400 rounded-r-lg hover:bg-primary-200" >Search!</button>
         </form>
 
 <!-- *harry potter button to fetch by title, will replace with searchInput -->
@@ -207,13 +207,11 @@
             
         </div>
 
-    <footer class="p-8 h-20 text-white flex-col justify-center items-center">
+    <footer class="pl-2 pt-4 h-20 text-white flex-col justify-center items-center bg-primary-100">
         <div>
-            <p>This [website, program, service, application, product] uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.</p>
+            <p class="flex inline-flex">This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.</p>
+            <img class="max-h-6 flex inline-flex" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="The Movie Database logo">
             <p>&copy; 2024 My Website. All rights reserved.</p>
-        </div>
-        <div>
-        <!---    <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="The Movie Database logo"> -->
         </div>
     </footer>
     
