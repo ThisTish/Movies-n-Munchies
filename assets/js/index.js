@@ -146,8 +146,6 @@ $('#randomMovieBtnAgain').on('click', function(event){
 // *function to display SINGLE RANDOM MOVIE
 const singleMovieArea = $('#singleMovie')
 function displaySingleMovie(movie){
-	// console.log(movieDe?tails)
-	$('#movie').show()
 
 	const movieModalHeader = $('<header>')
 
@@ -156,9 +154,6 @@ function displaySingleMovie(movie){
 	movieTitle.text(movie.title) 
 	movieTitle.attr('id', 'movieModalTitle')
 
-	const close = $('<span>')
-	close.addClass('close absolute text-white top-0 right-0 p-4 cursor-pointer')
-	close.html('&times;')
 
 	const moviePoster = movie.poster_path
 	const posterUrl = `https://image.tmdb.org/t/p/w92/${moviePoster}`
@@ -548,6 +543,9 @@ function displayRandomRecipe (randomRecipe){
 	
 	const recipeResultArea = $('#recipeResults')
 	const resultsCard = $('<div>')
+	.attr({
+		'id': 'resultsCard',
+		'data-recipe-id' : recipeArray.idMeal)
 	resultsCard.appendTo(recipeResultArea)
 	
 	const mealName = $('<h4>')
@@ -555,6 +553,18 @@ function displayRandomRecipe (randomRecipe){
 	mealName.text(`Meal: ${recipeArray.strMeal}`)
 	mealName.addClass('underline decoration-1')
 	mealName.attr('id', 'mealNameResult')
+
+	// const thumbnail = recipeArray.strMealThumb
+	// console.log(thumbnail)
+
+	const recipeThumb = $('<img>')
+	.attr({
+		'src': recipeArray.strMealThumb,
+		'id': 'recipeImg'
+})
+	.addClass('w-40 h-auto')
+	recipeThumb.appendTo(resultsCard)
+
 	
 	const category = $('<p>')
 	category.appendTo(resultsCard)
@@ -599,6 +609,7 @@ function displayRandomRecipe (randomRecipe){
 		source.addClass('text-green-200')
 	} else {
 		// Handle the case where the source link is not provided
+		// ?if we don't put this else, it just won't create the elements and won't mess up the display. either way, your choice :)
 		source.text('Source not available')
 		source.addClass('text-red-600')
 	}
@@ -701,7 +712,6 @@ function displayRecipeCard(recipeDetails){
 
 // * function to FETCH by ID for selectedRecipe MODAL(card click)
 const selectedRecipeModalBtn = $('#selectedRecipeModalBtn')
-// selectedRecipeModalBtn.attr('data-recipe-id', '52772')
 
 $(document).on('click','#selectedRecipeModalBtn', function() {
 	const recipeID = $(this).attr('data-recipe-id')
@@ -946,23 +956,97 @@ randomMatchUpBtn.on('click', function(event){
 		.catch(error =>{
 			console.error('fetch error', error)
 		})
-	
+
+	// $('#matchUpArea').prepend($('<button>')
+	// .addClass("button bg-green-400 text-base text-white z-0")
+	// .attr({
+	// 	'id': 'saveForAnotherNight',
+	// 	'type': 'button'
+	// })
+	// .html('Save pairing'))
+	// $('<hr>')
+	$('#matchContainer').show()
 	console.log('matching.....')
 })
 
 
 
-$(document).ready(function(){
-	displaySavedMovies()
-    displaySavedRecipes();
-	// displaySavedMatches() to do still
-})
 
 // todo getMatchLocalStorage()
 
-// todo setMatchLocalStorage()
 
-// todo displaySavedMatches()
+// *function to get match LOCALSTORAGE
+function getMatches(){
+	console.log(`localStorage${localStorage.matches}`)
+	let matches = (JSON.parse(localStorage.getItem('matches')))
+	if(!matches){
+		matches=[]
+	}
+	return matches
+}
+// *function to set match LOCALSTORAGE
+function setMatches(){
+	let matches = getMatches()
+	
+	const savedMatchObject = {
+		movie: {
+			title: ($('#movieModalTitle').text()),
+			poster: ($('#moviePoster').attr('src')),
+			id: ($('#movieDeets').attr('data-movie-id'))
+		},
+		recipe: {
+			mealName: ($('#mealNameResult').text()),
+			mealUrl: ($('#sourceResultLink').attr('href')),
+			thumbnail: ($('#recipeImg').attr('src')),
+			id: ($('#resultsCard').attr('data-recipe-id'))
+		}
+	}
+	matches.push(savedMatchObject)
+	
+	localStorage.setItem('matches', JSON.stringify(matches))
+	console.log(savedMatchObject)
+	console.log(localStorage.matches)
+	
+}
+// // *function POPULATE SAVED matches
+// function displaySavedMatches(){
+// 	const matches = 	getMatches()
+// 	const savedMatchesArea = $('#savedmatchesArea')
+	
+// 	savedmatchesArea.empty()
+	
+	// if(Array.isArray(matches)){
+	// 	for(let match of matches){
+			
+	// 		const movieCard = $('<card>')
+	// 		movieCard.addClass('card')
+	// 		movieCard.attr({
+	// 			'id': 'movieCard',
+	// 			'data-movie-id': movie.id
+	// 		})
+			
+	// 		const savedMovieTitle = $('<h2>')
+	// 		savedMovieTitle.addClass('font-bold')
+	// 		savedMovieTitle.text(movie.title)
+			
+	// 		const savedMoviePoster = $('<img>')
+	// 		savedMoviePoster.addClass('border-light')
+	// 		savedMoviePoster.attr('src', movie.poster)
+			
+			
+	// 		movieCard.append(savedMoviePoster, savedMovieTitle)
+	// 		savedmatchesArea.append(movieCard)	
+	// 	}
+	// }
+}
+
+$(document).ready(function(){
+	displaySavedMovies()
+	displaySavedRecipes();
+	// displaySavedMatches() to do still
+})
+
+
 
 // *fetch recipe api's not in use yet.
 // const fetchRecipeByTypeApi = `www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
