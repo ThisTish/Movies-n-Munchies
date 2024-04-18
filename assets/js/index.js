@@ -670,7 +670,7 @@ function displayRandomRecipe (randomRecipe){
 		// Handle the case where the source link is not provided
 		// ?if we don't put this else, it just won't create the elements and won't mess up the display. either way, your choice :)
 		source.text('Source not available')
-		source.addClass('text-red-600')
+		source.addClass('text-black')
 	}
 	
 	resultsCard.append('<br>');
@@ -681,11 +681,11 @@ function displayRandomRecipe (randomRecipe){
 		youTube.text(`YouTube Video: ${recipeArray.strYoutube}`)
 		youTube.attr('href', recipeArray.strYoutube);
 		youTube.attr('target', '_blank')
-		youTube.addClass('text-red-700')
+		youTube.addClass('text-black')
 	}else {
 		// Handle the case where the youtube link is not provided
 		youTube.text('YouTube link not available');
-		youTube.addClass('text-red-600')
+		youTube.addClass('text-black')
 	}
 
 	const saveRecipeLaterBtn = $('#saveRecipe')
@@ -1080,7 +1080,7 @@ function displaySavedMatches(){
 	if(Array.isArray(matchObjects)){
 		for(let match of matchObjects){
 			const matchCard = $('<div>')
-			.addClass('card')
+			.addClass('card flex flex-row p-4')
 			.attr('id','matchCard')
 
 			const movie = match.movie
@@ -1089,7 +1089,7 @@ function displaySavedMatches(){
 			console.log(match.recipe)
 
 			const movieCard = $('<card>')
-			// movieCard.addClass('card')
+			movieCard.addClass('p-4')
 			movieCard.attr({
 				'id': 'movieCard',
 				'data-movie-id': movie.id
@@ -1110,7 +1110,7 @@ function displaySavedMatches(){
 
 
 			const recipeCard = $('<div>')
-			// recipeCard.addClass('card')
+			recipeCard.addClass('p-4')
 
 			const backDropBtn = $('<button>')
 			backDropBtn.addClass('rounded-lg relative overflow-hidden')
