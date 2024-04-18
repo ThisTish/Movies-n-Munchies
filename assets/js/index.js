@@ -24,8 +24,14 @@ $('#searchForm').on('submit', function(event){
 	event.preventDefault()
 	$('#searchModal').hide()
 	const searchInputEl = $('#searchInput').val()
-	// fetchMovieTitleApi(searchInputEl)
-	fetchRecipeByMainIngredient(searchInputEl)
+	if($('#movieRadio').prop('checked')){
+		fetchMovieTitleApi(searchInputEl)
+		console.log('movie')
+	}
+	else if($('#recipeRadio').prop('checked')){
+		console.log('recipe')
+		fetchRecipeByMainIngredient(searchInputEl)
+	}
 })
 
 // *function for MOVIE TITLE FETCH
