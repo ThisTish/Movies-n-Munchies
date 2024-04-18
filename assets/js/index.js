@@ -1,6 +1,7 @@
 const modalSubmitSearchBtn = $('#submitSearch')
 const movieResultsArea= $('#movieResults')
-
+const submitSearch = $('#submitSearch');
+const searchForm = $('#searchForm')
 
 //* for search modal
 var modal = document.getElementById("searchModal");
@@ -17,6 +18,8 @@ window.onclick = function(event) {
 		modal.style.display = "none";
 	}
 }
+
+// kg note 4/17/2024 11:40 pm: if i change #searchForm to #submitSearch, the modal closes when the submit button on form is clicked but the movies don't show. if id# is left as is, "$('#searchForm')" it shows the movies but the modal does not close after clicking submit
 
 // todo tie to searchmodalform
 $('#searchForm').on('submit', function(event){

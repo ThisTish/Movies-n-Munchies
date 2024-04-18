@@ -19,7 +19,8 @@
         }
     }
     </script>
-    <link rel="stylesheet" type ="text/css" href="assets/css/style.css">
+        <link rel="stylesheet" type ="text/css" href="assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <title>Movies-n-Munchies</title>
 </head>
 
@@ -52,43 +53,37 @@
             <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">One random recipe</button>
             <button id="recipeCardBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">Pick a recipe from a random list</button>
             <button id="matchUpRandom" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">let us plan your night</button>
+            <button id="searchBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
         </div>
-        <form action="" class="flex justify-center p-8 position-static">
-            <label for="mainIngredient" class="text-xl pl-6 bg-primary-400 pr-4 border-black border-2 rounded-l-lg">Search by Main Ingredient:</label>
-            <input type="text" id="mainIngredient">
-            <button id="mainIngredientBTN"class="bg-yellow-400 rounded-r-lg hover:bg-primary-200">Search!</button>
-        </form>
 
-        
-        
         <!-- *MODALS -->
         
         <!-- Search Form Modal -->
         <!--todo Label id's & classes. Fix html structure. function in js-->
-        <button id="searchBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
-        
-        <div id="searchModal" class="modal hidden fixed text-white inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-50 max-w-80 max-auto">
-            <form id="searchForm">
-            <header>
-            <h3>Get your search on!</h3>
-            <span class="searchCloseBtn absolute text-white top-0 right-0 p-4 cursor-pointer">&times;</span>
-            </header>
-            <div>
-                <label>Search Movie or Recipe</label>
-                <input id="searchInput">
-                <button type="submit" id="submitSearch" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
-            </div>
-            <label class="movieRadio">
-                <input type="radio" name="movieRadio" value="movie">
-                <span class="radio"></span>
-                Movie
-            </label>
+  
+        <div id="searchModal" class="modal hidden fixed text-black inset-0 mx-auto flex justify-center align-center items-center bg-white size-80 mt-10 ">
+
+            <form id="searchForm" class="p-10 bg-amber-100">
+
+                <header>
+                    <h3 class="flex justify-center align-center items-center">Get your search on!</h3><br>
+                    <span class="searchCloseBtn absolute text-black top-0 right-0 p-4 cursor-pointer">&times;</span>
+                </header>
+
+                <div>
+                    <input id="movieRadio" type="radio" name="radio" >
+                    <label class="p-5">Movie</label>
             
-            <label class="recipeRadio">
-                <input type="radio" name="recipeRadio" value="recipe">
-                <span class="radio"></span>
-                Recipe
-            </label>
+                    <input id="recipeRadio" type="radio" name="radio">
+                    <label class="p-5">Recipe</label>
+                </div><br>
+
+                <div>
+                    <label class="flex justify-center align-center items-center">Search Movie or Recipe:</label><br>
+                    <input type="text" id="searchInput" class="border-2 border-black flex justify-center align-center items-center"><br>
+                </div><br>
+
+                <button type="submit" id="submitSearch" class="flex justify-center align-center items-center bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
         </form>
     </div>
     
@@ -131,7 +126,7 @@
         <!-- results -->
         
         <div id="results" class="p-4 flex-col justify-around align-center ">
-            
+           
             <div class="p-4 text-white text-2xl flex justify-center align-center">
                 <h3>Results</h3>
             </div>
@@ -167,7 +162,7 @@
                         <button id="saveForAnotherNight" type="button"class="justify-center align-center m-auto bg-primary-100 rounded-full p-2 text-base text-white">Save for another night</button>
                     </div>
 
-                        <section id="movies" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
+                        <section id="movies" class="hidden p-4 flex-col justify-center align-center h-auto">
                             <p class="p-4 text-white flex justify-center align-center">Random Movies to choose from</p>
                             <div id="movieResults" class="flex flex-wrap justify-evenly">
                             </div>
@@ -175,7 +170,7 @@
                         
                         
                         <!-- random receipes list area -->
-                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
+                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center h-80">
                             <p class="p-4 text-white flex justify-center align-center">Random Recipes to choose from</p>
                             <div id="randomRecipeArea" class="flex flex-wrap justify-evenly">
                             </div>
@@ -188,28 +183,33 @@
                 
                 <!--*SAVE COLUMNS-->
                     
-                    <div id="save" class="p-4 flex flex-row justify-around align-center">
+                <div id="save" class="p-4 flex flex-row justify-around align-center">
                         
-                        <div id="savedMovies" class="p-4 flex justify-center align-center border-4 h-auto w-1/3">
-                            <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
-                            <div id="savedMoviesArea">
-                            </div>
-                        </div>
-                        
-                    <div id="savedRecipes" class="p-4 flex-col justify-center align-center border-4 h-auto w-1/3">
+                    <div id="savedMovies" class="p-4 flex-col justify-center align-center h-auto w-1/3">
                         <div>
-                            <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
+                            <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
                         </div>
 
-                        <div id="recipeIdLinks"></div>
+                        <div id="savedMoviesArea"></div>
                     </div>
-            
-                    <div id="saveForLater" class="p-4 flex justify-center align-center border-4 h-auto w-1/3">
-                        <h4 class="p-4 text-white flex justify-center align-center">Saved for Later</h4>
-                            <div id="savedMatchesArea"></div>
+                    
+                <div id="savedRecipes" class="p-4 flex-col justify-center align-center h-auto w-1/3">
+                    <div>
+                        <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
                     </div>
-            
+
+                    <div id="recipeIdLinks"></div>
                 </div>
+        
+                <div id="saveForLater" class="p-4 flex justify-center align-center h-auto w-1/3">
+                    <div>
+                        <h4 class="p-4 text-white flex justify-center align-center">Saved for Later</h4>
+                    </div>
+
+                    <div id="savedMatchesArea"></div>
+                </div>
+        
+            </div>
 
     <footer class="pl-2 pt-4 h-20 text-white flex-col justify-center items-center bg-primary-100">
         <div>
