@@ -20,19 +20,18 @@ window.onclick = function(event) {
 	}
 }
 
-// kg note 4/17/2024 11:40 pm: if i change #searchForm to #submitSearch, the modal closes when the submit button on form is clicked but the movies don't show. if id# is left as is, "$('#searchForm')" it shows the movies but the modal does not close after clicking submit
-
-// todo tie to searchmodalform
 $('#searchForm').on('submit', function(event){
 	event.preventDefault()
+	$('#searchModal').hide()
 	const searchInputEl = $('#searchInput').val()
-	fetchMovieTitleApi(searchInputEl)
+	// fetchMovieTitleApi(searchInputEl)
+	fetchRecipeByMainIngredient(searchInputEl)
 })
 
 // *function for MOVIE TITLE FETCH
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=harry%20potter&api_key=${apiKey}`
+	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=${apiKey}`
 	
 	fetch(searchMovieTitleApi)
 	.then(response => {
@@ -42,9 +41,9 @@ function fetchMovieTitleApi(search){
 		return response.json()
 		console.log(response)
 	})
-	.then(harry => {
-		console.log(harry)
-		displayMovieResults(harry)
+	.then(movie => {
+		console.log(movie)
+		displayMovieResults(movie)
 	})
 	.catch(error => {
 		console.error('Fetch error:', error)
@@ -52,9 +51,30 @@ function fetchMovieTitleApi(search){
 	
 }
 
+// todo filter by main ingredient--------------------------------
+function fetchRecipeByMainIngredient(search) {
+	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${search}`
+	
+	fetch(mainIngredientUrl)
+	.then(response => {
+		console.log(response);
+		return response.json()
+	})
+	.then(list => {
+		console.log(list)
+		displayRecipeResults(list)
+	})
+	.catch(error => {
+		console.error('Error fetching list:', error)
+		alert('no recipes found with that main ingredient')
+	})
+}
+
+
 // *function for RANDOM MOVIE button click
 $('#randomMoviesBtn').on('click', function(event){
 	event.preventDefault()
+	matchUpArea.hide()
 	movieResultsArea.empty()
 	fetchRandomMovies()
 })
@@ -216,7 +236,7 @@ function displaySingleMovie(movie){
 	homepage.text('Homepage')//could make the image the anchor...maybe
 	
 	movieModalDetails.append(poster, year, overview, rating, genre, runtime, homepage)
-	movieModalHeader.append(movieTitle, close)
+	movieModalHeader.append(movieTitle)
 	singleMovieArea.append(movieModalHeader,movieModalDetails)
 
 
@@ -287,28 +307,29 @@ function displayMovieResults(page){
 		const movieDetails = page.results[i]
 		const movieCard = $('<div>')
 		movieCard.addClass('card')
-		// console.log(movieDetails)
-
-		const backDropBtn = $('<button>')
-		backDropBtn.addClass('rounded-lg relative overflow-hidden')
-		backDropBtn.attr({
-			'data-movie-id': movieDetails.id,
-			'id':'selectedMovieBtn',
-			'type':'button'
-		})
-
-		const backdrop = $('<img>')
-		.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
-		.addClass('w-full h-auto')
-
-		const titleOverlay = $('<div>')
-		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
-		.text(movieDetails.title)
 		
-
-		backDropBtn.append(backdrop, titleOverlay)
-		movieCard.append(backDropBtn)
-		movieResultsArea.append(movieCard)
+		if(movieDetails.backdrop_path){
+			const backdrop = $('<img>')
+			.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
+			.addClass('w-full h-auto')
+			
+			const backDropBtn = $('<button>')
+			backDropBtn.addClass('rounded-lg relative overflow-hidden')
+			backDropBtn.attr({
+				'data-movie-id': movieDetails.id,
+				'id':'selectedMovieBtn',
+				'type':'button'
+			})
+			
+			const titleOverlay = $('<div>')
+			.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
+			.text(movieDetails.title)
+	
+			backDropBtn.append(backdrop, titleOverlay)
+			movieCard.append(backDropBtn)
+			movieResultsArea.append(movieCard)
+		}
+	
 	}
 }
 
@@ -431,6 +452,9 @@ getRandomRecipeBtn.on('click', function(event){
 	event.preventDefault()
 	// $('#recipeResults').empty()
 	fetchRandomRecipe()
+		.then(recipe =>{
+			displayRandomRecipe(recipe)
+		})
 	const movieId = $('#movieModal').find('#movieDeets').attr('data-movie-id')
 	console.log(movieId)
 	fetchMovieId(movieId)
@@ -530,6 +554,10 @@ $('#randomRecipeBtn').on('click', function(event){
 $('#randomRecipeAgain').on('click', function(event){
 	event.preventDefault()
 	fetchRandomRecipe()
+		.then(recipe =>{
+			
+			displayRandomRecipe(recipe)
+		})
 })
 
 // *function to FETCH RANDOM RECIPE
@@ -565,6 +593,7 @@ function displayRandomRecipe (randomRecipe){
 	const recipeArray = randomRecipe.meals[0]
 	
 	const recipeResultArea = $('#recipeResults')
+	recipeResultArea.empty()
 	const resultsCard = $('<div>')
 	.attr({
 		'id': 'resultsCard',
@@ -689,26 +718,19 @@ function fetchRandomRecipeCard() {
 }
 
 $('#recipeCardBtn').on('click', function(event){
-    event.preventDefault();
-    recipeCardArea.empty();
-    for (let i = 0; i < 7; i++) {
-        fetchRandomRecipeCard();
+    event.preventDefault()
+    recipeCardArea.empty()
+    for (let i = 0; i < 5; i++) {
+        fetchRandomRecipeCard()
     }
-});
+	matchUpArea.hide()
+})
 
-
-// $('#recipeCardBtn').on('click', function(event){
-// 	event.preventDefault()
-// 	recipeCardArea.empty()
-// 	fetchRandomRecipeCard()
-	
-// })
 // *function to POPULATE RANDOM RECIPE CARD
 const recipeCardArea = $('#randomRecipeArea')
 function displayRecipeCard(recipeDetails){
-	const recipeList = recipeDetails.meals[0]
 	$('#recipeCardArea').show()
-	
+	const recipeList = recipeDetails.meals[0]
 	
 	const recipeCard = $('<div>')
 	recipeCard.addClass('card')
@@ -733,6 +755,39 @@ function displayRecipeCard(recipeDetails){
 	recipeCard.append(backDropBtn)
 	recipeCardArea.append(recipeCard)
 }
+
+function displayRecipeResults(recipes) {
+
+	console.log(recipes)
+	$('#recipeCardArea').show()
+
+	for(let i=0; i< 5; i++){
+		const recipeCard = $('<div>')
+		recipeCard.addClass('card')
+	console.log('hi')
+		const backDropBtn = $('<button>')
+		backDropBtn.addClass('rounded-lg relative overflow-hidden')
+		backDropBtn.attr({
+			'data-recipe-id': recipes.meals[i].idMeal,
+			'id':'selectedRecipeModalBtn',
+			'type':'button'
+		})
+		
+		const backdrop = $('<img>')
+		.attr('src', recipes.meals[i].strMealThumb)
+		.addClass('w-40 h-auto')
+	
+		const titleOverlay = $('<div>')
+		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
+		.text(recipes.meals[i].strMeal)
+		
+		backDropBtn.append(backdrop, titleOverlay)
+		recipeCard.append(backDropBtn)
+		recipeCardArea.append(recipeCard)
+	}
+
+}
+
 
 // * function to FETCH by ID for selectedRecipe MODAL(card click)
 const selectedRecipeModalBtn = $('#selectedRecipeModalBtn')
@@ -895,31 +950,6 @@ randomMovieR.on('click', function(event){
 })
 
 
-
-
-// *function for RECIPE SEARCH button click
-$('#mainIngredientBTN').on('click', function(event){
-	event.preventDefault();
-	fetchRecipeByMainIngredient();
-	displayList();
-})
-
-// todo filter by main ingredient--------------------------------
-function fetchRecipeByMainIngredient() {
-	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
-	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
-	
-	fetch(mainIngredientUrl)
-	.then(response => {
-		console.log(response);
-		return response.json()
-	})
-	.then(list => console.log(list))
-	.catch(error => {
-		console.error('Error fetching list:', error)
-	})
-}
-
 // *array to save recipes
 let savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
 console.log(savedRecipes);
@@ -956,10 +986,6 @@ function displaySavedRecipes (){
 	});
 }
 
-// $(document).ready(function() {
-// 	// const savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
-// });
-
 // todo list for recipe by main ingridient
 function displayList () {
 	
@@ -971,7 +997,6 @@ function displayList () {
 	}
 	
 }
-
 
 
 // *functions for RANDOM MATCH UP>>>>>>>>>>>>>>>>>>>>>>
@@ -1006,10 +1031,6 @@ $('#saveForAnotherNight').on('click', function(){
 	displaySavedMatches()
 })
 
-
-// todo getMatchLocalStorage()
-
-
 // *function to get match LOCALSTORAGE
 function getMatches(){
 	let matches = (JSON.parse(localStorage.getItem('matches')))
@@ -1043,7 +1064,7 @@ function setMatches(){
 	console.log(localStorage.matches)
 	
 }
-// // *function POPULATE SAVED matches
+// *function POPULATE SAVED matches
 function displaySavedMatches(){
 	const matchObjects = getMatches()
 	console.log(matchObjects)
@@ -1115,9 +1136,6 @@ function displaySavedMatches(){
 		}
 	}
 }
-	// 	}
-	// }
-// }
 
 $(document).ready(function(){
 	displaySavedMovies()
