@@ -49,8 +49,8 @@
         </div>
         <div class="flex justify-evenly">
             <button id="randomMoviesBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">Pick a movie from random list</button>
-            <button id="randomMovieBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">One random movie</button>
-            <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">One random recipe</button>
+            <!-- <button id="randomMovieBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">One random movie</button>
+            <button id="randomRecipeBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">One random recipe</button> -->
             <button id="recipeCardBtn" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">Pick a recipe from a random list</button>
             <button id="matchUpRandom" class= "bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">let us plan your night</button>
             <button id="searchBtn" class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
@@ -60,8 +60,8 @@
         
         <!-- Search Form Modal -->
         <!--todo Label id's & classes. Fix html structure. function in js-->
-  
-        <div id="searchModal" class="modal hidden fixed text-black inset-0 mx-auto flex justify-center align-center items-center bg-white size-80 mt-10 ">
+
+        <div id="searchModal" class="modal hidden fixed text-black inset-0 mx-auto flex justify-center align-center items-center bg-white size-80 mt-10 z-50 ">
 
             <form id="searchForm" class="p-10 bg-amber-100">
 
@@ -71,7 +71,7 @@
                 </header>
 
                 <div>
-                    <input id="movieRadio" type="radio" name="radio" >
+                    <input id="movieRadio" type="radio" name="radio" required>
                     <label class="p-5">Movie</label>
             
                     <input id="recipeRadio" type="radio" name="radio">
@@ -80,7 +80,7 @@
 
                 <div>
                     <label class="flex justify-center align-center items-center">Search Movie or Recipe:</label><br>
-                    <input type="text" id="searchInput" class="border-2 border-black flex justify-center align-center items-center"><br>
+                    <input type="text" id="searchInput" class="border-2 border-black flex justify-center align-center items-center" required><br>
                 </div><br>
 
                 <button type="submit" id="submitSearch" class="flex justify-center align-center items-center bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
@@ -103,9 +103,9 @@
     </div>
         
     <!-- selected recipe modal -->
-    <div id="recipeModal" class="modal hidden fixed inset-0 size-fit flex m-auto justify-center align-center items-center bg-gradient-to-t from-primary-100 via-primary-200 to-primary-300 p-auto max-w-prose max-h-prose border-dashed border-4 border-black">
+    <div id="recipeModal" class="modal hidden fixed inset-0 size-fit flex m-auto justify-center align-center items-center bg-gradient-to-t from-primary-100 via-primary-200 to-primary-300 p-auto max-w-prose max-h-prose border-dashed border-4 border-black z-50">
         <h2>Recipe Modal</h2>
-        <div class="recipeModalBody text-white rounded-lg p-4">
+        <div class="recipeModalBody text-white rounded-lg p-4 overflow-y-auto">
             
             <footer id="bottomButtons">
                 <button id ="saveForLaterR" type="submit" class="button bg-primary-300 rounded-full mx-4 p-1 hover:bg-primary-400 shadow-2xl">munch later</button>
@@ -126,10 +126,7 @@
         <!-- results -->
         
         <div id="results" class="p-4 flex-col justify-around align-center ">
-           
-            <div class="p-4 text-white text-2xl flex justify-center align-center">
-                <h3>Results</h3>
-            </div>
+        
             
                     <div id="matchContainer" class=" hidden p-4 flex flex-row justify-center align-center text-center px-8 m-auto">
                         <div id="matchUpArea" class="flex flex-row">
