@@ -115,13 +115,15 @@ function randomMovie(movies){
 }
 
 // *function for random movie clicks
-$('#randomMovieBtn').on('click', function(event){
+$('#getRandomMovie').on('click', function(event){
 	event.preventDefault()
 	singleMovieArea.empty()
 	fetchARandomMovie()
 		.then(movies => {
 			const randomMovieDetails = randomMovie(movies)
 		displaySingleMovie(randomMovieDetails)
+		$('#matchContainer').show()
+
 
 		})
 		.catch(error =>{
@@ -149,12 +151,13 @@ $('#randomMovieBtnAgain').on('click', function(event){
 // *function to display SINGLE RANDOM MOVIE
 const singleMovieArea = $('#singleMovie')
 function displaySingleMovie(movie){
+	singleMovieArea.empty()
 
 	const movieModalHeader = $('<header>')
 
 	const movieTitle = $('<h2>')
 	movieTitle.addClass('text-pink')
-	movieTitle.text(movie.title) 
+	movieTitle.text(movie.title)
 	movieTitle.attr('id', 'movieModalTitle')
 
 
@@ -422,16 +425,27 @@ $('#saveMovie').on('click', function(event){
 	
 })
 
+
+
+
+
+
+// *not working in modal
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
+	$('#recipeResults').empty()
 	fetchRandomRecipe()
 	// movieResultsArea.hide()//need to have funtion to get id and display in left half of match area first
 	selectedMovieModal.hide()
 })
-// * function for closing modal when you click off modal/don't want right now.
-// $(document).click(function(event){
-// 	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
-// 		selectedMovieModal.hide()}})
+$(document).click(function(event){
+	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
+		selectedMovieModal.hide()}})
+
+
+		$(document).click(function(event){
+	if(!selectedRecipeModal.is(event.target) && selectedRecipeModal.has(event.target).length === 0){
+		selectedRecipeModal.hide()}})
 
 
 
@@ -539,7 +553,7 @@ function fetchRandomRecipe() {
 // * function to POPULATE RANDOM RECIPE w/ details
 function displayRandomRecipe (randomRecipe){
 	
-	$('#recipe').show()
+	$('#matchContainer').show()
 	
 	
 	const recipeArray = randomRecipe.meals[0]
@@ -720,8 +734,12 @@ const selectedRecipeModalBtn = $('#selectedRecipeModalBtn')
 $(document).on('click','#selectedRecipeModalBtn', function() {
 	const recipeID = $(this).attr('data-recipe-id')
 	console.log(recipeID)
+
+	function clearModal() {
+		$('#recipeModalDynamics').empty()
+	}
+	clearModal()
 	
-	$('.recipeModalDynamics').empty()
 
 	function fetchRecipebyId(){
 		const recipeIdApi = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`
@@ -750,7 +768,7 @@ function displaySelectedRecipe(randomRecipe){
 	const selectedRecipeBody = $('.recipeModalBody')
 
 	const recipeModalDynamics = $('<div>')
-	recipeModalDynamics.addClass('recipeElements p-3 text-white')
+	recipeModalDynamics.addClass('recipeElements p-3 text-white').attr('id', 'recipeModalDynamics')
 	
 	const recipeArray = randomRecipe.meals[0]
 	
@@ -1082,7 +1100,7 @@ function displaySavedMatches(){
 $(document).ready(function(){
 	displaySavedMovies()
 	displaySavedRecipes();
-	// displaySavedMatches() to do still
+	displaySavedMatches()
 })
 
 
