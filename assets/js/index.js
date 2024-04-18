@@ -2,6 +2,7 @@ const modalSubmitSearchBtn = $('#submitSearch')
 const movieResultsArea= $('#movieResults')
 const submitSearch = $('#submitSearch');
 const searchForm = $('#searchForm')
+const matchUpArea = $('#matchContainer')
 
 //* for search modal
 var modal = document.getElementById("searchModal");
@@ -114,7 +115,7 @@ function randomMovie(movies){
 
 }
 
-// *function for random movie clicks
+// *function for random movie clicks modal
 $('#getRandomMovie').on('click', function(event){
 	event.preventDefault()
 	singleMovieArea.empty()
@@ -247,6 +248,24 @@ function displaySingleMovie(movie){
 
 }
 // * function to FETCH by ID for selectedMOVIE MODAL with movie click
+
+function fetchMovieId(movieId){
+	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
+	const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
+
+	return fetch(movieIdApi)
+	.then(response => {
+		if (!response.ok) {
+			throw response.json()
+		}
+		return response.json()
+		console.log(response)
+	})
+	.catch(error => {
+		console.error('Fetch error:', error)
+	});
+}
+
 $(document).on('click','#selectedMovieBtn', function() {
 	const movieId = $(this).attr('data-movie-id')
 	console.log(movieId)
@@ -255,28 +274,10 @@ $(document).on('click','#selectedMovieBtn', function() {
 		$('.movieModalDynamic').empty()
 	}
 	clearModal()
-
-	function fetchMovieId(){
-		const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-		const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
-	
-		fetch(movieIdApi)
-		.then(response => {
-			if (!response.ok) {
-				throw response.json()
-			}
-			return response.json()
-			console.log(response)
-		})
-		.then(movie => {
-			console.log(movie)
+	fetchMovieId(movieId)
+		.then(movie =>{
 			displaySelectedMovie(movie)
 		})
-		.catch(error => {
-			console.error('Fetch error:', error)
-		});
-	}
-	fetchMovieId()
 })
 
 // *function for POPULATE MOVIE RESULTS area
@@ -426,26 +427,32 @@ $('#saveMovie').on('click', function(event){
 })
 
 
-
-
-
-
-// *not working in modal
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
-	$('#recipeResults').empty()
+	// $('#recipeResults').empty()
 	fetchRandomRecipe()
+	const movieId = $('#movieModal').find('#movieDeets').attr('data-movie-id')
+	console.log(movieId)
+	fetchMovieId(movieId)
+		.then(movie =>{
+			console.log(movie)
+			displaySingleMovie(movie)
+			$('#matchContainer').show()
+			
+	})
 	// movieResultsArea.hide()//need to have funtion to get id and display in left half of match area first
 	selectedMovieModal.hide()
 })
+
 $(document).click(function(event){
 	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
-		selectedMovieModal.hide()}})
-
+		selectedMovieModal.hide()}
+})
 
 		$(document).click(function(event){
 	if(!selectedRecipeModal.is(event.target) && selectedRecipeModal.has(event.target).length === 0){
-		selectedRecipeModal.hide()}})
+		selectedRecipeModal.hide()}
+})
 
 
 
@@ -579,7 +586,7 @@ function displayRandomRecipe (randomRecipe){
 	.attr({
 		'src': recipeArray.strMealThumb,
 		'id': 'recipeImg'
-})
+	})
 	.addClass('w-40 h-auto')
 	recipeThumb.appendTo(resultsCard)
 
@@ -940,9 +947,9 @@ function displaySavedRecipes (){
 	});
 }
 
-$(document).ready(function() {
-	// const savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
-});
+// $(document).ready(function() {
+// 	// const savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
+// });
 
 // todo list for recipe by main ingridient
 function displayList () {
