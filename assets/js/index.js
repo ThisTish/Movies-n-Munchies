@@ -1,6 +1,8 @@
 const modalSubmitSearchBtn = $('#submitSearch')
 const movieResultsArea= $('#movieResults')
-
+const submitSearch = $('#submitSearch');
+const searchForm = $('#searchForm')
+const matchUpArea = $('#matchContainer')
 
 //* for search modal
 var modal = document.getElementById("searchModal");
@@ -18,17 +20,24 @@ window.onclick = function(event) {
 	}
 }
 
-// todo tie to searchmodalform
 $('#searchForm').on('submit', function(event){
 	event.preventDefault()
+	$('#searchModal').hide()
 	const searchInputEl = $('#searchInput').val()
-	fetchMovieTitleApi(searchInputEl)
+	if($('#movieRadio').prop('checked')){
+		fetchMovieTitleApi(searchInputEl)
+		console.log('movie')
+	}
+	else if($('#recipeRadio').prop('checked')){
+		console.log('recipe')
+		fetchRecipeByMainIngredient(searchInputEl)
+	}
 })
 
 // *function for MOVIE TITLE FETCH
 function fetchMovieTitleApi(search){
 	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=harry%20potter&api_key=${apiKey}`
+	const searchMovieTitleApi = `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=${apiKey}`
 	
 	fetch(searchMovieTitleApi)
 	.then(response => {
@@ -38,9 +47,9 @@ function fetchMovieTitleApi(search){
 		return response.json()
 		console.log(response)
 	})
-	.then(harry => {
-		console.log(harry)
-		displayMovieResults(harry)
+	.then(movie => {
+		console.log(movie)
+		displayMovieResults(movie)
 	})
 	.catch(error => {
 		console.error('Fetch error:', error)
@@ -48,9 +57,30 @@ function fetchMovieTitleApi(search){
 	
 }
 
+// todo filter by main ingredient--------------------------------
+function fetchRecipeByMainIngredient(search) {
+	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${search}`
+	
+	fetch(mainIngredientUrl)
+	.then(response => {
+		console.log(response);
+		return response.json()
+	})
+	.then(list => {
+		console.log(list)
+		displayRecipeResults(list)
+	})
+	.catch(error => {
+		console.error('Error fetching list:', error)
+		alert('no recipes found with that main ingredient')
+	})
+}
+
+
 // *function for RANDOM MOVIE button click
 $('#randomMoviesBtn').on('click', function(event){
 	event.preventDefault()
+	matchUpArea.hide()
 	movieResultsArea.empty()
 	fetchRandomMovies()
 })
@@ -111,14 +141,16 @@ function randomMovie(movies){
 
 }
 
-// *function for random movie clicks
-$('#randomMovieBtn').on('click', function(event){
+// *function for random movie clicks modal
+$('#getRandomMovie').on('click', function(event){
 	event.preventDefault()
 	singleMovieArea.empty()
 	fetchARandomMovie()
 		.then(movies => {
 			const randomMovieDetails = randomMovie(movies)
 		displaySingleMovie(randomMovieDetails)
+		$('#matchContainer').show()
+
 
 		})
 		.catch(error =>{
@@ -146,12 +178,13 @@ $('#randomMovieBtnAgain').on('click', function(event){
 // *function to display SINGLE RANDOM MOVIE
 const singleMovieArea = $('#singleMovie')
 function displaySingleMovie(movie){
+	singleMovieArea.empty()
 
 	const movieModalHeader = $('<header>')
 
 	const movieTitle = $('<h2>')
 	movieTitle.addClass('text-pink')
-	movieTitle.text(movie.title) 
+	movieTitle.text(movie.title)
 	movieTitle.attr('id', 'movieModalTitle')
 
 
@@ -209,7 +242,7 @@ function displaySingleMovie(movie){
 	homepage.text('Homepage')//could make the image the anchor...maybe
 	
 	movieModalDetails.append(poster, year, overview, rating, genre, runtime, homepage)
-	movieModalHeader.append(movieTitle, close)
+	movieModalHeader.append(movieTitle)
 	singleMovieArea.append(movieModalHeader,movieModalDetails)
 
 
@@ -241,6 +274,24 @@ function displaySingleMovie(movie){
 
 }
 // * function to FETCH by ID for selectedMOVIE MODAL with movie click
+
+function fetchMovieId(movieId){
+	const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
+	const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
+
+	return fetch(movieIdApi)
+	.then(response => {
+		if (!response.ok) {
+			throw response.json()
+		}
+		return response.json()
+		console.log(response)
+	})
+	.catch(error => {
+		console.error('Fetch error:', error)
+	});
+}
+
 $(document).on('click','#selectedMovieBtn', function() {
 	const movieId = $(this).attr('data-movie-id')
 	console.log(movieId)
@@ -249,28 +300,10 @@ $(document).on('click','#selectedMovieBtn', function() {
 		$('.movieModalDynamic').empty()
 	}
 	clearModal()
-
-	function fetchMovieId(){
-		const apiKey = "05ee849ca5bf0c7ca64d3561ba1aa9b8"
-		const movieIdApi = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${apiKey}`
-	
-		fetch(movieIdApi)
-		.then(response => {
-			if (!response.ok) {
-				throw response.json()
-			}
-			return response.json()
-			console.log(response)
-		})
-		.then(movie => {
-			console.log(movie)
+	fetchMovieId(movieId)
+		.then(movie =>{
 			displaySelectedMovie(movie)
 		})
-		.catch(error => {
-			console.error('Fetch error:', error)
-		});
-	}
-	fetchMovieId()
 })
 
 // *function for POPULATE MOVIE RESULTS area
@@ -280,28 +313,29 @@ function displayMovieResults(page){
 		const movieDetails = page.results[i]
 		const movieCard = $('<div>')
 		movieCard.addClass('card')
-		// console.log(movieDetails)
-
-		const backDropBtn = $('<button>')
-		backDropBtn.addClass('rounded-lg relative overflow-hidden')
-		backDropBtn.attr({
-			'data-movie-id': movieDetails.id,
-			'id':'selectedMovieBtn',
-			'type':'button'
-		})
-
-		const backdrop = $('<img>')
-		.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
-		.addClass('w-full h-auto')
-
-		const titleOverlay = $('<div>')
-		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
-		.text(movieDetails.title)
 		
-
-		backDropBtn.append(backdrop, titleOverlay)
-		movieCard.append(backDropBtn)
-		movieResultsArea.append(movieCard)
+		if(movieDetails.backdrop_path){
+			const backdrop = $('<img>')
+			.attr('src', `https://image.tmdb.org/t/p/w154/${movieDetails.backdrop_path}`)
+			.addClass('w-full h-auto')
+			
+			const backDropBtn = $('<button>')
+			backDropBtn.addClass('rounded-lg relative overflow-hidden')
+			backDropBtn.attr({
+				'data-movie-id': movieDetails.id,
+				'id':'selectedMovieBtn',
+				'type':'button'
+			})
+			
+			const titleOverlay = $('<div>')
+			.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
+			.text(movieDetails.title)
+	
+			backDropBtn.append(backdrop, titleOverlay)
+			movieCard.append(backDropBtn)
+			movieResultsArea.append(movieCard)
+		}
+	
 	}
 }
 
@@ -419,16 +453,36 @@ $('#saveMovie').on('click', function(event){
 	
 })
 
+
 getRandomRecipeBtn.on('click', function(event){ 
 	event.preventDefault()
+	// $('#recipeResults').empty()
 	fetchRandomRecipe()
+		.then(recipe =>{
+			displayRandomRecipe(recipe)
+		})
+	const movieId = $('#movieModal').find('#movieDeets').attr('data-movie-id')
+	console.log(movieId)
+	fetchMovieId(movieId)
+		.then(movie =>{
+			console.log(movie)
+			displaySingleMovie(movie)
+			$('#matchContainer').show()
+			
+	})
 	// movieResultsArea.hide()//need to have funtion to get id and display in left half of match area first
 	selectedMovieModal.hide()
 })
-// * function for closing modal when you click off modal/don't want right now.
-// $(document).click(function(event){
-// 	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
-// 		selectedMovieModal.hide()}})
+
+$(document).click(function(event){
+	if(!selectedMovieModal.is(event.target) && selectedMovieModal.has(event.target).length === 0){
+		selectedMovieModal.hide()}
+})
+
+		$(document).click(function(event){
+	if(!selectedRecipeModal.is(event.target) && selectedRecipeModal.has(event.target).length === 0){
+		selectedRecipeModal.hide()}
+})
 
 
 
@@ -506,13 +560,17 @@ $('#randomRecipeBtn').on('click', function(event){
 $('#randomRecipeAgain').on('click', function(event){
 	event.preventDefault()
 	fetchRandomRecipe()
+		.then(recipe =>{
+			
+			displayRandomRecipe(recipe)
+		})
 })
 
 // *function to FETCH RANDOM RECIPE
 function fetchRandomRecipe() {
 	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
 	
-	fetch(randomRecipeUrl)
+	return fetch(randomRecipeUrl)
 	.then(response => {
 		if (!response.ok){
 			throw response.json()
@@ -523,8 +581,7 @@ function fetchRandomRecipe() {
 	})
 	.then(randomRecipe => {
 		console.log(randomRecipe)
-		$('#recipeResults').empty()
-		displayRandomRecipe(randomRecipe)
+		return randomRecipe
 	})
 		
 	.catch(error => {
@@ -536,12 +593,13 @@ function fetchRandomRecipe() {
 // * function to POPULATE RANDOM RECIPE w/ details
 function displayRandomRecipe (randomRecipe){
 	
-	$('#recipe').show()
+	$('#matchContainer').show()
 	
 	
 	const recipeArray = randomRecipe.meals[0]
 	
 	const recipeResultArea = $('#recipeResults')
+	recipeResultArea.empty()
 	const resultsCard = $('<div>')
 	.attr({
 		'id': 'resultsCard',
@@ -562,7 +620,7 @@ function displayRandomRecipe (randomRecipe){
 	.attr({
 		'src': recipeArray.strMealThumb,
 		'id': 'recipeImg'
-})
+	})
 	.addClass('w-40 h-auto')
 	recipeThumb.appendTo(resultsCard)
 
@@ -666,26 +724,19 @@ function fetchRandomRecipeCard() {
 }
 
 $('#recipeCardBtn').on('click', function(event){
-    event.preventDefault();
-    recipeCardArea.empty();
-    for (let i = 0; i < 7; i++) {
-        fetchRandomRecipeCard();
+    event.preventDefault()
+    recipeCardArea.empty()
+    for (let i = 0; i < 5; i++) {
+        fetchRandomRecipeCard()
     }
-});
+	matchUpArea.hide()
+})
 
-
-// $('#recipeCardBtn').on('click', function(event){
-// 	event.preventDefault()
-// 	recipeCardArea.empty()
-// 	fetchRandomRecipeCard()
-	
-// })
 // *function to POPULATE RANDOM RECIPE CARD
 const recipeCardArea = $('#randomRecipeArea')
 function displayRecipeCard(recipeDetails){
-	const recipeList = recipeDetails.meals[0]
 	$('#recipeCardArea').show()
-	
+	const recipeList = recipeDetails.meals[0]
 	
 	const recipeCard = $('<div>')
 	recipeCard.addClass('card')
@@ -711,48 +762,92 @@ function displayRecipeCard(recipeDetails){
 	recipeCardArea.append(recipeCard)
 }
 
+function displayRecipeResults(recipes) {
+
+	console.log(recipes)
+	$('#recipeCardArea').show()
+
+	for(let i=0; i< 5; i++){
+		const recipeCard = $('<div>')
+		recipeCard.addClass('card')
+	console.log('hi')
+		const backDropBtn = $('<button>')
+		backDropBtn.addClass('rounded-lg relative overflow-hidden')
+		backDropBtn.attr({
+			'data-recipe-id': recipes.meals[i].idMeal,
+			'id':'selectedRecipeModalBtn',
+			'type':'button'
+		})
+		
+		const backdrop = $('<img>')
+		.attr('src', recipes.meals[i].strMealThumb)
+		.addClass('w-40 h-auto')
+	
+		const titleOverlay = $('<div>')
+		.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
+		.text(recipes.meals[i].strMeal)
+		
+		backDropBtn.append(backdrop, titleOverlay)
+		recipeCard.append(backDropBtn)
+		recipeCardArea.append(recipeCard)
+	}
+
+}
+
+
 // * function to FETCH by ID for selectedRecipe MODAL(card click)
 const selectedRecipeModalBtn = $('#selectedRecipeModalBtn')
 
 $(document).on('click','#selectedRecipeModalBtn', function() {
 	const recipeID = $(this).attr('data-recipe-id')
 	console.log(recipeID)
-	
-	$('.recipeModalDynamics').empty()
 
-	function fetchRecipebyId(){
-		const recipeIdApi = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`
-	
-		fetch(recipeIdApi)
-		.then(response => {
-			if (!response.ok) {
-				throw response.json()
-			}
-			return response.json()
-			console.log(response)
-		})
-		.then(recipe => {
-			console.log(recipe)
-			displaySelectedRecipe(recipe)
-		})
-		.catch(error => {
-			console.error('Fetch error:', error)
-		});
+	function clearModal() {
+		$('#recipeModalDynamics').empty()
 	}
-	fetchRecipebyId()
+	clearModal()
+	
+	fetchRecipebyId(recipeID)
+		.then(recipe =>{
+	displaySelectedRecipe(recipe)
+		})
 })
+
+function fetchRecipebyId(recipeID){
+	const recipeIdApi = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`
+
+	return fetch(recipeIdApi)
+	.then(response => {
+		if (!response.ok) {
+			throw response.json()
+		}
+		return response.json()
+		console.log(response)
+	})
+	.then(recipe => {
+		return recipe
+	})
+	.catch(error => {
+		console.error('Fetch error:', error)
+	});
+}
 
 // * function for Selected Recipe Modal.
 function displaySelectedRecipe(randomRecipe){
+	const recipeArray = randomRecipe.meals[0]
 	const selectedRecipeBody = $('.recipeModalBody')
 
 	const recipeModalDynamics = $('<div>')
-	recipeModalDynamics.addClass('recipeElements p-3 text-white')
+	recipeModalDynamics.addClass('recipeElements p-3 text-white').attr('id', 'recipeModalDynamics')
 	
-	const recipeArray = randomRecipe.meals[0]
 	
 	const resultsCard = $('<div>')
 	resultsCard.addClass('card')
+	resultsCard.attr({
+		'id':'recipeModalCard',
+		'data-recipe-id': recipeArray.idMeal
+
+	})
 
 	const recipeDetailsHeader = $('<header>').addClass('header')
 	
@@ -780,7 +875,6 @@ function displaySelectedRecipe(randomRecipe){
 			break;
 		}
 	}
-	// ? not sure if you wanted these. 
 	// const measurements = $('<p>')
 	// measurements.appendTo(resultsCard)
 	// measurements.text(recipeArray.strMeasure)
@@ -848,40 +942,19 @@ randomMovieR.on('click', function(event){
 		.then(movies => {
 			const randomMovieDetails = randomMovie(movies)
 		displaySingleMovie(randomMovieDetails)
-
 		})
 		.catch(error =>{
 			console.error('fetch error', error)
 		})
+		const recipeId = $('#recipeModal').find('#recipeModalCard').attr('data-recipe-id')
+		fetchRecipebyId(recipeId)
+			.then(recipe =>{
+				displayRandomRecipe(recipe)
+			})
 		// recipeCardArea.hide()need to have funtion to get id and display*details(?) in right half of match area first
 		selectedRecipeModal.hide()
 })
 
-
-
-
-// *function for RECIPE SEARCH button click
-$('#mainIngredientBTN').on('click', function(event){
-	event.preventDefault();
-	fetchRecipeByMainIngredient();
-	displayList();
-})
-
-// todo filter by main ingredient--------------------------------
-function fetchRecipeByMainIngredient() {
-	let mainIngredient = document.getElementById("#mainIngredient").value.trim()
-	const mainIngredientUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${mainIngredient}`
-	
-	fetch(mainIngredientUrl)
-	.then(response => {
-		console.log(response);
-		return response.json()
-	})
-	.then(list => console.log(list))
-	.catch(error => {
-		console.error('Error fetching list:', error)
-	})
-}
 
 // *array to save recipes
 let savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
@@ -919,14 +992,10 @@ function displaySavedRecipes (){
 	});
 }
 
-$(document).ready(function() {
-	// const savedRecipes = JSON.parse(localStorage.getItem('savedmeal')) || [];
-});
-
 // todo list for recipe by main ingridient
 function displayList () {
 	
-	const recipeResultArea = $('#recipeResults');
+	const recipeResultArea = $('#recipeCardArea');
 	if (list.meals){
 		list.meals.forEach ( meal => {
 		
@@ -936,13 +1005,18 @@ function displayList () {
 }
 
 
-
 // *functions for RANDOM MATCH UP>>>>>>>>>>>>>>>>>>>>>>
 const randomMatchUpBtn = $('#matchUpRandom')
 randomMatchUpBtn.on('click', function(event){
 	event.preventDefault()
 	singleMovieArea.empty()
 	fetchRandomRecipe()
+	.then(recipe =>{
+			$('#recipeResults').empty()
+			displayRandomRecipe(recipe)
+		})
+	
+
 	fetchARandomMovie()
 		.then(movies => {
 			const randomMovieDetails = randomMovie(movies)
@@ -963,10 +1037,6 @@ $('#saveForAnotherNight').on('click', function(){
 	displaySavedMatches()
 })
 
-
-// todo getMatchLocalStorage()
-
-
 // *function to get match LOCALSTORAGE
 function getMatches(){
 	let matches = (JSON.parse(localStorage.getItem('matches')))
@@ -974,7 +1044,7 @@ function getMatches(){
 		matches=[]
 	}
 	return matches
-	console.log(matches)
+	// console.log(matches)
 }
 // *function to set match LOCALSTORAGE
 function setMatches(){
@@ -1000,7 +1070,7 @@ function setMatches(){
 	console.log(localStorage.matches)
 	
 }
-// // *function POPULATE SAVED matches
+// *function POPULATE SAVED matches
 function displaySavedMatches(){
 	const matchObjects = getMatches()
 	console.log(matchObjects)
@@ -1072,14 +1142,11 @@ function displaySavedMatches(){
 		}
 	}
 }
-	// 	}
-	// }
-// }
 
 $(document).ready(function(){
 	displaySavedMovies()
 	displaySavedRecipes();
-	// displaySavedMatches() to do still
+	displaySavedMatches()
 })
 
 
