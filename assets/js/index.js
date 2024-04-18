@@ -536,7 +536,7 @@ $('#randomRecipeAgain').on('click', function(event){
 function fetchRandomRecipe() {
 	const randomRecipeUrl = `https://www.themealdb.com/api/json/v1/1/random.php?`
 	
-	fetch(randomRecipeUrl)
+	return fetch(randomRecipeUrl)
 	.then(response => {
 		if (!response.ok){
 			throw response.json()
@@ -547,8 +547,7 @@ function fetchRandomRecipe() {
 	})
 	.then(randomRecipe => {
 		console.log(randomRecipe)
-		$('#recipeResults').empty()
-		displayRandomRecipe(randomRecipe)
+		return randomRecipe
 	})
 		
 	.catch(error => {
@@ -747,40 +746,47 @@ $(document).on('click','#selectedRecipeModalBtn', function() {
 	}
 	clearModal()
 	
-
-	function fetchRecipebyId(){
-		const recipeIdApi = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`
-	
-		fetch(recipeIdApi)
-		.then(response => {
-			if (!response.ok) {
-				throw response.json()
-			}
-			return response.json()
-			console.log(response)
+	fetchRecipebyId(recipeID)
+		.then(recipe =>{
+	displaySelectedRecipe(recipe)
 		})
-		.then(recipe => {
-			console.log(recipe)
-			displaySelectedRecipe(recipe)
-		})
-		.catch(error => {
-			console.error('Fetch error:', error)
-		});
-	}
-	fetchRecipebyId()
 })
+
+function fetchRecipebyId(recipeID){
+	const recipeIdApi = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`
+
+	return fetch(recipeIdApi)
+	.then(response => {
+		if (!response.ok) {
+			throw response.json()
+		}
+		return response.json()
+		console.log(response)
+	})
+	.then(recipe => {
+		return recipe
+	})
+	.catch(error => {
+		console.error('Fetch error:', error)
+	});
+}
 
 // * function for Selected Recipe Modal.
 function displaySelectedRecipe(randomRecipe){
+	const recipeArray = randomRecipe.meals[0]
 	const selectedRecipeBody = $('.recipeModalBody')
 
 	const recipeModalDynamics = $('<div>')
 	recipeModalDynamics.addClass('recipeElements p-3 text-white').attr('id', 'recipeModalDynamics')
 	
-	const recipeArray = randomRecipe.meals[0]
 	
 	const resultsCard = $('<div>')
 	resultsCard.addClass('card')
+	resultsCard.attr({
+		'id':'recipeModalCard',
+		'data-recipe-id': recipeArray.idMeal
+
+	})
 
 	const recipeDetailsHeader = $('<header>').addClass('header')
 	
@@ -808,7 +814,6 @@ function displaySelectedRecipe(randomRecipe){
 			break;
 		}
 	}
-	// ? not sure if you wanted these. 
 	// const measurements = $('<p>')
 	// measurements.appendTo(resultsCard)
 	// measurements.text(recipeArray.strMeasure)
@@ -876,11 +881,15 @@ randomMovieR.on('click', function(event){
 		.then(movies => {
 			const randomMovieDetails = randomMovie(movies)
 		displaySingleMovie(randomMovieDetails)
-
 		})
 		.catch(error =>{
 			console.error('fetch error', error)
 		})
+		const recipeId = $('#recipeModal').find('#recipeModalCard').attr('data-recipe-id')
+		fetchRecipebyId(recipeId)
+			.then(recipe =>{
+				displayRandomRecipe(recipe)
+			})
 		// recipeCardArea.hide()need to have funtion to get id and display*details(?) in right half of match area first
 		selectedRecipeModal.hide()
 })
@@ -954,7 +963,7 @@ function displaySavedRecipes (){
 // todo list for recipe by main ingridient
 function displayList () {
 	
-	const recipeResultArea = $('#recipeResults');
+	const recipeResultArea = $('#recipeCardArea');
 	if (list.meals){
 		list.meals.forEach ( meal => {
 		
@@ -971,6 +980,12 @@ randomMatchUpBtn.on('click', function(event){
 	event.preventDefault()
 	singleMovieArea.empty()
 	fetchRandomRecipe()
+	.then(recipe =>{
+			$('#recipeResults').empty()
+			displayRandomRecipe(recipe)
+		})
+	
+
 	fetchARandomMovie()
 		.then(movies => {
 			const randomMovieDetails = randomMovie(movies)
@@ -1002,7 +1017,7 @@ function getMatches(){
 		matches=[]
 	}
 	return matches
-	console.log(matches)
+	// console.log(matches)
 }
 // *function to set match LOCALSTORAGE
 function setMatches(){
