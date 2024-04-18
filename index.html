@@ -25,10 +25,10 @@
 
 <body class=" bg-gradient-to-b from-primary-100 via-primary-300 to-primary-400">
 
-    <header class="px-4 flex justify-center items-center position: static">
-        <img class="rounded-xl" src="assets/images/logo2.webp" alt="film roll">
+    <header class="px-4 md:flex justify-center items-center position: static md-shrink-0 font-mono">
+        <img class="rounded-xl md:w-full" src="assets/images/logo2.webp" alt="film roll">
         <div class="position: absolute flex justify-center">
-        <h1 class="text-primary-200 y-4 font-bold text-6xl drop-shadow-2xl text-outline-black">
+        <h1 class="text-primary-200 y-4 font-bold text-6xl drop-shadow-2xl md:shrink-0 sm-size-min">
             <div class="inline-flex text-primary-100 drop-shadow-2xl">
                 Movies
             </div>
@@ -42,9 +42,9 @@
         </div>
     </header>
     
-    <main>
+    <main class="font-serif">
         <div class="p-4 text-xl underline text-[#63262] flex justify-center align-center">
-            <h2 class=" rounded-md bg-white p-1">Browse our site for what feels right and let us help you plan your night!</h2>
+            <h2 class=" rounded-md bg-white bg-opacity-0 p-1 text-white">Browse our site for what feels right and let us help you plan your night!</h2>
         </div>
         <div class="flex justify-evenly">
             <button id="randomMoviesBtn" class="bg-primary-300 hover:bg-primary-400 text-white font-bold py-2 px-4 rounded drop-shadow-2xl hover:drop-shadow-sm">Pick a movie from random list</button>
@@ -56,7 +56,7 @@
         <form action="" class="flex justify-center p-8 position-static">
             <label for="mainIngredient" class="text-xl pl-6 bg-primary-400 pr-4 border-black border-2 rounded-l-lg">Search by Main Ingredient:</label>
             <input type="text" id="mainIngredient">
-            <button id="mainIngredientBTN"class="bg-yellow-400 rounded-r-lg hover:bg-primary-200" >Search!</button>
+            <button id="mainIngredientBTN"class="bg-yellow-400 rounded-r-lg hover:bg-primary-200">Search!</button>
         </form>
 
         
@@ -95,29 +95,29 @@
 
     <!-- selected movie modal -->
     <!--todo design, dynamic elements in js need design as well -->
-    <div id="movieModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto z-50">
+    <div id="movieModal" class="modal hidden fixed inset-0 h-4/6 w-3/6 flex m-auto justify-center align-center items-center bg-gradient-to-t from-primary-100 via-primary-200 to-primary-300 bg-opacity-100 z-50 size-fit rounded-2xl">
         <div class="movieModalBody text-white rounded-lg p-4">
             
-            <footer id="bottomButtons">
-                <button id ="saveForLaterM" type="submit" class="button bg-blue-600 rounded-4 mx-4">watch later</button>
-                <button id ="go-back" type="button" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+            <footer id="bottomButtons" class="flex inline-flex space-x-0 justify-evenly">
+                <button id ="saveForLaterM" type="submit" class="button bg-primary-300 rounded-full mx-4 p-2 hover:bg-primary-400 shadow-2xl">watch later</button>
+                <button id ="go-back" type="button" class="button bg-primary-300 rounded-full mx-4 p-1 hover:bg-primary-400 shadow-2xl">go back</button>
                 <!-- <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button> not used right now. for future ideas-->
-                <button id ="getRandomRecipe" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM reCipE</button>
+                <button id ="getRandomRecipe" type="button" class="button bg-primary-300 rounded-full mx-4 p-2 hover:bg-primary-400 shadow-2xl">RaNdoM reCipE</button>
             </footer>
         </div>
     </div>
         
     <!-- selected recipe modal -->
-    <div id="recipeModal" class="modal hidden fixed inset-0 mx-auto flex justify-center align-center items-center bg-black bg-opacity-100 max-auto z-50">
+    <div id="recipeModal" class="modal hidden fixed inset-0 size-fit flex m-auto justify-center align-center items-center bg-gradient-to-t from-primary-100 via-primary-200 to-primary-300 p-auto max-w-prose max-h-prose border-dashed border-4 border-black">
         <h2>Recipe Modal</h2>
         <div class="recipeModalBody text-white rounded-lg p-4">
             
             <footer id="bottomButtons">
-                <button id ="saveForLaterR" type="submit" class="button bg-blue-600 rounded-4 mx-4">munch later</button>
-                    <button id ="goBack" type="button" class="button bg-blue-600 rounded-4 mx-4">go back</button>
+                <button id ="saveForLaterR" type="submit" class="button bg-primary-300 rounded-full mx-4 p-1 hover:bg-primary-400 shadow-2xl">munch later</button>
+                    <button id ="goBack" type="button" class="button bg-primary-300 rounded-full mx-4 p-1 hover:bg-primary-400 shadow-2xl">go back</button>
                     <!-- <button id ="findMatchingMunchie" type="button" class="button bg-blue-600 rounded-4 mx-4">Find the perfect Munchie</button> not applicable right now--> 
                     <!-- todo call fetchARandomMovie & display functions -->
-                    <button id ="getRandomMovie" type="button" class="button bg-blue-600 rounded-4 mx-4">RaNdoM moViE</button>
+                    <button id ="getRandomMovie" type="button" class="button bg-primary-300 rounded-full mx-4 p-1 hover:bg-primary-400 shadow-2xl">RaNdoM moViE</button>
                 </footer>
             </div>
         </div>
@@ -136,31 +136,35 @@
                 <h3>Results</h3>
             </div>
             
-                    <div id="matchContainer" class=" hidden p-4 flex flex-row justify-center align-center text-center">
+                    <div id="matchContainer" class=" hidden p-4 flex flex-row justify-center align-center text-center px-8 m-auto">
                         <div id="matchUpArea" class="flex flex-row">
-                            <section id="movie" class=" p-4 flex-col justify-center align-center border-4 h-auto col-md-6">
+                            <section id="movie" class=" p-4 flex-col justify-center align-center border-4 h-auto col-md-6 max-w-prose">
                                 <p class="p-4 text-white flex justify-center align-center">Movie</p>
                                 <div id="singleMovie" class="flex flex-wrap justify-evenly">
                                 </div>
                                 <div>
-                                    <button type="button" id="saveMovie" class="bg-green-400 text-base text-white">Watch Later</button>
-                                    <button type="button" id="randomMovieBtnAgain" class="bg-green-400 text-base text-white">Find a different movie</button>
+                                    <button type="button" id="saveMovie" class="bg-primary-100 rounded-full p-2 text-base text-white">Watch Later</button>
+                                    <button type="button" id="randomMovieBtnAgain" class="bg-primary-200 rounded-full p-2 text-base text-white">Find a different movie</button>
                                     <!-- <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button> -->
                                 </div>
                             </section>
 
-                            <section id="recipe" class=" p-4 flex-col justify-center align-center border-4 h-auto col-md-6">
+                            <section class="justify-center align-center pt-8 px-8 text-8xl text-primary-400 shadow-2xl">
+                                <h3>'n'</h3> 
+                            </section>
+
+                            <section id="recipe" class=" p-4 flex-col justify-center align-center border-4 h-auto col-md-6 max-w-prose p-auto m-auto">
                                 <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
                                 <div id="recipeResults" class="text-white text-center">
                                 </div>
                                 <div>
-                                    <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Munch Later</button>
-                                    <button type="button" id="randomRecipeAgain" class="bg-green-400 text-base text-white">Find a different recipe</button>
+                                    <button type="button" id="saveRecipe" class="bg-primary-100 rounded-full p-2 text-base text-white">Munch Later</button>
+                                    <button type="button" id="randomRecipeAgain" class="bg-primary-200 rounded-full p-2 text-base text-white">Find a different recipe</button>
                                     <!-- <button type="button" id="saveRecipe" class="bg-green-400 text-base text-white">Save Recipe</button> -->
                                 </div>
                             </section>
                         </div>
-                        <button id="saveForAnotherNight" type="button"class="bg-green-400 text-base text-white">Save for another night</button>
+                        <button id="saveForAnotherNight" type="button"class="justify-center align-center m-auto bg-primary-100 rounded-full p-2 text-base text-white">Save for another night</button>
                     </div>
 
                         <section id="movies" class="hidden p-4 flex-col justify-center align-center border-4 h-80">
@@ -211,7 +215,7 @@
         <div>
             <p class="flex inline-flex">This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.</p>
             <img class="max-h-6 flex inline-flex" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="The Movie Database logo">
-            <p>&copy; 2024 My Website. All rights reserved.</p>
+            <p>&copy; 2024 Movies'n'Munchies LLC. All rights reserved.</p>
         </div>
     </footer>
     
