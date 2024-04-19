@@ -90,7 +90,7 @@
 
     <!-- selected movie modal -->
     <!--todo design, dynamic elements in js need design as well -->
-    <div id="movieModal" class="modal hidden fixed inset-0 h-4/6 w-3/6 flex m-auto justify-center align-center items-center bg-gradient-to-t from-primary-100 via-primary-200 to-primary-300 bg-opacity-100 z-50 size-fit rounded-2xl">
+    <div id="movieModal" class="modal hidden fixed inset-0 h-4/6 w-3/6 flex m-auto justify-center align-center items-center bg-gradient-to-t from-primary-100 via-primary-200 to-primary-300 bg-opacity-100 z-50 size-fit rounded-2xl border-solid border-2">
         <div class="movieModalBody text-white rounded-lg p-4">
             
             <footer id="bottomButtons" class="flex inline-flex space-x-0 justify-evenly">
@@ -103,9 +103,11 @@
     </div>
         
     <!-- selected recipe modal -->
-    <div id="recipeModal" class="modal hidden fixed inset-0 size-fit flex m-auto justify-center align-center items-center bg-gradient-to-t from-primary-100 via-primary-200 to-primary-300 p-auto max-w-prose max-h-prose border-dashed border-4 border-black z-50">
+
+    <div id="recipeModal" class="modal hidden fixed inset-0 h-80 w-100 flex m-auto justify-center align-center items-center bg-gradient-to-t from-primary-100 via-primary-200 to-primary-300 p-auto max-w-prose max-h-prose border-dashed border-4 border-black z-50">
+
         <h2>Recipe Modal</h2>
-        <div class="recipeModalBody text-white rounded-lg p-4 overflow-y-auto">
+        <div class="scroll recipeModalBody text-white rounded-lg p-4 overflow-y-auto">
             
             <footer id="bottomButtons">
                 <button id ="saveForLaterR" type="submit" class="button bg-primary-300 rounded-full mx-4 p-1 hover:bg-primary-400 shadow-2xl">munch later</button>
@@ -182,23 +184,23 @@
                     
                 <div id="save" class="p-4 flex flex-row justify-around align-center">
                         
-                    <div id="savedMovies" class="p-4 flex-col justify-center align-center h-auto w-1/3">
+                    <div id="savedMovies" class="p-4 flex-col justify-center align-center h-auto w-1/4">
                         <div>
                             <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
-                        </div>
+                    </div>
 
-                        <div id="savedMoviesArea"></div>
-                    </div>
+                    <div id="savedMoviesArea"></div>
+                </div>
                     
-                <div id="savedRecipes" class="p-4 flex-col justify-center align-center h-auto w-1/3">
-                    <div>
-                        <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
-                    </div>
+                <div id="savedRecipes" class="p-4 flex-col justify-center align-center h-auto w-1/4">
+                        <div>
+                            <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
+                        </div>
 
                     <div id="recipeIdLinks"></div>
                 </div>
         
-                <div id="saveForLater" class="p-4 flex justify-center align-center h-auto w-1/3">
+                <div id="saveForLater" class="p-4 flex-col justify-center align-center h-auto w-1/2">
                     <div>
                         <h4 class="p-4 text-white flex justify-center align-center">Saved for Later</h4>
                     </div>
