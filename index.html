@@ -149,7 +149,7 @@
 
                             <section id="recipe" class=" p-4 flex-col justify-center align-center border-4 h-auto col-md-6 max-w-prose p-auto m-auto">
                                 <p class="p-4 text-white flex justify-center align-center">Recipe Results</p>
-                                <div id="recipeResults" class="text-white text-center">
+                                <div id="recipeResults" class="flex flex-wrap justify-evenly h-auto m-7">
                                 </div>
                                 <div>
                                     <button type="button" id="saveRecipe" class="bg-primary-100 rounded-full p-2 text-base text-white">Munch Later</button>
@@ -169,9 +169,9 @@
                         
                         
                         <!-- random receipes list area -->
-                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center h-80">
+                        <section id="recipeCardArea" class="hidden p-4 flex-col justify-center align-center h-auto">
                             <p class="p-4 text-white flex justify-center align-center">Random Recipes to choose from</p>
-                            <div id="randomRecipeArea" class="flex flex-wrap justify-evenly">
+                            <div id="randomRecipeArea" class="flex flex-wrap justify-evenly h-auto">
                             </div>
                         </section>
                     </div>
@@ -182,30 +182,30 @@
                 
                 <!--*SAVE COLUMNS-->
                     
-                <div id="save" class="p-4 flex flex-row justify-around align-center">
+                <div id="save" class="p-4 md:grid grid-cols-4 justify-center">
                         
-                    <div id="savedMovies" class="p-4 flex-col justify-center align-center h-auto w-1/4">
-                        <div>
+                    <div id="savedMovies" class="p-4 h-auto md:grid-span-1">
+                        <div class="flex justify-center">
                             <h4 class="p-4 text-white flex justify-center align-center">Movies</h4>
                     </div>
 
-                    <div id="savedMoviesArea"></div>
+                    <div id="savedMoviesArea" class="flex justify-center flex-wrap items-center"></div>
                 </div>
                     
-                <div id="savedRecipes" class="p-4 flex-col justify-center align-center h-auto w-1/4">
+                <div id="savedRecipes" class="p-4 justify-center h-auto md:grid-span-1 ">
                         <div>
                             <h4 class="p-4 text-white flex justify-center align-center">Recipes</h4>
                         </div>
 
-                    <div id="recipeIdLinks"></div>
+                    <div id="recipeIdLinks" class="flex justify-center flex-wrap items-center"></div>
                 </div>
         
-                <div id="saveForLater" class="p-4 flex-col justify-center align-center h-auto w-1/2">
+                <div id="saveForLater" class="p-4 justify-center h-auto md:grid-span-2">
                     <div>
                         <h4 class="p-4 text-white flex justify-center align-center">Saved for Later</h4>
                     </div>
 
-                    <div id="savedMatchesArea"></div>
+                    <div id="savedMatchesArea" class="flex justify-center flex-wrap"></div>
                 </div>
         
             </div>
