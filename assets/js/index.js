@@ -470,7 +470,6 @@ getRandomRecipeBtn.on('click', function(event){
 			$('#matchContainer').show()
 			
 	})
-	// movieResultsArea.hide()//need to have funtion to get id and display in left half of match area first
 	selectedMovieModal.hide()
 })
 
@@ -489,7 +488,6 @@ $(document).click(function(event){
 
 // *function to get MOVIE LOCALSTORAGE
 function getMovieLocalStorage(){
-	// console.log(`localStorage${localStorage.movies}`)
 	let movies = (JSON.parse(localStorage.getItem('movies')))
 	if(!movies){
 		movies=[]
@@ -523,19 +521,19 @@ function displaySavedMovies(){
 	if(Array.isArray(movies)){
 		for(let movie of movies){
 		
-		const movieCard = $('<card>')
-		movieCard.addClass('card')
+		const movieCard = $('<div>')
+		movieCard.addClass('w-32 h-auto rounded-lg shadow-md overflow-hidden mr-4 mb-4')
 		movieCard.attr({
 			'id': 'movieCard',
 			'data-movie-id': movie.id
 		})
 
 		const savedMovieTitle = $('<h2>')
-		savedMovieTitle.addClass('font-bold')
+		savedMovieTitle.addClass('bg-black text-white opacity-50')
 		savedMovieTitle.text(movie.title)
 
 		const savedMoviePoster = $('<img>')
-		savedMoviePoster.addClass('border-light')
+		savedMoviePoster.addClass('border-light w-full h-full object-fit')
 		savedMoviePoster.attr('src', movie.poster)
 
 
@@ -609,12 +607,9 @@ function displayRandomRecipe (randomRecipe){
 	
 	const mealName = $('<h4>')
 	mealName.appendTo(resultsCard)
-	mealName.text(`Meal: ${recipeArray.strMeal}`)
+	mealName.text(recipeArray.strMeal)
 	mealName.addClass('underline decoration-1')
 	mealName.attr('id', 'mealNameResult')
-
-	// const thumbnail = recipeArray.strMealThumb
-	// console.log(thumbnail)
 
 	const recipeThumb = $('<img>')
 	.attr({
@@ -629,7 +624,6 @@ function displayRandomRecipe (randomRecipe){
 	category.appendTo(resultsCard)
 	category.text(`Category: ${recipeArray.strCategory}`)
 	
-	// need for loop to get all ingredients and measurements
 	
 	const ingredientsList = $('<ul>')
 	ingredientsList.text(`Ingredients & Measurements:`)
@@ -641,25 +635,18 @@ function displayRandomRecipe (randomRecipe){
 			
 			listItem.appendTo(ingredientsList);
 		} else {
-			// If there are no more ingredients, break the loop
 			break;
 		}
 	}
 	ingredientsList.appendTo(resultsCard);
 	
-	// const measurements = $('<p>')
-	// measurements.appendTo(resultsCard)
-	// measurements.text(recipeArray.strMeasure)
-	
 	const instructions = $('<p>')
 	instructions.appendTo(resultsCard)
 	instructions.text(`Instructions: ${recipeArray.strInstructions}`)
 	
-	// padding margin tailwind 
 	
 	const source = $('<a>');
 	source.appendTo(resultsCard);
-	// Check if recipeArray.strSource exists and is not an empty string
 	if (recipeArray.strSource && recipeArray.strSource.trim() !== ""){
 		source.text(`Source: ${recipeArray.strSource}`)
 		source.attr('href', recipeArray.strSource);
@@ -667,8 +654,6 @@ function displayRandomRecipe (randomRecipe){
 		source.attr('id', 'sourceResultLink')
 		source.addClass('text-green-200')
 	} else {
-		// Handle the case where the source link is not provided
-		// ?if we don't put this else, it just won't create the elements and won't mess up the display. either way, your choice :)
 		source.text('Source not available')
 		source.addClass('text-red-600')
 	}
@@ -683,7 +668,6 @@ function displayRandomRecipe (randomRecipe){
 		youTube.attr('target', '_blank')
 		youTube.addClass('text-red-700')
 	}else {
-		// Handle the case where the youtube link is not provided
 		youTube.text('YouTube link not available');
 		youTube.addClass('text-red-600')
 	}
@@ -763,14 +747,12 @@ function displayRecipeCard(recipeDetails){
 }
 
 function displayRecipeResults(recipes) {
-
-	console.log(recipes)
+	// $('#recipeCardArea').empty()
 	$('#recipeCardArea').show()
 
 	for(let i=0; i< 5; i++){
 		const recipeCard = $('<div>')
 		recipeCard.addClass('card')
-	console.log('hi')
 		const backDropBtn = $('<button>')
 		backDropBtn.addClass('rounded-lg relative overflow-hidden')
 		backDropBtn.attr({
@@ -852,7 +834,7 @@ function displaySelectedRecipe(randomRecipe){
 	const recipeDetailsHeader = $('<header>').addClass('header')
 	
 	const mealName = $('<h4>')
-	mealName.text(`Meal: ${recipeArray.strMeal}`)
+	mealName.text(recipeArray.strMeal)
 	mealName.addClass('underline decoration-1')
 	mealName.attr('id', 'mealNameResult')
 
@@ -862,7 +844,16 @@ function displaySelectedRecipe(randomRecipe){
 	
 	const category = $('<p>')
 	category.text(`Category: ${recipeArray.strCategory}`)
-	
+
+	const recipeThumb = $('<img>')
+	.attr({
+		'src': recipeArray.strMealThumb,
+		'id': 'recipeImg'
+	})
+	.addClass('w-40 h-auto')
+	recipeThumb.appendTo(resultsCard)
+
+
 	const ingredientsList = $('<ul>')
 	ingredientsList.text(`Ingredients & Measurements:`)
 	for (let  i=1; i<=20; i++){
@@ -875,9 +866,6 @@ function displaySelectedRecipe(randomRecipe){
 			break;
 		}
 	}
-	// const measurements = $('<p>')
-	// measurements.appendTo(resultsCard)
-	// measurements.text(recipeArray.strMeasure)
 	
 	const instructions = $('<p>')
 	instructions.text(`Instructions: ${recipeArray.strInstructions}`)
@@ -951,7 +939,6 @@ randomMovieR.on('click', function(event){
 			.then(recipe =>{
 				displayRandomRecipe(recipe)
 			})
-		// recipeCardArea.hide()need to have funtion to get id and display*details(?) in right half of match area first
 		selectedRecipeModal.hide()
 })
 
@@ -964,9 +951,11 @@ console.log(savedRecipes);
 function saveRecipe(){
 	
 	const savedmeal = {
-		mealName: ($('#mealNameResult').text()),
-		mealUrl: ($('#sourceResultLink').attr('href')),
-	}
+			mealName: ($('#mealNameResult').text()),
+			mealUrl: ($('#sourceResultLink').attr('href')),
+			thumbnail: ($('#recipeImg').attr('src')),
+			id: ($('#recipeModalCard').attr('data-recipe-id'))
+		}
 
 	console.log($('#sourceResultLink').attr('href'));
 	console.log(savedmeal)
@@ -982,26 +971,31 @@ function displaySavedRecipes (){
 	recipeIdLinks.empty();
 	
 	savedRecipes.forEach(function(savedmeal) {
-		const listItem = $('<li>'); // Create <li> element
-		const link = $('<a>'); // Create <a> element
-		
-		link.attr('href', savedmeal.mealUrl); 
-		link.text(savedmeal.mealName); 
-		listItem.append(link); 
-		recipeIdLinks.append(listItem);
-	});
-}
+		const recipeCard = $('<div>')
 
-// todo list for recipe by main ingridient
-function displayList () {
-	
-	const recipeResultArea = $('#recipeCardArea');
-	if (list.meals){
-		list.meals.forEach ( meal => {
+			const backDropBtn = $('<button>')
+			backDropBtn.addClass('w-32 h-32 rounded-full overflow-hidden relative')
+			backDropBtn.attr({
+				'data-recipe-id': savedmeal.id,
+				'id':'selectedRecipeModalBtn',
+				'type':'button'
+			})
+			
+			const backdrop = $('<img>')
+			.attr('src', savedmeal.thumbnail)
+			.addClass('w-40 h-auto')
+
+			const titleOverlay = $('<div>')
+			.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
+			.text(savedmeal.mealName)
+
+
 		
-		});
-	}
-	
+
+			backDropBtn.append(backdrop, titleOverlay)
+			recipeCard.append(backDropBtn)
+		recipeIdLinks.append(recipeCard);
+	});
 }
 
 
@@ -1106,11 +1100,7 @@ function displaySavedMatches(){
 			movieCard.append(savedMoviePoster, savedMovieTitle)
 			savedMatchesArea.append(movieCard)	
 
-
-
-
 			const recipeCard = $('<div>')
-			// recipeCard.addClass('card')
 
 			const backDropBtn = $('<button>')
 			backDropBtn.addClass('rounded-lg relative overflow-hidden')
@@ -1133,7 +1123,6 @@ function displaySavedMatches(){
 				'id':'recipeLink',
 				'src': recipe.mealUrl
 			})
-			// recipeSrc.text('Recipe Link')
 			
 			backDropBtn.append(backdrop, titleOverlay)
 			recipeCard.append(backDropBtn)
@@ -1296,13 +1285,6 @@ $(document).ready(function(){
 
 
 
-
-
-// OPTIONAL FOR NOW
-// todo displayPickedMovie()
-
-// OPTIONAL
-// todo displayPickedMovie()
 
 // OPTIONAL
 // todo startOver()
