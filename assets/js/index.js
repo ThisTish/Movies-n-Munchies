@@ -473,26 +473,40 @@ function displaySavedMovies(){
 
 	savedMoviesArea.empty()
 
+	
+	
+
+
 	if(Array.isArray(movies)){
 		for(let movie of movies){
-		
-		const movieCard = $('<div>')
-		movieCard.addClass('w-32 h-auto rounded-lg shadow-md overflow-hidden mr-4 mb-4')
+			
+		const movieCard = $('<div>').addClass('flex flex-col items-center overflow-hidden h-full p-1 m-1 rounded bg-black bg-opacity-50')
 		movieCard.attr({
-			'id': 'movieCard',
+			'id': 'selectedMovieBtn',
+			'type': 'button',
 			'data-movie-id': movie.id
 		})
 
+		
+		const movieButton = $('<button>')
+		movieButton.addClass('hover:grow hover:scale-110')
+
+		const titleContainer = $('<div>').addClass('w-full h-17 overflow-hidden pt-1')
+
 		const savedMovieTitle = $('<h2>')
-		savedMovieTitle.addClass('bg-black text-white opacity-50')
+		savedMovieTitle.addClass(' text-white opacity-50 text-xs p-2 text-center w-full')
 		savedMovieTitle.text(movie.title)
 
+		// const div = $('<div>').addClass('px-6 py-4')
+
 		const savedMoviePoster = $('<img>')
-		savedMoviePoster.addClass('border-light w-full h-full object-fit')
+		savedMoviePoster.addClass('w-full h-auto ')
 		savedMoviePoster.attr('src', movie.poster)
 
 
-	movieCard.append(savedMoviePoster, savedMovieTitle)
+	movieButton.append(savedMoviePoster)
+	titleContainer.append(savedMovieTitle)	
+	movieCard.append(movieButton, titleContainer)
 	savedMoviesArea.append(movieCard)	
 	}
 }
