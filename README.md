@@ -19,3 +19,8 @@ Charles Wilson | github: [CharlesRWilson](https://github.com/CharlesRWilson)<br>
 ### APIs Used
 TheMealDB (https://www.themealdb.com/api.php)<br>
 TMDB (https://developer.themoviedb.org/reference/search-movie)
+
+Deployed: https://tishthegoat.github.io/Movies-n-Munchies/
+GitHub repo : https://github.com/tishthegoat/Movies-n-Munchies
+
+[Movies'n'Munchies](./assets/images/Movies'n'Munchies.png)

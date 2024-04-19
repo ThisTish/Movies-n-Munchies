@@ -8,3 +8,9 @@ input[type=radio], input[type=checkbox]{
     transform: scale(2);
     margin-right: 5px;
 }
+
+#recipeModal {
+    scroll-behavior: auto;
+    overflow: hidden;
+    overflow-y: scroll;
+}
