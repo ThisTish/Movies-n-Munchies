@@ -468,14 +468,10 @@ function setMovieLocalStorage(){
 }
 // *function POPULATE SAVED MOVIES
 function displaySavedMovies(){
-	const movies = 	getMovieLocalStorage()
 	const savedMoviesArea = $('#savedMoviesArea')
+	const movies = 	getMovieLocalStorage()
 
 	savedMoviesArea.empty()
-
-	
-	
-
 
 	if(Array.isArray(movies)){
 		for(let movie of movies){
@@ -486,7 +482,6 @@ function displaySavedMovies(){
 			'type': 'button',
 			'data-movie-id': movie.id
 		})
-
 		
 		const movieButton = $('<button>')
 		movieButton.addClass('hover:grow hover:scale-110')
@@ -705,7 +700,7 @@ function displayRecipeCard(recipeDetails){
 	.addClass('w-40 h-auto')
 
 	const titleOverlay = $('<div>')
-	.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
+	.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 hover:bg-black hover:bg-opacity-50')
 	.text(recipeList.strMeal)
 	
 	backDropBtn.append(backdrop, titleOverlay)
@@ -936,7 +931,7 @@ function displaySavedRecipes (){
 		const recipeCard = $('<div>')
 
 			const backDropBtn = $('<button>')
-			backDropBtn.addClass('w-32 h-32 rounded-full overflow-hidden relative')
+			backDropBtn.addClass('w-32 h-32 rounded-lg overflow-hidden hover:grow hover:scale-110 m-2 relative')
 			backDropBtn.attr({
 				'data-recipe-id': savedmeal.id,
 				'id':'selectedRecipeModalBtn',
@@ -1033,34 +1028,45 @@ function displaySavedMatches(){
 	if(Array.isArray(matchObjects)){
 		for(let match of matchObjects){
 			const matchCard = $('<div>')
-			.addClass('card flex flex-row p-4 m-3 rounded-lg bg-white bg-opacity-50 h-auto')
+			.addClass('card flex flex-row p-4 m-3 rounded-lg bg-black text-white bg-opacity-50 h-auto content-center shrink-0')
 			.attr('id','matchCard')
 
 			const movie = match.movie
 			const recipe = match.recipe
 			
 
-			const movieCard = $('<card>').addClass('flex-1 object-cover h-auto pl-2')
+			const movies = 	getMovieLocalStorage()
+			
+			const movieCard = $('<div>').addClass('flex flex-col items-center overflow-hidden max-w-full h-full md:p-1 md:m-2 rounded bg-black bg-opacity-50 shrink-0')
 			movieCard.attr({
-				'id': 'movieCard',
+				'id': 'selectedMovieBtn',
+				'type': 'button',
 				'data-movie-id': movie.id
-			})			
-			const savedMovieTitle = $('<h2>')
-			savedMovieTitle.addClass('font-bold')
-			savedMovieTitle.text(movie.title)
-			
-			const savedMoviePoster = $('<img>')
-			savedMoviePoster.addClass('border-light')
-			savedMoviePoster.attr('src', movie.poster)
-			
-			
-			movieCard.append(savedMoviePoster, savedMovieTitle)
-			savedMatchesArea.append(movieCard)	
+			})
+	
+			const movieButton = $('<button>')
+			movieButton.addClass('hover:grow hover:scale-110')
 
-			const recipeCard = $('<div>').addClass("flex-1 object-cover md:max-w-full h-auto")
+			const titleContainer = $('<div>').addClass('w-full h-17 overflow-hidden pt-1')
+
+			const savedMovieTitle = $('<h2>')
+			savedMovieTitle.addClass(' text-white opacity-50 text-xs p-2 text-center w-full shrink-0')
+			savedMovieTitle.text(movie.title)
+
+			const savedMoviePoster = $('<img>')
+			savedMoviePoster.addClass('w-full h-auto ')
+			savedMoviePoster.attr('src', movie.poster)
+
+
+			movieButton.append(savedMoviePoster)
+			titleContainer.append(savedMovieTitle)	
+			movieCard.append(movieButton, titleContainer)	
+			
+
+			const recipeCard = $('<div>').addClass("flex flex-col items-center overflow-hidden h-full md:p-1 md:m-2 rounded shrink-0")
 
 			const backDropBtn = $('<button>')
-			backDropBtn.addClass('rounded-lg relative overflow-hidden')
+			backDropBtn.addClass('rounded-lg relative overflow-hidden hover:grow hover:scale-110')
 			
 			backDropBtn.attr({
 				'data-recipe-id': recipe.id,
@@ -1073,7 +1079,7 @@ function displaySavedMatches(){
 			.addClass('w-40 h-auto shrink-0 min-w-full')
 
 			const titleOverlay = $('<div>')
-			.addClass('absolute bottom-0 left-0 right-0 text-white px-4 py-2 bg-black bg-opacity-50')
+			.addClass('absolute bottom-0 left-0 right-0 text-white md:px-4 md:py-2 bg-black bg-opacity-50')
 			.text(recipe.mealName)
 
 			const recipeSrc = ($('<a>'))
