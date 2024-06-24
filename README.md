@@ -11,7 +11,7 @@ To use the website simply search up whatever movie you want to watch and it will
 ## Credits
 
 ### Collaborators
-Tish Parry (Project Manager) | github: [tishthegoat](https://github.com/tishthegoat)<br>
+Tish Parry (Project Manager) | github: [ThisTish](https://github.com/thistish)<br>
 Karina Gonzalez | github: [2023kgl](https://github.com/2023kgl)<br>
 Charlie Dalton | github: [8bitCharlie](https://github.com/8bitCharlie)<br>
 Charles Wilson | github: [CharlesRWilson](https://github.com/CharlesRWilson)<br>
@@ -20,7 +20,7 @@ Charles Wilson | github: [CharlesRWilson](https://github.com/CharlesRWilson)<br>
 TheMealDB (https://www.themealdb.com/api.php)<br>
 TMDB (https://developer.themoviedb.org/reference/search-movie)
 
-Deployed: https://tishthegoat.github.io/Movies-n-Munchies/
-GitHub repo : https://github.com/tishthegoat/Movies-n-Munchies
+Deployed: https://thistish.github.io/Movies-n-Munchies/
+GitHub repo : https://github.com/thistish/Movies-n-Munchies
 
 ![Movies'n'Munchies](./assets/images/Movies'n'Munchies.png)
